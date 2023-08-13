@@ -34,7 +34,7 @@ const Sidebar = () => {
                             ? 'text-decoration-none text-white'
                             : 'text-decoration-none seriy'
                     }
-                        to='/mahsulotlar'
+                        to='/category'
                     >
                         <li className='d-flex gap-3 align-items-center hv fs-5'><i className="fa-solid fa-pen-nib fs-5"></i>Mahsulotlar</li>
                     </NavLink>

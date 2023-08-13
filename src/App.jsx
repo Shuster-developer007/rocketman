@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Route , Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Takliflar from './pages/Takliflar/Takliflar'
 import Mijozlar from './pages/Clients/Mijozlar'
@@ -9,21 +9,34 @@ import Payment from './pages/Settings/Payment'
 import SettingChange from './pages/Settings/SettingChange'
 import SettingsUsers from './pages/Settings/SettingsUsers'
 import SettingsDriver from './pages/Settings/SettingsDriver'
+import { Category } from './pages/Category/Category';
+import { Login } from './components/Login/Login';
+import { FastFood } from './pages/FastFood/FastFood';
+import { SinglePage } from './pages/SinglePage/SinglePage';
+import { NotFound } from './pages/NotFound/NotFound';
+import { Food } from './pages/Food/Food';
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/takliflar' element={<Takliflar />}/>
-        <Route path='/mijozlar' element={<Mijozlar />}/>
-        <Route path='/mijozlar/:id' element={<MijozlarById />}/>
-        <Route path='/mijozlar/info' element={<MijozInfo />}/>
-        <Route path='/settings/payment' element={<Payment/>}/>
-        <Route path='/settings/change' element={<SettingChange/>}/>
-        <Route path='/settings/users' element={<SettingsUsers/>}/>
-        <Route path='/settings/drivers' element={<SettingsDriver/>}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/takliflar' element={<Takliflar />} />
+        <Route path='/mijozlar' element={<Mijozlar />} />
+        <Route path='/mijozlar/:id' element={<MijozlarById />} />
+        <Route path='/mijozlar/info' element={<MijozInfo />} />
+        <Route path='/settings/payment' element={<Payment />} />
+        <Route path='/settings/change' element={<SettingChange />} />
+        <Route path='/settings/users' element={<SettingsUsers />} />
+        <Route path='/settings/drivers' element={<SettingsDriver />} />
+        <Route path='/category' element={<Category />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/category/fastfood' element={<FastFood />} />
+        <Route path='/category/fastfood/name' element={<SinglePage />} />
+        <Route path='/category/fastfood/name/:food' element={<Food />} />
+        <Route path='*' element={<NotFound />} />
+
       </Routes>
     </>
   )
