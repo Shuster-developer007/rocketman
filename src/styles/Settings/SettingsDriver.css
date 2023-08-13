@@ -1,0 +1,14 @@
+.enabled {
+    width: 90px;
+    height: 32px;
+    border-radius: 18px;
+    background-color: #D9FFDA;
+}
+
+
+.disabled {
+    width: 90px;
+    height: 32px;
+    border-radius: 18px;
+    background-color: #FFD9D9;    ;
+}

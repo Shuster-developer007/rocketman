@@ -1,0 +1,35 @@
+.next {
+    display: flex;
+    justify-content: end;
+    padding: 1.3rem 3rem;
+    gap: 1rem;
+}
+
+.ok {
+   padding-top: 2rem;
+}
+
+.orab {
+    box-shadow: 0px 0px 8px rgba(128, 128, 128, 0.104);
+    border: 1px solid rgba(128, 128, 128, 0.282);
+    margin-top: 3rem;
+    border-radius: 10px;
+}
+
+
+.bor {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.633);
+    border-radius: 50%;
+}
+
+
+.bor:hover {
+    background-color: #2E3444;
+    color: white;
+    transition: 0.3s;
+}

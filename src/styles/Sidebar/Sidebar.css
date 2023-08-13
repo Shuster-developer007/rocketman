@@ -1,0 +1,48 @@
+.sidebar {
+    padding: 1.5rem 0;
+    width: 18%;
+    height: 100vh;
+    background-color: #2E3444;
+    position: fixed;
+}
+
+
+
+.imageicon {
+    width: 200px;
+    height: 40px;
+}
+
+.ul {
+    margin-top: -10rem;
+    gap: 2rem;
+}
+
+.hv:hover {
+    transition: 0.3s;
+    color: white;
+}
+
+.jk {
+    height: 100%;
+}
+
+
+
+
+
+.link {
+    color: inherit;
+}
+
+.setting {
+    margin-left: 1.9rem;
+}
+
+
+
+.seriy {
+    color: grey;
+}
+
+

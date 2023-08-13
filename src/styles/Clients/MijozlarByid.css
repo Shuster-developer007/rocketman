@@ -1,0 +1,31 @@
+.my-select {
+    width: 150px;
+    height: 45px;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+
+.auto_number {
+    width: 113px;
+    height: 33px;
+    border: 1px solid black;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.buyutrma {
+    margin-top: -1rem;
+}
+
+.phone-btn {
+    width: 170px;
+    height: 45px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    background-color: #3EB597;
+}
