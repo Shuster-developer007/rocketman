@@ -42,35 +42,39 @@ export const Food = () => {
 			<Sidebar />
 			<div className="ummumiy">
 				<Header />
-				<button className='btn btn-success categoryBtn'>Qo’shish +</button>
-				<div className='category mt-5'>
-					<ul className='category-list'>
-						<li className='category-item'>
-							<h3>ID</h3>
-							<h3>TOVAR</h3>
-							<h3>MA'LUMOT</h3>
-							<h3>NARXI</h3>
-							<h3>HOLAT</h3>
-							<h3>TAHRIRLASH</h3>
-						</li>
-						{obj.map((item) => (
-							<li key={item.id} className='Item'>
-								<p>{item.id}</p>
-								<Link to={''} className='Item-link'>
-									<p className='Item-text'>{item.name}</p>
-								</Link>
-								<p className='Item-text'>{item.desc}</p>
-								<p className='Item-text'>{item.price}</p>
-								<p className='Item-text'>{item.isActive}</p>
-								<p className='Item-text'>
-									<button className='btn'>
-										<GrEdit color='green' size={20} />
-									</button>
-								</p>
-							</li>
-						))}
-					</ul>
-				</div>
+				<section className="py-4">
+					<div className="container px-4">
+						<button className='btn btn-success categoryBtn'>Qo’shish +</button>
+						<div className='category mt-3'>
+							<ul className='category-list'>
+								<li className='category-item'>
+									<h3>ID</h3>
+									<h3>TOVAR</h3>
+									<h3>MA'LUMOT</h3>
+									<h3>NARXI</h3>
+									<h3>HOLAT</h3>
+									<h3>TAHRIRLASH</h3>
+								</li>
+								{obj.map((item) => (
+									<li key={item.id} className='Item'>
+										<p>{item.id}</p>
+										<Link to={''} className='Item-link'>
+											<p className='Item-text'>{item.name}</p>
+										</Link>
+										<p className='Item-text'>{item.desc}</p>
+										<p className='Item-text'>{item.price}</p>
+										<p className='Item-text'>{item.isActive}</p>
+										<p className='Item-text'>
+											<button className='btn'>
+												<GrEdit color='green' size={20} />
+											</button>
+										</p>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				</section>
 			</div>
 
 		</>

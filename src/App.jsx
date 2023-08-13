@@ -9,12 +9,13 @@ import Payment from './pages/Settings/Payment'
 import SettingChange from './pages/Settings/SettingChange'
 import SettingsUsers from './pages/Settings/SettingsUsers'
 import SettingsDriver from './pages/Settings/SettingsDriver'
-import { Category } from './pages/Category/Category';
-import { Login } from './components/Login/Login';
-import { FastFood } from './pages/FastFood/FastFood';
-import { SinglePage } from './pages/SinglePage/SinglePage';
-import { NotFound } from './pages/NotFound/NotFound';
-import { Food } from './pages/Food/Food';
+import { Login } from './components/Login';
+import './assets/styles/main.css';
+import { Category } from './pages/Category';
+import { NotFound } from './pages/NotFound';
+import { FastFood } from './pages/FastFood';
+import { SinglePage } from './pages/SinglePage';
+import { Food } from './pages/Food';
 function App() {
   const [count, setCount] = useState(0)
 
