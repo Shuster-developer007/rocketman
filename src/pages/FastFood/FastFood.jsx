@@ -3,21 +3,14 @@ import { Link } from 'react-router-dom';
 import './FastFood.css';
 import { GrEdit } from 'react-icons/gr';
 import { useState } from 'react';
-import RModal from 'react-modal';
 import Sidebar from './../../components/Sidebar';
 import Header from '../../components/Header';
-RModal.setAppElement('#root');
+import { FastfoodModal } from '../../components/Modal/fastfoodModal';
 
 export const FastFood = () => {
-	const [rmodal, rsetModal] = useState(false);
-	const [edModal, edSetModal] = useState(false);
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
+	const [addModal, addSetModal] = useState(false);
+	const [editModal, editSetModal] = useState(false);
+
 	const obj = [
 		{
 			id: 1,
@@ -72,13 +65,13 @@ export const FastFood = () => {
 	return (
 		<>
 			<Sidebar />
-			<div className="ummumiy">
+			<div className='ummumiy'>
 				<Header />
-				<section className="py-4">
-					<div className="container px-4">
+				<section className='py-4'>
+					<div className='container px-4'>
 						<button
 							className='btn btn-success categoryBtn'
-							onClick={() => rsetModal(true)}
+							onClick={() => addSetModal(true)}
 						>
 							Qo’shish +
 						</button>
@@ -104,224 +97,23 @@ export const FastFood = () => {
 										<p className='Item-text'>{item.address}</p>
 										<p className='Item-text'>{item.isActive}</p>
 										<p className='Item-text'>
-											<button className='btn' onClick={() => edSetModal(true)}>
+											<button className='btn' onClick={() => editSetModal(true)}>
 												<GrEdit color='green' size={20} />
 											</button>
 										</p>
 									</li>
 								))}
 							</ul>
-							<RModal
-								isOpen={edModal}
-								onRequestClose={() => edSetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '500px',
-										height: '500px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<h1>Tahrirlash</h1>
-								<div className='d-flex align-items-center'>
-									<span>
-										{' '}
-										<h4>Do’’kon nomi</h4>
-										<input
-											className='rounded me-3'
-											type='text'
-											name=''
-											id=''
-											placeholder='Evos'
-										/>
-									</span>
-									<span>
-										{' '}
-										<h4>Telefon raqami</h4>
-										<input
-											className='rounded'
-											type='text'
-											name=''
-											id=''
-											placeholder='+998999999999'
-										/>
-									</span>
-								</div>
-								<div className='d-flex align-items-center mt-5'>
-									<span>
-										{' '}
-										<h4>Long</h4>
-										<input
-											className='rounded me-3'
-											type='text'
-											name=''
-											id=''
-											placeholder='41.32554974771851|'
-										/>
-									</span>
-									<span>
-										{' '}
-										<h4>Lang</h4>
-										<input
-											className='rounded'
-											type='text'
-											name=''
-											id=''
-											placeholder='41.32554974771851|'
-										/>
-									</span>
-								</div>
-								<div className='d-flex align-items-end mt-5'>
-									<span>
-										{' '}
-										<h4>Manzil</h4>
-										<input
-											className='rounded me-4'
-											type='text'
-											name=''
-											id=''
-											placeholder='Qo’shtepa'
-										/>
-									</span>
-									<div>
-										<p className='m-0'>HOLAT</p>
-										<span className='me-4 fs-5'>
-											<input type='radio' name='status' id='' />
-											on
-										</span>
-										<span className='fs-5'>
-											<input type='radio' name='status' id='' />
-											off
-										</span>
-									</div>
-								</div>
-								<button
-									className='btn btn-dark mt-5 ms-5 w-50'
-									onClick={() => edSetModal(false)}
-								>
-									Saqlash
-								</button>
-
-								<button style={styledBtn} onClick={() => edSetModal(false)}>
-									X
-								</button>
-							</RModal>
-							<RModal
-								isOpen={rmodal}
-								onRequestClose={() => rsetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '500px',
-										height: '500px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<h1>Qo’shish</h1>
-								<div className='d-flex align-items-center'>
-									<span>
-										{' '}
-										<h4>Do’’kon nomi</h4>
-										<input
-											className='rounded me-3'
-											type='text'
-											name=''
-											id=''
-											placeholder='Evos'
-										/>
-									</span>
-									<span>
-										{' '}
-										<h4>Telefon raqami</h4>
-										<input
-											className='rounded'
-											type='text'
-											name=''
-											id=''
-											placeholder='+998999999999'
-										/>
-									</span>
-								</div>
-								<div className='d-flex align-items-center mt-5'>
-									<span>
-										{' '}
-										<h4>Long</h4>
-										<input
-											className='rounded me-3'
-											type='text'
-											name=''
-											id=''
-											placeholder='41.32554974771851|'
-										/>
-									</span>
-									<span>
-										{' '}
-										<h4>Lang</h4>
-										<input
-											className='rounded'
-											type='text'
-											name=''
-											id=''
-											placeholder='41.32554974771851|'
-										/>
-									</span>
-								</div>
-								<div className='d-flex align-items-end mt-5'>
-									<span>
-										{' '}
-										<h4>Manzil</h4>
-										<input
-											className='rounded me-4'
-											type='text'
-											name=''
-											id=''
-											placeholder='Qo’shtepa'
-										/>
-									</span>
-									<div>
-										<p className='m-0'>HOLAT</p>
-										<span className='me-4 fs-5'>
-											<input type='radio' name='status' id='' />
-											on
-										</span>
-										<span className='fs-5'>
-											<input type='radio' name='status' id='' />
-											off
-										</span>
-									</div>
-								</div>
-								<button
-									className='btn btn-dark mt-5 ms-5 w-50'
-									onClick={() => rsetModal(false)}
-								>
-									Qo’shish
-								</button>
-
-								<button style={styledBtn} onClick={() => rsetModal(false)}>
-									X
-								</button>
-							</RModal>
+							<FastfoodModal
+								editModal={editModal}
+								editSetModal={editSetModal}
+								addModal={addModal}
+								addSetModal={addSetModal}
+							/>
 						</div>
 					</div>
 				</section>
 			</div>
-
 		</>
 	);
 };

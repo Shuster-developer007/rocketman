@@ -5,21 +5,12 @@ import './Food.css';
 import { GrEdit } from 'react-icons/gr';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-import RModal from 'react-modal';
 import { useState } from 'react';
-import MOCKIMAGE from '../../assets/images/300.png';
+import { FoodModal } from '../../components/Modal/foodModal';
 
 export const Food = () => {
-	RModal.setAppElement('#root');
-	const [rmodal, rsetModal] = useState(false);
-	const [edModal, edSetModal] = useState(false);
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
+	const [addModal, addSetModal] = useState(false);
+	const [editModal, editSetModal] = useState(false);
 
 	const obj = [
 		{
@@ -61,7 +52,7 @@ export const Food = () => {
 					<div className='container px-4'>
 						<button
 							className='btn btn-success categoryBtn'
-							onClick={() => rsetModal(true)}
+							onClick={() => addSetModal(true)}
 						>
 							Qo’shish +
 						</button>
@@ -85,224 +76,22 @@ export const Food = () => {
 										<p className='Item-text'>{item.price}</p>
 										<p className='Item-text'>{item.isActive}</p>
 										<p className='Item-text'>
-											<button className='btn' onClick={() => edSetModal(true)}>
+											<button
+												className='btn'
+												onClick={() => editSetModal(true)}
+											>
 												<GrEdit color='green' size={20} />
 											</button>
 										</p>
 									</li>
 								))}
 							</ul>
-							<RModal
-								isOpen={edModal}
-								onRequestClose={() => edSetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '800px',
-										height: '350px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<div className='d-flex align-items-start gap-5'>
-									<div className=''>
-										<img
-											src={MOCKIMAGE}
-											alt='MOCK IMAGE'
-											width={300}
-											height={300}
-										/>
-									</div>
-
-									<form className='d-flex align-items-center p-3 gap-3'>
-										<div className='d-flex flex-column'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<span>
-												<p className='mt-4'>Holat</p>
-												<span className='me-4 fs-5'>
-													<input type='radio' name='status' id='' />
-													on
-												</span>
-												<span className='fs-5'>
-													<input type='radio' name='status' id='' />
-													off
-												</span>
-											</span>
-										</div>
-										<div className='d-flex flex-column gap-5'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<button className='btn btn-dark'>Saqlash</button>
-										</div>
-									</form>
-
-									<button style={styledBtn} onClick={() => edSetModal(false)}>
-										X
-									</button>
-								</div>
-							</RModal>
-							<RModal
-								isOpen={rmodal}
-								onRequestClose={() => rsetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '800px',
-										height: '350px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<div className='d-flex align-items-center gap-5'>
-									<div>
-										<img
-											src={MOCKIMAGE}
-											alt='MOCK IMAGE'
-											width={300}
-											height={300}
-										/>
-									</div>
-									<form className='d-flex align-items-center p-3 gap-3'>
-										<div className='d-flex flex-column'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<span>
-												<p className='mt-4'>Holat</p>
-												<span className='me-4 fs-5'>
-													<input
-														type='radio'
-														className='form-check-input'
-														name='status'
-														id=''
-													/>
-													on
-												</span>
-												<span className='fs-5'>
-													<input
-														type='radio'
-														className='form-check-input'
-														name='status'
-														id=''
-													/>
-													off
-												</span>
-											</span>
-										</div>
-										<div className='d-flex flex-column gap-5'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<button className='btn btn-dark'>Saqlash</button>
-										</div>
-									</form>
-
-									<button style={styledBtn} onClick={() => rsetModal(false)}>
-										X
-									</button>
-								</div>
-							</RModal>
+							<FoodModal
+								addModal={addModal}
+								addSetModal={addSetModal}
+								editModal={editModal}
+								editSetModal={editSetModal}
+							/>
 						</div>
 					</div>
 				</section>

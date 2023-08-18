@@ -2,21 +2,14 @@ import { Link } from 'react-router-dom';
 import './SinglePage.css';
 import { GrEdit } from 'react-icons/gr';
 import { useState } from 'react';
-import RModal from 'react-modal';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-RModal.setAppElement('#root');
+import { SModal } from '../../components/Modal/smodal';
 
 export const SinglePage = () => {
-	const [rmodal, rsetModal] = useState(false);
-	const [edModal, edSetModal] = useState(false);
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
+	const [addModal, addSetModal] = useState(false);
+	const [editModal, editSetModal] = useState(false);
+
 	const obj = [
 		{
 			id: 1,
@@ -53,13 +46,13 @@ export const SinglePage = () => {
 	return (
 		<>
 			<Sidebar />
-			<div className="ummumiy">
+			<div className='ummumiy'>
 				<Header />
-				<section className="py-4">
-					<div className="container px-4">
+				<section className='py-4'>
+					<div className='container px-4'>
 						<button
 							className='btn btn-success categoryBtn'
-							onClick={() => rsetModal(true)}
+							onClick={() => addSetModal(true)}
 						>
 							Qo’shish +
 						</button>
@@ -81,100 +74,26 @@ export const SinglePage = () => {
 										<p className='Item-text'>{item.count}</p>
 										<p className='Item-text'>{item.isActive}</p>
 										<p className='Item-text'>
-											<button className='btn' onClick={() => edSetModal(true)}>
+											<button
+												className='btn'
+												onClick={() => editSetModal(true)}
+											>
 												<GrEdit color='green' size={20} />
 											</button>
 										</p>
 									</li>
 								))}
 							</ul>
-							<RModal
-								isOpen={edModal}
-								onRequestClose={() => edSetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '300px',
-										height: '300px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<h1>Tahrirlash</h1>
-								<p>Kategoriya nomi</p>
-								<input
-									className='rounded'
-									type='text'
-									name=''
-									id=''
-									placeholder='masalan: texnika'
-								/>
-								<p className='mt-4'>Holat</p>
-								<span className='me-4 fs-5'>
-									<input type='radio' name='status' id='' />
-									on
-								</span>
-								<span className='fs-5'>
-									<input type='radio' name='status' id='' />
-									off
-								</span>
-								<button style={styledBtn} onClick={() => edSetModal(false)}>
-									X
-								</button>
-							</RModal>
-							<RModal
-								isOpen={rmodal}
-								onRequestClose={() => rsetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '300px',
-										height: '300px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<h1>Qo’shish</h1>
-								<p>Kategoriya nomi</p>
-								<input
-									className='rounded'
-									type='text'
-									name=''
-									id=''
-									placeholder='masalan: texnika'
-								/>
-								<p className='mt-4'>Holat</p>
-								<span className='me-4 fs-5'>
-									<input type='radio' name='status' id='' />
-									on
-								</span>
-								<span className='fs-5'>
-									<input type='radio' name='status' id='' />
-									off
-								</span>
-								<button style={styledBtn} onClick={() => rsetModal(false)}>
-									X
-								</button>
-							</RModal>
+							<SModal
+								addModal={addModal}
+								addSetModal={addSetModal}
+								editModal={editModal}
+								editSetModal={editSetModal}
+							/>
 						</div>
 					</div>
 				</section>
 			</div>
-
 		</>
 	);
 };
