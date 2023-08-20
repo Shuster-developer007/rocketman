@@ -82,9 +82,12 @@ export const Category = () => {
 								</thead>
 								<tbody className=''>
 									{obj.map((item) => (
-										<tr key={item.id}  className='table-borderless'>
+										<tr key={item.id} className='table-borderless'>
 											<th scope='row' className='jg text-center'>
-												<Link to={'fastfood'} className='Item-link '>
+												<Link
+													to={'fastfood'}
+													className='Item-link text-decoration-none text-dark'
+												>
 													{item.category}
 												</Link>
 											</th>
@@ -112,6 +115,14 @@ export const Category = () => {
 								editModal={editModal}
 								editSetModal={editSetModal}
 							/>
+							<div className='d-flex next border-top'>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-left'></i>
+								</div>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-right '></i>
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>

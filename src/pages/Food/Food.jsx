@@ -57,41 +57,90 @@ export const Food = () => {
 							Qo’shish +
 						</button>
 						<div className='category mt-3'>
-							<ul className='category-list'>
-								<li className='category-item'>
-									<h3>ID</h3>
-									<h3>TOVAR</h3>
-									<h3>MA'LUMOT</h3>
-									<h3>NARXI</h3>
-									<h3>HOLAT</h3>
-									<h3>TAHRIRLASH</h3>
-								</li>
-								{obj.map((item) => (
-									<li key={item.id} className='Item'>
-										<p>{item.id}</p>
-										<Link to={''} className='Item-link'>
-											<p className='Item-text'>{item.name}</p>
-										</Link>
-										<p className='Item-text'>{item.desc}</p>
-										<p className='Item-text'>{item.price}</p>
-										<p className='Item-text'>{item.isActive}</p>
-										<p className='Item-text'>
-											<button
-												className='btn'
-												onClick={() => editSetModal(true)}
+							<table className='table table-hover table-borderless'>
+								<thead className='thread'>
+									<tr className='table-dark'>
+										<th scope='col' className='jg text-center'>
+											ID
+										</th>
+										<th scope='col' className='jg text-center'>
+											TOVAR
+										</th>
+										<th scope='col' className='jg text-center'>
+											MA'LUMOT
+										</th>
+										<th scope='col' className='jg text-center'>
+											NARXI
+										</th>
+										<th scope='col' className='jg text-center'>
+											HOLAT
+										</th>
+										<th scope='col' className='jg text-center'>
+											TAHRIRLASH
+										</th>
+									</tr>
+								</thead>
+								<tbody className=''>
+									{obj.map((item) => (
+										<tr key={item.id} className='table-borderless'>
+											<th scope='row' className='jg text-center'>
+												{item.id}
+											</th>
+											<td scope='row' className='jg text-center'>
+												<Link
+													to={'#'}
+													className='Item-link text-decoration-none text-dark'
+												>
+													{item.name}
+												</Link>
+											</td>
+											<td className='jg text-center'>{item.desc}</td>
+											<td className='jg text-center'>{item.price}</td>
+											<td
+												className='jg text-center'
+												style={
+													item.isActive === 'enabled'
+														? {
+																backgroundColor: '#D9FFDA',
+																color: '#008C06',
+																border: 'transparent',
+														  }
+														: {
+																backgroundColor: '#FFD9D9',
+																color: '#BE0707',
+																border: 'transparent',
+														  }
+												}
 											>
-												<GrEdit color='green' size={20} />
-											</button>
-										</p>
-									</li>
-								))}
-							</ul>
+												{item.isActive}
+											</td>
+											<td className='jg text-center'>
+												{' '}
+												<button
+													className='btn'
+													onClick={() => editSetModal(true)}
+												>
+													<GrEdit color='green' size={20} />
+												</button>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
 							<FoodModal
 								addModal={addModal}
 								addSetModal={addSetModal}
 								editModal={editModal}
 								editSetModal={editSetModal}
 							/>
+							<div className='d-flex next border-top'>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-left'></i>
+								</div>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-right '></i>
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>
