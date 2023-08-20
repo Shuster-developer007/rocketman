@@ -3,7 +3,7 @@
 }
 
 
-.mytable{
+.mytable {
     width: 100%;
     border-radius: 9px;
     overflow: hidden;
@@ -17,13 +17,24 @@
 }
 
 
+.buyurtma {
+    color: rgb(231, 192, 102);
+}
+
+.bekor {
+    color: rgba(255, 0, 0, 0.725);
+}
 
 
-.yashil {
+.qabul {
+    color: blue;
+}
+
+.yakun {
     color: rgb(54, 255, 54);
 }
 
-.purple {
+.yetkazish {
     color: rgb(117, 23, 117);
 }
 
@@ -43,6 +54,3 @@
     border-bottom: 1px solid rgba(128, 128, 128, 0.482);
     padding-left: 1.2rem;
 }
-
-
-
