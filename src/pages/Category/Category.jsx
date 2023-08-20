@@ -6,6 +6,7 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import { useState } from 'react';
 import { CategoryModal } from '../../components/Modal/categoryModal';
+import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
 
 export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
@@ -49,6 +50,8 @@ export const Category = () => {
 		},
 	];
 
+	const title = ['KATEGORIYA', "DO'KONLAR", 'TAHRIRLASH', 'STATUS'];
+
 	return (
 		<>
 			<Sidebar />
@@ -66,47 +69,52 @@ export const Category = () => {
 							<table className='table table-hover table-borderless'>
 								<thead className='thread'>
 									<tr className='table-dark'>
-										<th scope='col' className='jg text-center'>
-											KATEGORIYA
-										</th>
-										<th scope='col' className='jg text-center'>
-											DO'KONLAR
-										</th>
-										<th scope='col' className='jg text-center'>
-											TAHRIRLASH
-										</th>
-										<th scope='col' className='jg text-center'>
-											STATUS
-										</th>
+										{title.map((el, i) => (
+											// eslint-disable-next-line react/jsx-key
+											<th key={i} scope='col' className='jg text-center'>
+												{el}
+											</th>
+										))}
 									</tr>
 								</thead>
 								<tbody className=''>
-									{obj.map((item) => (
-										<tr key={item.id} className='table-borderless'>
-											<th scope='row' className='jg text-center'>
-												<Link
-													to={'fastfood'}
-													className='Item-link text-decoration-none text-dark'
-												>
-													{item.category}
-												</Link>
-											</th>
-											<td className='jg text-center'>{item.markets}</td>
-											<td className='jg text-center'>
-												{' '}
-												<button
-													className='btn'
-													onClick={() => editSetModal(true)}
-												>
-													<GrEdit color='green' size={20} />
-												</button>
-											</td>
-											<td className='jg text-center'>
-												{' '}
-												<BtnSlider isComplated={item.isComplated} />
-											</td>
+									{obj.length ? (
+										obj.map((item) => (
+											<tr key={item.id} className='table-borderless'>
+												<th scope='row' className='jg text-center'>
+													<Link
+														to={'fastfood'}
+														className='Item-link text-decoration-none text-dark'
+													>
+														{item.category}
+													</Link>
+												</th>
+												<td className='jg text-center'>{item.markets}</td>
+												<td className='jg text-center'>
+													{' '}
+													<button
+														className='btn'
+														onClick={() => editSetModal(true)}
+													>
+														<GrEdit color='green' size={20} />
+													</button>
+												</td>
+												<td className='jg text-center'>
+													{' '}
+													<BtnSlider isComplated={item.isComplated} />
+												</td>
+											</tr>
+										))
+									) : (
+										<tr>
+											{title.map((el, i) => (
+												// eslint-disable-next-line react/jsx-key
+												<td>
+													<React_Skeleton key={i} />
+												</td>
+											))}
 										</tr>
-									))}
+									)}
 								</tbody>
 							</table>
 							<CategoryModal
