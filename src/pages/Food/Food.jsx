@@ -5,21 +5,12 @@ import './Food.css';
 import { GrEdit } from 'react-icons/gr';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-import RModal from 'react-modal';
 import { useState } from 'react';
-import MOCKIMAGE from '../../assets/images/300.png';
+import { FoodModal } from '../../components/Modal/foodModal';
 
 export const Food = () => {
-	RModal.setAppElement('#root');
-	const [rmodal, rsetModal] = useState(false);
-	const [edModal, edSetModal] = useState(false);
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
+	const [addModal, addSetModal] = useState(false);
+	const [editModal, editSetModal] = useState(false);
 
 	const obj = [
 		{
@@ -61,248 +52,95 @@ export const Food = () => {
 					<div className='container px-4'>
 						<button
 							className='btn btn-success categoryBtn'
-							onClick={() => rsetModal(true)}
+							onClick={() => addSetModal(true)}
 						>
 							Qo’shish +
 						</button>
 						<div className='category mt-3'>
-							<ul className='category-list'>
-								<li className='category-item'>
-									<h3>ID</h3>
-									<h3>TOVAR</h3>
-									<h3>MA'LUMOT</h3>
-									<h3>NARXI</h3>
-									<h3>HOLAT</h3>
-									<h3>TAHRIRLASH</h3>
-								</li>
-								{obj.map((item) => (
-									<li key={item.id} className='Item'>
-										<p>{item.id}</p>
-										<Link to={''} className='Item-link'>
-											<p className='Item-text'>{item.name}</p>
-										</Link>
-										<p className='Item-text'>{item.desc}</p>
-										<p className='Item-text'>{item.price}</p>
-										<p className='Item-text'>{item.isActive}</p>
-										<p className='Item-text'>
-											<button className='btn' onClick={() => edSetModal(true)}>
-												<GrEdit color='green' size={20} />
-											</button>
-										</p>
-									</li>
-								))}
-							</ul>
-							<RModal
-								isOpen={edModal}
-								onRequestClose={() => edSetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '800px',
-										height: '350px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<div className='d-flex align-items-start gap-5'>
-									<div className=''>
-										<img
-											src={MOCKIMAGE}
-											alt='MOCK IMAGE'
-											width={300}
-											height={300}
-										/>
-									</div>
-
-									<form className='d-flex align-items-center p-3 gap-3'>
-										<div className='d-flex flex-column'>
-											{' '}
-											<span>
+							<table className='table table-hover table-borderless'>
+								<thead className='thread'>
+									<tr className='table-dark'>
+										<th scope='col' className='jg text-center'>
+											ID
+										</th>
+										<th scope='col' className='jg text-center'>
+											TOVAR
+										</th>
+										<th scope='col' className='jg text-center'>
+											MA'LUMOT
+										</th>
+										<th scope='col' className='jg text-center'>
+											NARXI
+										</th>
+										<th scope='col' className='jg text-center'>
+											HOLAT
+										</th>
+										<th scope='col' className='jg text-center'>
+											TAHRIRLASH
+										</th>
+									</tr>
+								</thead>
+								<tbody className=''>
+									{obj.map((item) => (
+										<tr key={item.id} className='table-borderless'>
+											<th scope='row' className='jg text-center'>
+												{item.id}
+											</th>
+											<td scope='row' className='jg text-center'>
+												<Link
+													to={'#'}
+													className='Item-link text-decoration-none text-dark'
+												>
+													{item.name}
+												</Link>
+											</td>
+											<td className='jg text-center'>{item.desc}</td>
+											<td className='jg text-center'>{item.price}</td>
+											<td
+												className='jg text-center'
+												style={
+													item.isActive === 'enabled'
+														? {
+																backgroundColor: '#D9FFDA',
+																color: '#008C06',
+																border: 'transparent',
+														  }
+														: {
+																backgroundColor: '#FFD9D9',
+																color: '#BE0707',
+																border: 'transparent',
+														  }
+												}
+											>
+												{item.isActive}
+											</td>
+											<td className='jg text-center'>
 												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<span>
-												<p className='mt-4'>Holat</p>
-												<span className='me-4 fs-5'>
-													<input type='radio' name='status' id='' />
-													on
-												</span>
-												<span className='fs-5'>
-													<input type='radio' name='status' id='' />
-													off
-												</span>
-											</span>
-										</div>
-										<div className='d-flex flex-column gap-5'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<button className='btn btn-dark'>Saqlash</button>
-										</div>
-									</form>
-
-									<button style={styledBtn} onClick={() => edSetModal(false)}>
-										X
-									</button>
+												<button
+													className='btn'
+													onClick={() => editSetModal(true)}
+												>
+													<GrEdit color='green' size={20} />
+												</button>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+							<FoodModal
+								addModal={addModal}
+								addSetModal={addSetModal}
+								editModal={editModal}
+								editSetModal={editSetModal}
+							/>
+							<div className='d-flex next border-top'>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-left'></i>
 								</div>
-							</RModal>
-							<RModal
-								isOpen={rmodal}
-								onRequestClose={() => rsetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '800px',
-										height: '350px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<div className='d-flex align-items-center gap-5'>
-									<div>
-										<img
-											src={MOCKIMAGE}
-											alt='MOCK IMAGE'
-											width={300}
-											height={300}
-										/>
-									</div>
-									<form className='d-flex align-items-center p-3 gap-3'>
-										<div className='d-flex flex-column'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<span>
-												<p className='mt-4'>Holat</p>
-												<span className='me-4 fs-5'>
-													<input
-														type='radio'
-														className='form-check-input'
-														name='status'
-														id=''
-													/>
-													on
-												</span>
-												<span className='fs-5'>
-													<input
-														type='radio'
-														className='form-check-input'
-														name='status'
-														id=''
-													/>
-													off
-												</span>
-											</span>
-										</div>
-										<div className='d-flex flex-column gap-5'>
-											{' '}
-											<span>
-												{' '}
-												<span className='d-flex flex-column mt-4'>
-													<label for='product'>Tovar nomi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='product'
-														id='product'
-														placeholder='masalan: Lavash Big'
-													/>
-												</span>
-												<span className='d-flex flex-column mt-4'>
-													<label for='price'>Narxi</label>
-													<input
-														type='text'
-														className='rounded form-control'
-														name='price'
-														id='price'
-														placeholder='masalan: 20 000'
-													/>
-												</span>
-											</span>
-											<button className='btn btn-dark'>Saqlash</button>
-										</div>
-									</form>
-
-									<button style={styledBtn} onClick={() => rsetModal(false)}>
-										X
-									</button>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-right '></i>
 								</div>
-							</RModal>
+							</div>
 						</div>
 					</div>
 				</section>

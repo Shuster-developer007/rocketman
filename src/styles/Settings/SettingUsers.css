@@ -9,6 +9,31 @@
 }
 
 
+.added_border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;  
+    border: white 1px solid ;
+    border-radius: 50%;
+}
+
+.plus_icon {
+    font-size: 12px;
+}
+
+
+.btn-add {
+    width: 130px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #3EB597;
+    border: none;
+    color: white;
+}
+
+
 .user_setting {
     height: 50px;
     width: 100%;
@@ -18,7 +43,7 @@
 
 
 .btn_modal {
-    width:100%;
+    width: 100%;
     height: 45px;
     border-radius: 10px;
     background-color: #2E3444;

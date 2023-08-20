@@ -2,21 +2,14 @@ import { Link } from 'react-router-dom';
 import './SinglePage.css';
 import { GrEdit } from 'react-icons/gr';
 import { useState } from 'react';
-import RModal from 'react-modal';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-RModal.setAppElement('#root');
+import { SModal } from '../../components/Modal/smodal';
 
 export const SinglePage = () => {
-	const [rmodal, rsetModal] = useState(false);
-	const [edModal, edSetModal] = useState(false);
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
+	const [addModal, addSetModal] = useState(false);
+	const [editModal, editSetModal] = useState(false);
+
 	const obj = [
 		{
 			id: 1,
@@ -53,128 +46,101 @@ export const SinglePage = () => {
 	return (
 		<>
 			<Sidebar />
-			<div className="ummumiy">
+			<div className='ummumiy'>
 				<Header />
-				<section className="py-4">
-					<div className="container px-4">
+				<section className='py-4'>
+					<div className='container px-4'>
 						<button
 							className='btn btn-success categoryBtn'
-							onClick={() => rsetModal(true)}
+							onClick={() => addSetModal(true)}
 						>
 							Qo’shish +
 						</button>
 						<div className='category mt-3'>
-							<ul className='category-list'>
-								<li className='category-item'>
-									<h3>ID</h3>
-									<h3>TOVAR</h3>
-									<h3>TOVAR SONI</h3>
-									<h3>TAHRIRLASH</h3>
-									<h3>STATUS</h3>
-								</li>
-								{obj.map((item) => (
-									<li key={item.id} className='Item'>
-										<p>{item.id}</p>
-										<Link to={'' + item.name} className='Item-link'>
-											<p className='Item-text'>{item.name}</p>
-										</Link>
-										<p className='Item-text'>{item.count}</p>
-										<p className='Item-text'>{item.isActive}</p>
-										<p className='Item-text'>
-											<button className='btn' onClick={() => edSetModal(true)}>
-												<GrEdit color='green' size={20} />
-											</button>
-										</p>
-									</li>
-								))}
-							</ul>
-							<RModal
-								isOpen={edModal}
-								onRequestClose={() => edSetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '300px',
-										height: '300px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<h1>Tahrirlash</h1>
-								<p>Kategoriya nomi</p>
-								<input
-									className='rounded'
-									type='text'
-									name=''
-									id=''
-									placeholder='masalan: texnika'
-								/>
-								<p className='mt-4'>Holat</p>
-								<span className='me-4 fs-5'>
-									<input type='radio' name='status' id='' />
-									on
-								</span>
-								<span className='fs-5'>
-									<input type='radio' name='status' id='' />
-									off
-								</span>
-								<button style={styledBtn} onClick={() => edSetModal(false)}>
-									X
-								</button>
-							</RModal>
-							<RModal
-								isOpen={rmodal}
-								onRequestClose={() => rsetModal(false)}
-								style={{
-									overlay: {
-										backgroundColor: 'rgba(0,0,0,0.4)',
-									},
-									content: {
-										width: '300px',
-										height: '300px',
-										top: 0,
-										right: 0,
-										left: 0,
-										bottom: 0,
-										margin: 'auto',
-										color: 'black',
-									},
-								}}
-							>
-								<h1>Qo’shish</h1>
-								<p>Kategoriya nomi</p>
-								<input
-									className='rounded'
-									type='text'
-									name=''
-									id=''
-									placeholder='masalan: texnika'
-								/>
-								<p className='mt-4'>Holat</p>
-								<span className='me-4 fs-5'>
-									<input type='radio' name='status' id='' />
-									on
-								</span>
-								<span className='fs-5'>
-									<input type='radio' name='status' id='' />
-									off
-								</span>
-								<button style={styledBtn} onClick={() => rsetModal(false)}>
-									X
-								</button>
-							</RModal>
+							<table className='table table-hover table-borderless'>
+								<thead className='thread'>
+									<tr className='table-dark'>
+										<th scope='col' className='jg text-center'>
+											ID
+										</th>
+										<th scope='col' className='jg text-center'>
+											TOVAR
+										</th>
+										<th scope='col' className='jg text-center'>
+											TOVAR SONI
+										</th>
+										<th scope='col' className='jg text-center'>
+											TAHRIRLASH
+										</th>
+										<th scope='col' className='jg text-center'>
+											STATUS
+										</th>
+									</tr>
+								</thead>
+								<tbody className=''>
+									{obj.map((item) => (
+										<tr key={item.id} className='table-borderless'>
+											<th scope='row' className='jg text-center'>
+												{item.id}
+											</th>
+											<td scope='row' className='jg text-center'>
+												<Link
+													to={'food'}
+													className='Item-link text-decoration-none text-dark'
+												>
+													{item.name}
+												</Link>
+											</td>
+											<td className='jg text-center'>{item.count}</td>
+											<td
+												className='jg text-center'
+												style={
+													item.isActive === 'enabled'
+														? {
+																backgroundColor: '#D9FFDA',
+																color: '#008C06',
+																border: 'transparent',
+														  }
+														: {
+																backgroundColor: '#FFD9D9',
+																color: '#BE0707',
+																border: 'transparent',
+														  }
+												}
+											>
+												{item.isActive}
+											</td>
+											<td className='jg text-center'>
+												{' '}
+												<button
+													className='btn'
+													onClick={() => editSetModal(true)}
+												>
+													<GrEdit color='green' size={20} />
+												</button>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+							<SModal
+								addModal={addModal}
+								addSetModal={addSetModal}
+								editModal={editModal}
+								editSetModal={editSetModal}
+							/>
+							<div className='d-flex next border-top'>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-left'></i>
+								</div>
+								<div className='bor'>
+									<i className='fa-solid fa-angle-right '></i>
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>
 			</div>
-
 		</>
 	);
 };

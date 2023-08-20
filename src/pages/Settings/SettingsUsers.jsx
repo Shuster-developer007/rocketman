@@ -15,7 +15,28 @@ const SettingsUsers = () => {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Qo'shish</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <form action="">
+                                    <label htmlFor="admin_name" className='my-3'>Login</label>
+                                    <input type="text" className='form-control' placeholder='admin_name' id='admin_name' name='admin_name'/>
+                                    <label htmlFor="password" className=' my-3'>Password</label>
+                                    <input type="password" className='form-control' placeholder='password' />
+                                </form>
+                            </div>
+                            <div className="modal-footer d-flex justify-content-center align-items-center">
+                                <button className="btn_modal">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="editUserModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Tahrirlash</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
@@ -43,7 +64,7 @@ const SettingsUsers = () => {
                                 <div className='user_setting d-flex justify-content-between'>
                                     <div><h6>1. John Doe</h6></div>
                                     <div className='d-flex gap-3'>
-                                        <div className='setting_icon_edit'>
+                                        <div className='setting_icon_edit' data-bs-toggle="modal" data-bs-target="#editUserModal">
                                             <i className="fa-solid fa-marker text-white"></i>
                                         </div>
                                         <div className='setting_icon_delete'>
@@ -54,7 +75,7 @@ const SettingsUsers = () => {
                                 <div className='user_setting d-flex justify-content-between'>
                                     <div><h6>1. Shuhrat</h6></div>
                                     <div className='d-flex gap-3'>
-                                        <div className=" setting_icon_edit" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <div className=" setting_icon_edit" data-bs-toggle="modal" data-bs-target="#editUserModal">
                                             <i className="fa-solid fa-marker text-white"></i>
                                         </div>
                                         <div className='setting_icon_delete'>
@@ -64,8 +85,9 @@ const SettingsUsers = () => {
                                 </div>
                             </div>
                             <div className='d-flex justify-content-end'>
-                                <button type="button" className="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Qo'shish
+                                <button type="button" className="btn-add mt-3 d-flex gap-2 justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Qo'shish 
+                                    <div className='added_border'><i className="fa-solid fa-plus plus_icon"></i></div>
                                 </button>
                             </div>
 
