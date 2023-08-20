@@ -13,7 +13,7 @@ export const Category = () => {
 	const obj = [
 		{
 			id: 1,
-			category: 'Git hub uchun uzgarish',
+			category: 'Git hub ozgartirish',
 			markets: 2,
 			isComplated: false,
 		},
@@ -62,9 +62,9 @@ export const Category = () => {
 						>
 							Qo’shish +
 						</button>
-						<div className='category mt-4'>
-							<table className='table table-hover table-borderless'>
-								<thead className='thread'>
+						<div className='category mt-4 '>
+							<table className='table table-hover table-borderless '>
+								<thead className='thread '>
 									<tr className='table-dark'>
 										<th scope='col' className='jg text-center'>
 											KATEGORIYA
