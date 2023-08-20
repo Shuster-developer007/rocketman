@@ -4,12 +4,12 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 21px;
-  margin-bottom: 20px;
 }
 
 .table {
   font-family: 'Montserrat', sans-serif;
 }
+
 
 .table__header {
   display: grid;
