@@ -21,7 +21,7 @@ export const Category = () => {
 	const obj = [
 		{
 			id: 1,
-			category: 'Fast food',
+			category: 'Git hub uchun uzgarish',
 			markets: 2,
 			isComplated: false,
 		},
