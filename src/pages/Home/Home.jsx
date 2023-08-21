@@ -69,6 +69,28 @@ const Home = () => {
       <Sidebar />
       <div className='ummumiy'>
         <Header />
+        <div className="offcanvas offcanvas-end bg-dark" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title text-white" id="offcanvasRightLabel">All Drivers</h5>
+            <button type="button" className="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div className="offcanvas-body">
+            <div className="card_driver px-3 py-2 justify-content-between d-flex">
+              <div className="tod_card_driver">
+                <h5 className='driver_name'>Raxmatov Timur</h5>
+                <p>holat: <span className='text-success'>enabled</span></p>
+                <p>turi: <span className='text-secondary turi_driver'>Damas</span></p>
+
+              </div>
+
+              <div className="bottom_car_driver">
+                <div className='auto_number'>01 | S 777 AA</div>
+                <p className='mt-3'><a href="" >+998901342387</a></p>
+                <button className='btn btn-success'>Add driver in order</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <section className='py-5'>
           <div className="container px-4">
             <select className="form-select w-50" aria-label="Default select example">
@@ -103,7 +125,7 @@ const Home = () => {
                       <td className='jg text-center'>{item.soni}</td>
                       <td className='jg text-center'>{item.narxi}</td>
                       <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                      <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
+                      <td className='jg'>{item.holat == "buyurtma" ? (<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div  className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item.driver}</div></div>)}</td>
                       <td className={`jg text-center ${item.holat}`}>{item.holat}</td>
                       <td className='jg m-auto text-center fs-2'>...</td>
                     </tr>

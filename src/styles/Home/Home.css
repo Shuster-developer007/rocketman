@@ -17,8 +17,33 @@
 }
 
 
+
 .buyurtma {
     color: rgb(231, 192, 102);
+}
+
+
+.card_driver {
+    border-radius: 5px;
+    background-color: white;
+    min-height: 150px;
+}
+
+.turi_driver {
+    font-weight: 700;
+}
+
+
+.driver_name {
+    color: #1d2a52;
+}
+
+.tod_card_driver {
+    width: 150px;
+}
+
+.auto_num {
+    margin-top: -1rem;
 }
 
 .bekor {
