@@ -44,6 +44,8 @@ export const Food = () => {
 		},
 	];
 
+	const title = ['ID', 'TOVAR', "MA'LUMOT", 'NARXI', 'HOLAT', 'TAHRIRLASH'];
+
 	return (
 		<>
 			<Sidebar />
@@ -61,24 +63,12 @@ export const Food = () => {
 							<table className='table table-hover table-borderless'>
 								<thead className='thread'>
 									<tr className='table-dark'>
-										<th scope='col' className='jg text-center'>
-											ID
-										</th>
-										<th scope='col' className='jg text-center'>
-											TOVAR
-										</th>
-										<th scope='col' className='jg text-center'>
-											MA'LUMOT
-										</th>
-										<th scope='col' className='jg text-center'>
-											NARXI
-										</th>
-										<th scope='col' className='jg text-center'>
-											HOLAT
-										</th>
-										<th scope='col' className='jg text-center'>
-											TAHRIRLASH
-										</th>
+										{title.map((el, i) => (
+											// eslint-disable-next-line react/jsx-key
+											<th key={i} scope='col' className='jg text-center'>
+												{el}
+											</th>
+										))}
 									</tr>
 								</thead>
 								<tbody className=''>
@@ -130,24 +120,12 @@ export const Food = () => {
 										))
 									) : (
 										<tr>
-											<td>
-												<React_Skeleton />
-											</td>
-											<td>
-												<React_Skeleton />
-											</td>
-											<td>
-												<React_Skeleton />
-											</td>
-											<td>
-												<React_Skeleton />
-											</td>
-											<td>
-												<React_Skeleton />
-											</td>
-											<td>
-												<React_Skeleton />
-											</td>
+											{title.map((el, i) => (
+												// eslint-disable-next-line react/jsx-key
+												<td>
+													<React_Skeleton key={i} />
+												</td>
+											))}
 										</tr>
 									)}
 								</tbody>
