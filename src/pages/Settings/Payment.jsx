@@ -1,25 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../../styles/Settings/Payment.css"
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import SettingsLinks from '../../components/SettingsLinks'
+import { api } from '../../API/api'
 
 const Payment = () => {
+    const [data, setData] = useState([])
+    localStorage.setItem("token" , "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
+    const getPayments = async () => {
+        try {
+            const data = await api.getSettingsPayment();
+            console.log(data);
+            // if (data.status === 200) {
+            // 	dispatch(setCategory(data.data.data));
+            // }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
-    const data = [
-        {
-            payment_type: "Click",
-            link: "https://click.uz/ru",
-            telegram_payment: "bilmadim",
-            status: true
-        },
-        {
-            payment_type: "Payme",
-            link: "nimadir link",
-            telegram_payment: "bilmadim",
-            status: false
-        },
-    ]
+    useEffect(() => {
+        getPayments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // const data = [
+    //     {
+    //         payment_type: "Click",
+    //         link: "https://click.uz/ru",
+    //         telegram_payment: "bilmadim",
+    //         status: true
+    //     },
+    //     {
+    //         payment_type: "Payme",
+    //         link: "nimadir link",
+    //         telegram_payment: "bilmadim",
+    //         status: false
+    //     },
+    // ]
 
     return (
         <div>
@@ -94,7 +113,7 @@ const Payment = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((item) => (
+                                    {/* {data.map((item) => (
                                         <tr className='tr'>
                                             <th className='jg text-center' cope="row">{item.payment_type}</th>
                                             <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>{item.payment_type}</td>
@@ -116,7 +135,7 @@ const Payment = () => {
                                             </td>
 
                                         </tr>
-                                    ))}
+                                    ))} */}
                                 </tbody>
                             </table>
                         </div>
