@@ -20,8 +20,6 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<>
 			<Routes>
@@ -36,9 +34,9 @@ function App() {
 				<Route path='/settings/drivers' element={<SettingsDriver />} />
 				<Route path='/category' element={<Category />} />
 				<Route path='/login' element={<Login />} />
-				<Route path='/category/fastfood' element={<FastFood />} />
-				<Route path='/category/fastfood/name' element={<SinglePage />} />
-				<Route path='/category/fastfood/name/:food' element={<Food />} />
+				<Route path='/category/:id' element={<FastFood />} />
+				<Route path='/category/:id/:id' element={<SinglePage />} />
+				<Route path='/category/:id/:id/:id' element={<Food />} />
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</>
