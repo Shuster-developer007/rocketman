@@ -7,10 +7,11 @@ import Sidebar from './../../components/Sidebar';
 import Header from '../../components/Header';
 import { FastfoodModal } from '../../components/Modal/fastfoodModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
-import { api } from '../../API/api';
+// import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSubCategory } from '../../redux/subCategory/subCategoryAction';
+import axios from 'axios';
 
 export const FastFood = () => {
 	const [addModal, addSetModal] = useState(false);
@@ -66,14 +67,13 @@ export const FastFood = () => {
 	// 		isActive: 'disabled',
 	// 	},
 	// ];
-	const params = useParams();
-	console.log(params);
+	const { id } = useParams();
 	const dispatch = useDispatch();
 	const subCategories = useSelector((state) => state.subCategory.subCategory);
 	console.log(subCategories);
 
 	const getSubCategories = async () => {
-		const data = await api.getSubCategories(params.id);
+		const data = await axios(`/subcategories/${id}`);
 		if (data.status === 200) {
 			dispatch(setSubCategory(data.data.data));
 		}
@@ -144,15 +144,15 @@ export const FastFood = () => {
 													style={
 														item.status === true
 															? {
-																	backgroundColor: '#D9FFDA',
-																	color: '#008C06',
-																	border: 'transparent',
-															  }
+																backgroundColor: '#D9FFDA',
+																color: '#008C06',
+																border: 'transparent',
+															}
 															: {
-																	backgroundColor: '#FFD9D9',
-																	color: '#BE0707',
-																	border: 'transparent',
-															  }
+																backgroundColor: '#FFD9D9',
+																color: '#BE0707',
+																border: 'transparent',
+															}
 													}
 												>
 													{item.status === true ? 'enabled' : 'disabled'}
