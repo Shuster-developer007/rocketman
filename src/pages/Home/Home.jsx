@@ -64,6 +64,18 @@ const Home = () => {
     },
   ]
 
+
+  const data_driver = [
+    {
+      driver_full_name: 'Ali Valiey',
+      driver_birthday: "12.12.1212",
+      driver_phone: "+998901342386",
+      car_number: "10 A 453 SS",
+      type: "Captiva",
+      status: true
+    }
+  ]
+
   return (
     <div>
       <Sidebar />
@@ -75,20 +87,22 @@ const Home = () => {
             <button type="button" className="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div className="offcanvas-body">
-            <div className="card_driver px-3 py-2 justify-content-between d-flex">
-              <div className="tod_card_driver">
-                <h5 className='driver_name'>Raxmatov Timur</h5>
-                <p>holat: <span className='text-success'>enabled</span></p>
-                <p>turi: <span className='text-secondary turi_driver'>Damas</span></p>
+            {data_driver?.map((item) => (
+              <div className="card_driver px-3 py-2 justify-content-between d-flex">
+                <div className="tod_card_driver">
+                  <h5 className='driver_name'>{item.driver_full_name}</h5>
+                  <p>holat: {item.status == true ? (<span className='text-success'>enabled</span>) : <span className='text-danger'>disabled</span>}</p>
+                  <p>turi: <span className='text-secondary turi_driver'>{item.type}</span></p>
 
-              </div>
+                </div>
 
-              <div className="bottom_car_driver">
-                <div className='auto_number'>01 | S 777 AA</div>
-                <p className='mt-3'><a href="" >+998901342387</a></p>
-                <button className='btn btn-success'>Add driver in order</button>
+                <div className="bottom_car_driver">
+                  <div className='auto_number'>{item.car_number}</div>
+                  <p className='mt-3'><a href="" >{item.driver_phone}</a></p>
+                  <button className='btn btn-success'>Add driver in order</button>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
         <section className='py-5'>
@@ -125,7 +139,7 @@ const Home = () => {
                       <td className='jg text-center'>{item.soni}</td>
                       <td className='jg text-center'>{item.narxi}</td>
                       <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                      <td className='jg'>{item.holat == "buyurtma" ? (<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div  className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item.driver}</div></div>)}</td>
+                      <td className='jg'>{item.holat == "buyurtma" ? (<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item.driver}</div></div>)}</td>
                       <td className={`jg text-center ${item.holat}`}>{item.holat}</td>
                       <td className='jg m-auto text-center fs-2'>...</td>
                     </tr>
