@@ -10,8 +10,8 @@ const Payment = () => {
     localStorage.setItem("token" , "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getPayments = async () => {
         try {
-            const data = await api.getSettingsPayment();
-            console.log(data);
+            const {data} = await api.getSettingsPayment();
+            setData(data)
             // if (data.status === 200) {
             // 	dispatch(setCategory(data.data.data));
             // }
@@ -113,8 +113,8 @@ const Payment = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {data.map((item) => (
-                                        <tr className='tr'>
+                                    {data?.data?.map((item) => (
+                                        <tr className='tr' key={item._id}>
                                             <th className='jg text-center' cope="row">{item.payment_type}</th>
                                             <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>{item.payment_type}</td>
                                             <td className='jg text-center'><a href={item.link}><i className="fa-solid fa-link"></i></a></td>
@@ -135,7 +135,7 @@ const Payment = () => {
                                             </td>
 
                                         </tr>
-                                    ))} */}
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
