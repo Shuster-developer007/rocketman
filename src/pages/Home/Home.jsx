@@ -9,58 +9,58 @@ const Home = () => {
   const data = [
     {
       id: "1",
-      sana: "12.23.1234",
-      ism: "Timur",
+      created_at: "12.23.1234",
+      username: "Timur",
       phone: "998901342386",
-      soni: 2,
-      narxi: 14000,
+      count: 2,
+      total_price: 14000,
       location: "Toshkent",
       driver: "01 S 777 AA",
-      holat: "qabul"
+      status: "qabul"
     },
     {
       id: "2",
-      sana: "04.21.2000",
-      ism: "Ali",
+      created_at: "04.21.2000",
+      username: "Ali",
       phone: "998901342673",
-      soni: 1,
-      narxi: 11000,
+      count: 1,
+      total_price: 11000,
       location: "Toshkent",
       driver: "01 S 134 SA",
-      holat: "yetkazish"
+      status: "yetkazish"
     },
     {
       id: "3",
-      sana: "2.31.2008",
-      ism: "Vali",
+      created_at: "2.31.2008",
+      username: "Vali",
       phone: "998901342386",
-      soni: 5,
-      narxi: 34000,
+      count: 5,
+      total_price: 34000,
       location: "Toshkent",
       driver: "01 S 214 JJ",
-      holat: "buyurtma"
+      status: "buyurtma"
     },
     {
       id: "4",
-      sana: "1.12.2023",
-      ism: "Mahmud",
+      created_at: "1.12.2023",
+      username: "Mahmud",
       phone: "998902345654",
-      soni: 3,
-      narxi: 16000,
+      count: 3,
+      total_price: 16000,
       location: "Toshkent",
       driver: "01 A 376 FR",
-      holat: "bekor"
+      status: "bekor"
     },
     {
       id: "5",
-      sana: "11.31.1954",
-      ism: "Kimdir",
+      created_at: "11.31.1954",
+      username: "Kimdir",
       phone: "998901342386",
-      soni: 5,
-      narxi: 17000,
+      count: 5,
+      total_price: 17000,
       location: "Toshkent",
       driver: "01 D 134 AE",
-      holat: "yakun"
+      status: "yakun"
     },
   ]
 
@@ -71,6 +71,20 @@ const Home = () => {
       driver_birthday: "12.12.1212",
       driver_phone: "+998901342386",
       car_number: "10 A 453 SS",
+      type: "Captiva",
+      status: true
+    }, {
+      driver_full_name: 'Salim qanqadir',
+      driver_birthday: "12.12.1212",
+      driver_phone: "+998901376766",
+      car_number: "10 A 323 SS",
+      type: "Captiva",
+      status: true
+    }, {
+      driver_full_name: 'Karim Sali',
+      driver_birthday: "12.12.1212",
+      driver_phone: "+9989679567",
+      car_number: "0 A 4ewr3 SS",
       type: "Captiva",
       status: true
     }
@@ -86,7 +100,7 @@ const Home = () => {
             <h5 className="offcanvas-title text-white" id="offcanvasRightLabel">All Drivers</h5>
             <button type="button" className="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
-          <div className="offcanvas-body">
+          <div className="offcanvas-body d-flex flex-column gap-4">
             {data_driver?.map((item) => (
               <div className="card_driver px-3 py-2 justify-content-between d-flex">
                 <div className="tod_card_driver">
@@ -133,14 +147,14 @@ const Home = () => {
                   {data.map((item) => (
                     <tr className='tr' key={item.id}>
                       <th className='jg text-center' cope="row">{item.id}</th>
-                      <td className='jg text-center'>{item.sana}</td>
-                      <td className='jg text-center'>{item.ism}</td>
+                      <td className='jg text-center'>{item.created_at}</td>
+                      <td className='jg text-center'>{item.username}</td>
                       <td className='jg text-center'>{item.phone}</td>
-                      <td className='jg text-center'>{item.soni}</td>
-                      <td className='jg text-center'>{item.narxi}</td>
+                      <td className='jg text-center'>{item.count}</td>
+                      <td className='jg text-center'>{item.total_price}</td>
                       <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                      <td className='jg'>{item.holat == "buyurtma" ? (<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item.driver}</div></div>)}</td>
-                      <td className={`jg text-center ${item.holat}`}>{item.holat}</td>
+                      <td className='jg'>{item.status == "buyurtma" ? (<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item.driver}</div></div>)}</td>
+                      <td className={`jg text-center ${item.status}`}>{item.status}</td>
                       <td className='jg m-auto text-center fs-2'>...</td>
                     </tr>
                   ))}
