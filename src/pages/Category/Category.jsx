@@ -7,48 +7,68 @@ import Header from '../../components/Header';
 import { useState } from 'react';
 import { CategoryModal } from '../../components/Modal/categoryModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
+import { api } from '../../API/api';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategory } from '../../redux/category/categoryAction';
 
 export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
-	const obj = [
-		{
-			id: 1,
-			category: 'Git hub ozgartirish',
-			markets: 2,
-			isComplated: false,
-		},
-		{
-			id: 2,
-			category: 'Texnika',
-			markets: 12,
-			isComplated: false,
-		},
-		{
-			id: 3,
-			category: 'Gullar',
-			markets: 5,
-			isComplated: false,
-		},
-		{
-			id: 4,
-			category: 'Gullar',
-			markets: 5,
-			isComplated: false,
-		},
-		{
-			id: 5,
-			category: 'Gullar',
-			markets: 5,
-			isComplated: false,
-		},
-		{
-			id: 6,
-			category: 'Gullar',
-			markets: 5,
-			isComplated: false,
-		},
-	];
+	// const obj = [
+	// 	{
+	// 		id: 1,
+	// 		category: 'Git hub ozgartirish',
+	// 		markets: 2,
+	// 		isComplated: false,
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		category: 'Texnika',
+	// 		markets: 12,
+	// 		isComplated: false,
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		category: 'Gullar',
+	// 		markets: 5,
+	// 		isComplated: false,
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		category: 'Gullar',
+	// 		markets: 5,
+	// 		isComplated: false,
+	// 	},
+	// 	{
+	// 		id: 5,
+	// 		category: 'Gullar',
+	// 		markets: 5,
+	// 		isComplated: false,
+	// 	},
+	// 	{
+	// 		id: 6,
+	// 		category: 'Gullar',
+	// 		markets: 5,
+	// 		isComplated: false,
+	// 	},
+	// ];
+
+	const dispatch = useDispatch();
+	const categories = useSelector((state) => state.category.category);
+	console.log(categories);
+
+	const getCategories = async () => {
+		const data = await api.getCategories();
+		if (data.status === 200) {
+			dispatch(setCategory(data.data.data));
+		}
+	};
+
+	useEffect(() => {
+		getCategories();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const title = ['KATEGORIYA', "DO'KONLAR", 'TAHRIRLASH', 'STATUS'];
 
@@ -78,18 +98,20 @@ export const Category = () => {
 									</tr>
 								</thead>
 								<tbody className=''>
-									{obj.length ? (
-										obj.map((item) => (
-											<tr key={item.id} className='table-borderless'>
+									{categories.length ? (
+										categories.map((item) => (
+											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
 													<Link
-														to={'fastfood'}
+														to={`${item._id}`}
 														className='Item-link text-decoration-none text-dark'
 													>
-														{item.category}
+														{item.category_name}
 													</Link>
 												</th>
-												<td className='jg text-center'>{item.markets}</td>
+												<td className='jg text-center'>
+													{item.subCategories.length}
+												</td>
 												<td className='jg text-center'>
 													{' '}
 													<button
@@ -101,7 +123,7 @@ export const Category = () => {
 												</td>
 												<td className='jg text-center'>
 													{' '}
-													<BtnSlider isComplated={item.isComplated} />
+													<BtnSlider status={item.status} />
 												</td>
 											</tr>
 										))
@@ -109,8 +131,8 @@ export const Category = () => {
 										<tr>
 											{title.map((el, i) => (
 												// eslint-disable-next-line react/jsx-key
-												<td>
-													<React_Skeleton key={i} />
+												<td key={i}>
+													<React_Skeleton />
 												</td>
 											))}
 										</tr>

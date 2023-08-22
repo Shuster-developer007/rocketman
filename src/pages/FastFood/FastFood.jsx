@@ -1,5 +1,5 @@
 // import { Item } from '../../components/Item';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './FastFood.css';
 import { GrEdit } from 'react-icons/gr';
 import { useState } from 'react';
@@ -7,61 +7,82 @@ import Sidebar from './../../components/Sidebar';
 import Header from '../../components/Header';
 import { FastfoodModal } from '../../components/Modal/fastfoodModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
+import { api } from '../../API/api';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSubCategory } from '../../redux/subCategory/subCategoryAction';
 
 export const FastFood = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 
-	const obj = [
-		{
-			id: 1,
-			markets: 'Fast food',
-			count: 2,
-			phoneNumber: +998937298025,
-			address: 'Baliqchi',
-			isActive: 'enabled',
-		},
-		{
-			id: 2,
-			markets: 'Texnika',
-			count: 12,
-			phoneNumber: +998937298025,
-			address: 'Baliqchi',
-			isActive: 'enabled',
-		},
-		{
-			id: 3,
-			markets: 'Gullar',
-			count: 5,
-			phoneNumber: +998937298025,
-			address: 'Baliqchi',
-			isActive: 'enabled',
-		},
-		{
-			id: 4,
-			markets: 'Gullar',
-			count: 5,
-			phoneNumber: +998937298025,
-			address: 'Baliqchi',
-			isActive: 'disabled',
-		},
-		{
-			id: 5,
-			markets: 'Gullar',
-			count: 5,
-			phoneNumber: +998937298025,
-			address: 'Baliqchi',
-			isActive: 'enabled',
-		},
-		{
-			id: 6,
-			markets: 'Gullar',
-			count: 5,
-			phoneNumber: +998937298025,
-			address: 'Baliqchi',
-			isActive: 'disabled',
-		},
-	];
+	// const obj = [
+	// 	{
+	// 		id: 1,
+	// 		markets: 'Fast food',
+	// 		count: 2,
+	// 		phoneNumber: +998937298025,
+	// 		address: 'Baliqchi',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		markets: 'Texnika',
+	// 		count: 12,
+	// 		phoneNumber: +998937298025,
+	// 		address: 'Baliqchi',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		markets: 'Gullar',
+	// 		count: 5,
+	// 		phoneNumber: +998937298025,
+	// 		address: 'Baliqchi',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		markets: 'Gullar',
+	// 		count: 5,
+	// 		phoneNumber: +998937298025,
+	// 		address: 'Baliqchi',
+	// 		isActive: 'disabled',
+	// 	},
+	// 	{
+	// 		id: 5,
+	// 		markets: 'Gullar',
+	// 		count: 5,
+	// 		phoneNumber: +998937298025,
+	// 		address: 'Baliqchi',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 6,
+	// 		markets: 'Gullar',
+	// 		count: 5,
+	// 		phoneNumber: +998937298025,
+	// 		address: 'Baliqchi',
+	// 		isActive: 'disabled',
+	// 	},
+	// ];
+	const params = useParams();
+	console.log(params);
+	const dispatch = useDispatch();
+	const subCategories = useSelector((state) => state.subCategory.subCategory);
+	console.log(subCategories);
+
+	const getSubCategories = async () => {
+		const data = await api.getSubCategories(params.id);
+		if (data.status === 200) {
+			dispatch(setSubCategory(data.data.data));
+		}
+	};
+
+	useEffect(() => {
+		getSubCategories();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const title = [
 		'ID',
@@ -99,9 +120,9 @@ export const FastFood = () => {
 									</tr>
 								</thead>
 								<tbody className=''>
-									{obj.length ? (
-										obj.map((item) => (
-											<tr key={item.id} className='table-borderless'>
+									{subCategories.length ? (
+										subCategories.map((item) => (
+											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
 													{item.id}
 												</th>
@@ -110,16 +131,18 @@ export const FastFood = () => {
 														to={'name'}
 														className='Item-link text-decoration-none text-dark'
 													>
-														{item.markets}
+														{item.sub_category_name}
 													</Link>
 												</td>
-												<td className='jg text-center'>{item.count}</td>
-												<td className='jg text-center'>{item.phoneNumber}</td>
-												<td className='jg text-center'>{item.address}</td>
+												<td className='jg text-center'>
+													{item.products.length}
+												</td>
+												<td className='jg text-center'>{item.phone}</td>
+												<td className='jg text-center'>{item.location}</td>
 												<td
 													className='jg text-center'
 													style={
-														item.isActive === 'enabled'
+														item.status === true
 															? {
 																	backgroundColor: '#D9FFDA',
 																	color: '#008C06',
@@ -132,7 +155,7 @@ export const FastFood = () => {
 															  }
 													}
 												>
-													{item.isActive}
+													{item.status === true ? 'enabled' : 'disabled'}
 												</td>
 												<td className='jg text-center'>
 													{' '}
@@ -149,8 +172,8 @@ export const FastFood = () => {
 										<tr>
 											{title.map((el, i) => (
 												// eslint-disable-next-line react/jsx-key
-												<td>
-													<React_Skeleton key={i} />
+												<td key={i}>
+													<React_Skeleton />
 												</td>
 											))}
 										</tr>

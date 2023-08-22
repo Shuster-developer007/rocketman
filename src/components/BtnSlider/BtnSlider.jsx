@@ -1,9 +1,9 @@
 import './BtnSlider.css';
 
-export const BtnSlider = () => {
+export const BtnSlider = ({ status }) => {
 	return (
 		<label className='switch'>
-			<input type='checkbox' />
+			<input type='checkbox' defaultChecked={status} />
 			<span className='slider round' />
 		</label>
 	);
