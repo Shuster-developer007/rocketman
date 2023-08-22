@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './SinglePage.css';
 import { GrEdit } from 'react-icons/gr';
 import { useState } from 'react';
@@ -6,6 +6,10 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import { SModal } from '../../components/Modal/smodal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
+import { api } from '../../API/api';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProduct } from '../../redux/product/productAction';
 
 export const SinglePage = () => {
 	const [addModal, addSetModal] = useState(false);
@@ -43,6 +47,21 @@ export const SinglePage = () => {
 			isActive: 'enabled',
 		},
 	];
+	const { id } = useParams();
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.product.product);
+	console.log(products);
+	const getProducts = async () => {
+		const data = await api.getProducts(id);
+		if (data.status === 200) {
+			dispatch(setProduct(data.data.data));
+		}
+	};
+
+	useEffect(() => {
+		getProducts();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const title = ['ID', 'TOVAR', 'TOVAR SONI', 'HOLAT', 'TAHRIRLASH'];
 
@@ -72,25 +91,27 @@ export const SinglePage = () => {
 									</tr>
 								</thead>
 								<tbody className=''>
-									{obj.length ? (
-										obj.map((item) => (
-											<tr key={item.id} className='table-borderless'>
+									{products.length ? (
+										products.map((item) => (
+											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
 													{item.id}
 												</th>
 												<td scope='row' className='jg text-center'>
 													<Link
-														to={'food'}
+														to={item._id}
 														className='Item-link text-decoration-none text-dark'
 													>
-														{item.name}
+														{item.product_name}
 													</Link>
 												</td>
-												<td className='jg text-center'>{item.count}</td>
+												<td className='jg text-center'>
+													{item.subProducts.length}
+												</td>
 												<td
 													className='jg text-center'
 													style={
-														item.isActive === 'enabled'
+														item.status
 															? {
 																	backgroundColor: '#D9FFDA',
 																	color: '#008C06',
@@ -103,7 +124,7 @@ export const SinglePage = () => {
 															  }
 													}
 												>
-													{item.isActive}
+													{item.status ? 'enabled' : 'disabled'}
 												</td>
 												<td className='jg text-center'>
 													<button
@@ -119,8 +140,8 @@ export const SinglePage = () => {
 										<tr>
 											{title.map((el, i) => (
 												// eslint-disable-next-line react/jsx-key
-												<td>
-													<React_Skeleton key={i} />
+												<td key={i}>
+													<React_Skeleton />
 												</td>
 											))}
 										</tr>

@@ -1,12 +1,13 @@
 import axios from 'axios';
 
+// const BASE_URL = 'http://139.59.64.246:5000';
 const BASE_URL = 'http://localhost:5000';
-const token = localStorage.getItem("token")
-axios.defaults.headers.common["Content-Type"] = "application/json"
-if (token) axios.defaults.headers.common['token'] = token;
+// http://localhost:5000/subcategories/64df920aa873e2082fc90c61
+
+axios.defaults;
+
 export const api = {
     getCategories: () => axios.get(BASE_URL + '/categories'),
     getSubCategories: (id) => axios.get(BASE_URL + '/subcategories/' + id),
-    getSettingPayments: () => axios.get(BASE_URL + "/payments"),
-    getSettingDrivers: () => axios.get(BASE_URL + "/drivers")
+    getSettingsPayment: () => axios.get(BASE_URL + "/payments")
 };

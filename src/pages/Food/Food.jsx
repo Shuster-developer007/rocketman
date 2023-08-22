@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 // import { Item } from '../../components/Item';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './Food.css';
 import { GrEdit } from 'react-icons/gr';
 import Sidebar from '../../components/Sidebar';
@@ -8,41 +8,63 @@ import Header from '../../components/Header';
 import { useState } from 'react';
 import { FoodModal } from '../../components/Modal/foodModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
+import { api } from '../../API/api';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProduct } from '../../redux/product/productAction';
+import { setSubProduct } from '../../redux/subProduct/subProductAction';
 
 export const Food = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 
-	const obj = [
-		{
-			id: 1,
-			name: 'LAVASH',
-			desc: 'In tellus leo eleifend ut mollis lorem...',
-			price: '20 000 so’m',
-			isActive: 'enabled',
-		},
-		{
-			id: 2,
-			name: 'LAVASH',
-			desc: 'In tellus leo eleifend ut mollis lorem...',
-			price: '20 000 so’m',
-			isActive: 'enabled',
-		},
-		{
-			id: 3,
-			name: 'LAVASH',
-			desc: 'In tellus leo eleifend ut mollis lorem...',
-			price: '20 000 so’m',
-			isActive: 'enabled',
-		},
-		{
-			id: 4,
-			name: 'LAVASH',
-			desc: 'In tellus leo eleifend ut mollis lorem...',
-			price: '20 000 so’m',
-			isActive: 'disabled',
-		},
-	];
+	// const obj = [
+	// 	{
+	// 		id: 1,
+	// 		name: 'LAVASH',
+	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
+	// 		price: '20 000 so’m',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: 'LAVASH',
+	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
+	// 		price: '20 000 so’m',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		name: 'LAVASH',
+	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
+	// 		price: '20 000 so’m',
+	// 		isActive: 'enabled',
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		name: 'LAVASH',
+	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
+	// 		price: '20 000 so’m',
+	// 		isActive: 'disabled',
+	// 	},
+	// ];
+
+	const { id } = useParams();
+	const dispatch = useDispatch();
+	const subProducts = useSelector((state) => state.product.product);
+	console.log(subProducts);
+
+	const getSubProducts = async () => {
+		const data = await api.getSubProducts(id);
+		if (data.status === 200) {
+			dispatch(setSubProduct(data.data.data));
+		}
+	};
+
+	useEffect(() => {
+		getSubProducts();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const title = ['ID', 'TOVAR', "MA'LUMOT", 'NARXI', 'HOLAT', 'TAHRIRLASH'];
 
@@ -72,9 +94,9 @@ export const Food = () => {
 									</tr>
 								</thead>
 								<tbody className=''>
-									{obj.length ? (
-										obj.map((item) => (
-											<tr key={item.id} className='table-borderless'>
+									{subProducts.length ? (
+										subProducts.map((item) => (
+											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
 													{item.id}
 												</th>
@@ -91,7 +113,7 @@ export const Food = () => {
 												<td
 													className='jg text-center'
 													style={
-														item.isActive === 'enabled'
+														item.isActive
 															? {
 																	backgroundColor: '#D9FFDA',
 																	color: '#008C06',
@@ -104,7 +126,7 @@ export const Food = () => {
 															  }
 													}
 												>
-													{item.isActive}
+													{item.status ? 'enabled' : 'disabled'}
 												</td>
 												<td className='jg text-center'>
 													{' '}
@@ -122,8 +144,8 @@ export const Food = () => {
 										<tr>
 											{title.map((el, i) => (
 												// eslint-disable-next-line react/jsx-key
-												<td>
-													<React_Skeleton key={i} />
+												<td key={i}>
+													<React_Skeleton />
 												</td>
 											))}
 										</tr>

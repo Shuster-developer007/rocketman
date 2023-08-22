@@ -13,8 +13,8 @@ export const categoryReducer = (state = initialState, action) => {
 				category: action.payload,
 			};
 		case EDIT_CATEGORY:
-			const updatedCategory = state.todo.map((el) =>
-				el.id === action.payload.id ? action.payload.updatedTodo : el,
+			const updatedCategory = state.category.map((el) =>
+				el.id === action.payload.id ? action.payload.updatedCategory : el,
 			);
 			return {
 				...state,

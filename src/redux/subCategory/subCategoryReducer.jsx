@@ -13,8 +13,8 @@ export const subCategoryReducer = (state = initialState, action) => {
 				subCategory: action.payload,
 			};
 		case EDIT_SUBCATEGORY:
-			const updatedSubCategory = state.todo.map((el) =>
-				el.id === action.payload.id ? action.payload.updatedTodo : el,
+			const updatedSubCategory = state.subCategory.map((el) =>
+				el.id === action.payload.id ? action.payload.updatedSubCategory : el,
 			);
 			return {
 				...state,
