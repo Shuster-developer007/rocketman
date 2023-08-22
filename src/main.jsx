@@ -2,21 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 
-
-
-// axios 
-import axios from 'axios'
-import { localtoken } from './constains/index';
-axios.defaults.baseURL = "http://localhost:5000/"
-axios.defaults.headers.common["Content-Type"] = "application/json"
-
-
-
-// Token
-let token = localStorage.getItem(localtoken)
-if (token) axios.defaults.headers.common['token'] = token;
-
-
 // styles
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';

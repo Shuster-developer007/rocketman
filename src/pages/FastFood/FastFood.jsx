@@ -7,7 +7,7 @@ import Sidebar from './../../components/Sidebar';
 import Header from '../../components/Header';
 import { FastfoodModal } from '../../components/Modal/fastfoodModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
-// import { api } from '../../API/api';
+import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSubCategory } from '../../redux/subCategory/subCategoryAction';
@@ -73,7 +73,8 @@ export const FastFood = () => {
 	console.log(subCategories);
 
 	const getSubCategories = async () => {
-		const data = await axios(`/subcategories/${id}`);
+		const data = await api.getSubCategories(id);
+		console.log(data);
 		if (data.status === 200) {
 			dispatch(setSubCategory(data.data.data));
 		}

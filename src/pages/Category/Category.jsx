@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import { useState } from 'react';
 import { CategoryModal } from '../../components/Modal/categoryModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
-// import { api } from '../../API/api';
+import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from '../../redux/category/categoryAction';
@@ -60,7 +60,7 @@ export const Category = () => {
 	console.log(categories);
 
 	const getCategories = async () => {
-		const data = await axios.get("/categories");
+		const data = await api.getCategories();
 		console.log(data);
 		if (data.status === 200) {
 			dispatch(setCategory(data.data.data));
