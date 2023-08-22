@@ -7,5 +7,6 @@ if (token) axios.defaults.headers.common['token'] = token;
 export const api = {
     getCategories: () => axios.get(BASE_URL + '/categories'),
     getSubCategories: (id) => axios.get(BASE_URL + '/subcategories/' + id),
-    getSettingsPayment: () => axios.get(BASE_URL + "/payments")
+    getSettingPayments: () => axios.get(BASE_URL + "/payments"),
+    getSettingDrivers: () => axios.get(BASE_URL + "/drivers")
 };

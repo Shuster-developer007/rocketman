@@ -1,37 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
 import "../../styles/Settings/SettingsDriver.css"
 import SettingsLinks from '../../components/SettingsLinks'
+import { api } from '../../API/api'
 
 const SettingsDriver = () => {
-    const data = [
-        {
-            id: "1",
-            driver_full_name: 'Ali Valiey',
-            driver_birthday: "12.12.1212",
-            driver_phone: "+998901342386",
-            car_number: "10 A 453 SS",
-            type: "Captiva",
-            status: true
-        }, {
-            id: "2",
-            driver_full_name: 'Salim qanqadir',
-            driver_birthday: "12.12.1212",
-            driver_phone: "+998901376766",
-            car_number: "10 A 323 SS",
-            type: "Captiva",
-            status: true
-        }, {
-            id: "3",
-            driver_full_name: 'Karim Sali',
-            driver_birthday: "12.12.1212",
-            driver_phone: "+9989679567",
-            car_number: "0 A 4ewr3 SS",
-            type: "Captiva",
-            status: false
+
+
+    const [data, setData] = useState([])
+    const getDrivers = async () => {
+        try {
+            const { data } = await api.getSettingDrivers();
+            setData(data)
+            // if (data.status === 200) {
+            // 	dispatch(setCategory(data.data.data));
+            // }
+        } catch (error) {
+            console.log(error.message);
         }
-    ]
+    };
+
+    useEffect(() => {
+        getDrivers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div>
             <Sidebar />
@@ -74,15 +68,15 @@ const SettingsDriver = () => {
                                         <div className='input_cheks'>
                                             <label htmlFor="status" className='mt-4'>Holat</label>
                                             <div className='d-flex gap-4'>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                                    <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                         on
                                                     </label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
+                                                    <label className="form-check-label" htmlFor="flexRadioDefault2">
                                                         of
                                                     </label>
                                                 </div>
@@ -134,15 +128,15 @@ const SettingsDriver = () => {
                                         <div className='input_cheks'>
                                             <label htmlFor="status" className='mt-4'>Holat</label>
                                             <div className='d-flex gap-4'>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                                    <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                         on
                                                     </label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
+                                                    <label className="form-check-label" htmlFor="flexRadioDefault2">
                                                         of
                                                     </label>
                                                 </div>
@@ -183,18 +177,19 @@ const SettingsDriver = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((item) => (
-                                        <tr className='tr'>
-                                            <th className='jg text-center' cope="row">{item.id}</th>
+                                    {data?.data?.map((item) => (
+                                        <tr className='tr' key={item._id}>
+                                            <th className='jg text-center' cope="row">1</th>
                                             <td className='jg text-center'>{item.driver_full_name}</td>
                                             <td className='jg text-center'>{item.driver_birthday}</td>
                                             <td className='jg text-center'>{item.driver_phone}</td>
                                             <td className='jg text-center'>{item.car_number}</td>
                                             <td className='jg text-center'>{item.type}</td>
-                                            <td className='jg text-success'>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div>): (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
+                                            <td className='jg text-success'>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div>) : (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
                                             <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
                                                 <i className="fa-solid fa-marker text-white"></i>
-                                            </div></td>
+                                            </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
