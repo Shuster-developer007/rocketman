@@ -11,6 +11,7 @@ import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from '../../redux/category/categoryAction';
+import axios from 'axios';
 
 export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
@@ -60,6 +61,7 @@ export const Category = () => {
 
 	const getCategories = async () => {
 		const data = await api.getCategories();
+		console.log(data);
 		if (data.status === 200) {
 			dispatch(setCategory(data.data.data));
 		}

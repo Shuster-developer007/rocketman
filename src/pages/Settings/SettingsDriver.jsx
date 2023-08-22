@@ -5,6 +5,33 @@ import "../../styles/Settings/SettingsDriver.css"
 import SettingsLinks from '../../components/SettingsLinks'
 
 const SettingsDriver = () => {
+    const data = [
+        {
+            id: "1",
+            driver_full_name: 'Ali Valiey',
+            driver_birthday: "12.12.1212",
+            driver_phone: "+998901342386",
+            car_number: "10 A 453 SS",
+            type: "Captiva",
+            status: true
+        }, {
+            id: "2",
+            driver_full_name: 'Salim qanqadir',
+            driver_birthday: "12.12.1212",
+            driver_phone: "+998901376766",
+            car_number: "10 A 323 SS",
+            type: "Captiva",
+            status: true
+        }, {
+            id: "3",
+            driver_full_name: 'Karim Sali',
+            driver_birthday: "12.12.1212",
+            driver_phone: "+9989679567",
+            car_number: "0 A 4ewr3 SS",
+            type: "Captiva",
+            status: false
+        }
+    ]
     return (
         <div>
             <Sidebar />
@@ -156,66 +183,20 @@ const SettingsDriver = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>Raxmatov Timur</td>
-                                        <td className='jg text-center'>22.03.1934</td>
-                                        <td className='jg text-center'>+99890234324</td>
-                                        <td className='jg text-center'>20 A 000 CC</td>
-                                        <td className='jg text-center'>Damas</td>
-                                        <td className='jg text-success'><div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#editmodal"  className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
-                                            <i className="fa-solid fa-marker text-white"></i>
-                                        </div></td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>Raxmatov Timur</td>
-                                        <td className='jg text-center'>22.03.1934</td>
-                                        <td className='jg text-center'>+99890234324</td>
-                                        <td className='jg text-center'>20 A 000 CC</td>
-                                        <td className='jg text-center'>Damas</td>
-                                        <td className='jg text-success'><div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
-                                            <i className="fa-solid fa-marker text-white"></i>
-                                        </div></td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>Raxmatov Timur</td>
-                                        <td className='jg text-center'>22.03.1934</td>
-                                        <td className='jg text-center'>+99890234324</td>
-                                        <td className='jg text-center'>20 A 000 CC</td>
-                                        <td className='jg text-center'>Damas</td>
-                                        <td className='jg text-center text-danger'><div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
-                                            <i className="fa-solid fa-marker text-white"></i>
-                                        </div></td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>Raxmatov Timur</td>
-                                        <td className='jg text-center'>22.03.1934</td>
-                                        <td className='jg text-center'>+99890234324</td>
-                                        <td className='jg text-center'>20 A 000 CC</td>
-                                        <td className='jg text-center'>Damas</td>
-                                        <td className='jg text-success'><div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
-                                            <i className="fa-solid fa-marker text-white"></i>
-                                        </div></td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>Raxmatov Timur</td>
-                                        <td className='jg text-center'>22.03.1934</td>
-                                        <td className='jg text-center'>+99890234324</td>
-                                        <td className='jg text-center'>20 A 000 CC</td>
-                                        <td className='jg text-center'>Damas</td>
-                                        <td className='jg text-center text-danger'><div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div></td>
-                                        <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
-                                            <i className="fa-solid fa-marker text-white"></i>
-                                        </div></td>
-                                    </tr>
+                                    {data.map((item) => (
+                                        <tr className='tr'>
+                                            <th className='jg text-center' cope="row">{item.id}</th>
+                                            <td className='jg text-center'>{item.driver_full_name}</td>
+                                            <td className='jg text-center'>{item.driver_birthday}</td>
+                                            <td className='jg text-center'>{item.driver_phone}</td>
+                                            <td className='jg text-center'>{item.car_number}</td>
+                                            <td className='jg text-center'>{item.type}</td>
+                                            <td className='jg text-success'>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div>): (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
+                                            <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
+                                                <i className="fa-solid fa-marker text-white"></i>
+                                            </div></td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                             <div className='d-flex next'>

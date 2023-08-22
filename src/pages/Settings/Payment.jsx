@@ -1,10 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../../styles/Settings/Payment.css"
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import SettingsLinks from '../../components/SettingsLinks'
+import { api } from '../../API/api'
 
 const Payment = () => {
+    const [data, setData] = useState([])
+    localStorage.setItem("token" , "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
+    const getPayments = async () => {
+        try {
+            const {data} = await api.getSettingsPayment();
+            setData(data)
+            // if (data.status === 200) {
+            // 	dispatch(setCategory(data.data.data));
+            // }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    useEffect(() => {
+        getPayments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // const data = [
+    //     {
+    //         payment_type: "Click",
+    //         link: "https://click.uz/ru",
+    //         telegram_payment: "bilmadim",
+    //         status: true
+    //     },
+    //     {
+    //         payment_type: "Payme",
+    //         link: "nimadir link",
+    //         telegram_payment: "bilmadim",
+    //         status: false
+    //     },
+    // ]
+
     return (
         <div>
             <Sidebar />
@@ -78,47 +113,29 @@ const Payment = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">Click</th>
-                                        <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>Click</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-link"></i></td>
-                                        <td className='jg text-success'><div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div></td>
-                                        <td className="jg">
-                                            <div className='d-flex justify-content-center align-items-center'>
-                                                <div data-bs-toggle="modal" data-bs-target="#editmodal" className='setting_icon_edit'>
-                                                    <i className="fa-solid fa-marker text-white"></i>
+                                    {data?.data?.map((item) => (
+                                        <tr className='tr' key={item._id}>
+                                            <th className='jg text-center' cope="row">{item.payment_type}</th>
+                                            <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>{item.payment_type}</td>
+                                            <td className='jg text-center'><a href={item.link}><i className="fa-solid fa-link"></i></a></td>
+                                            <td className='jg '>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled text-success d-flex align-items-center justify-content-center'>enabled</div></div>) : (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
+                                            <td className="jg">
+                                                <div className='d-flex justify-content-center align-items-center'>
+                                                    <div data-bs-toggle="modal" data-bs-target="#editmodal" className='setting_icon_edit'>
+                                                        <i className="fa-solid fa-marker text-white"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="jg">
-                                            <div className="d-flex justify-content-center align-items-center">
-                                                <div className='setting_icon_delete my-3'>
-                                                    <i className="fa-solid fa-trash text-white"></i>
+                                            </td>
+                                            <td className="jg">
+                                                <div className="d-flex justify-content-center align-items-center">
+                                                    <div className='setting_icon_delete my-3'>
+                                                        <i className="fa-solid fa-trash text-white"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
 
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">Payme</th>
-                                        <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>Payme</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-link"></i></td>
-                                        <td className='jg text-success'><div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div></td>
-                                        <td className="jg">
-                                            <div className='d-flex justify-content-center align-items-center'>
-                                                <div className='setting_icon_edit'>
-                                                    <i className="fa-solid fa-marker text-white"></i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="jg">
-                                            <div className="d-flex justify-content-center align-items-center">
-                                                <div className='setting_icon_delete my-3'>
-                                                    <i className="fa-solid fa-trash text-white"></i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
