@@ -1,0 +1,2 @@
+export const SET_SUBPRODUCT = 'SET_SUBPRODUCT';
+export const EDIT_SUBPRODUCT = 'EDIT_SUBPRODUCT';

@@ -129,7 +129,7 @@ export const FastFood = () => {
 												</th>
 												<td scope='row' className='jg text-center'>
 													<Link
-														to={'name'}
+														to={item._id}
 														className='Item-link text-decoration-none text-dark'
 													>
 														{item.sub_category_name}
@@ -143,7 +143,7 @@ export const FastFood = () => {
 												<td
 													className='jg text-center'
 													style={
-														item.status === true
+														item.status
 															? {
 																backgroundColor: '#D9FFDA',
 																color: '#008C06',
@@ -156,7 +156,7 @@ export const FastFood = () => {
 															}
 													}
 												>
-													{item.status === true ? 'enabled' : 'disabled'}
+													{item.status ? 'enabled' : 'disabled'}
 												</td>
 												<td className='jg text-center'>
 													{' '}
