@@ -31,6 +31,20 @@ const SettingsUsers = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+    const handleDeleteAdmin = async (id) => {
+        try {
+            setLoading(true)
+            const { data } = await api.deleteAdmin(id);
+            setData(data)
+            getAdmins()
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setLoading(false)
+        }
+    };
+
     return (
         <div>
             <Sidebar />
@@ -84,17 +98,17 @@ const SettingsUsers = () => {
                             <SettingsLinks />
                         </div>
                         <div className='thor mt-5'>
-                            
+
                             {loading ? (<h2>Loading</h2>) : (<h2>Available users</h2>)}
                             <div className='setting_card_users'>
                                 {data?.data?.map((item) => (
-                                    <div className='user_setting d-flex justify-content-between'>
+                                    <div key={item._id} className='user_setting d-flex justify-content-between'>
                                         <div><h6>1.{item.username}</h6></div>
                                         <div className='d-flex gap-3'>
                                             <div className='setting_icon_edit' data-bs-toggle="modal" data-bs-target="#editUserModal">
                                                 <i className="fa-solid fa-marker text-white"></i>
                                             </div>
-                                            <div className='setting_icon_delete'>
+                                            <div onClick={() => handleDeleteAdmin(item._id)} className='setting_icon_delete'>
                                                 <i className="fa-solid fa-trash text-white"></i>
                                             </div>
                                         </div>

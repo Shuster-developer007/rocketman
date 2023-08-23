@@ -107,7 +107,7 @@ const Payment = () => {
                                         <tr className='tr' key={item._id}>
                                             <th className='jg text-center' cope="row">{item.payment_type}</th>
                                             <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>{item.payment_type}</td>
-                                            <td className='jg text-center'><a href={item.link}><i className="fa-solid fa-link"></i></a></td>
+                                            <td className='jg text-center'><a href={item.link} target='_blank'><i className="fa-solid fa-link"></i></a></td>
                                             <td className='jg '>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled text-success d-flex align-items-center justify-content-center'>enabled</div></div>) : (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
                                             <td className="jg">
                                                 <div className='d-flex justify-content-center align-items-center'>
