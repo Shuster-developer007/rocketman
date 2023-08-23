@@ -9,8 +9,11 @@ import { api } from '../../API/api'
 const SettingsUsers = () => {
 
     const [data, setData] = useState([])
+    const [loading, setLoading] = useState(false)
+
     const getAdmins = async () => {
         try {
+            setLoading(true)
             const { data } = await api.getAdmins();
             setData(data)
             // if (data.status === 200) {
@@ -18,6 +21,8 @@ const SettingsUsers = () => {
             // }
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -79,7 +84,8 @@ const SettingsUsers = () => {
                             <SettingsLinks />
                         </div>
                         <div className='thor mt-5'>
-                            <h2>Available users</h2>
+                            
+                            {loading ? (<h2>Loading</h2>) : (<h2>Available users</h2>)}
                             <div className='setting_card_users'>
                                 {data?.data?.map((item) => (
                                     <div className='user_setting d-flex justify-content-between'>
