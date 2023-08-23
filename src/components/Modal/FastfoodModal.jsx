@@ -1,10 +1,15 @@
+import { useRef, useState } from 'react';
 import Modal from 'react-modal';
+import { api } from '../../API/api';
+import { Radio } from 'antd';
 
 export const FastfoodModal = ({
 	editModal,
 	editSetModal,
 	addModal,
 	addSetModal,
+	getSubCategories,
+	id,
 }) => {
 	const styledBtn = {
 		position: 'absolute',
@@ -13,6 +18,46 @@ export const FastfoodModal = ({
 		backgroundColor: 'green',
 		color: 'white',
 	};
+
+	const inputRef = useRef();
+	const locInputRef = useRef();
+	const phoneInputRef = useRef();
+	const longInputRef = useRef();
+	const langInputRef = useRef();
+	const [value, setValue] = useState(false);
+
+	const onChange = (e) => {
+		setValue(e.target.value);
+	};
+
+	const subCategoryPost = async (subCategory) => {
+		const data = await api.postSubCategory(subCategory);
+		console.log(data);
+		if (data.status === 201) {
+			getSubCategories();
+		}
+	};
+
+	const handleSubmit = (evt) => {
+		evt.preventDefault();
+
+		subCategoryPost({
+			sub_category_name: inputRef.current.value,
+			location: locInputRef.current.value,
+			long: longInputRef.current.value,
+			lang: langInputRef.current.value,
+			phone: phoneInputRef.current.value,
+			status: value === 'on' ? true : false,
+			category: id,
+		});
+		inputRef.current.value = '';
+		locInputRef.current.value = '';
+		longInputRef.current.value = '';
+		langInputRef.current.value = '';
+		phoneInputRef.current.value = '';
+		addSetModal(false);
+	};
+
 	return (
 		<>
 			{' '}
@@ -100,24 +145,10 @@ export const FastfoodModal = ({
 						</span>
 						<div>
 							<p className='m-0'>HOLAT</p>
-							<span className='me-4 fs-5'>
-								<input
-									type='radio'
-									className='form-check-input'
-									name='status'
-									id=''
-								/>
-								on
-							</span>
-							<span className='fs-5'>
-								<input
-									type='radio'
-									className='form-check-input'
-									name='status'
-									id=''
-								/>
-								off
-							</span>
+							<Radio.Group onChange={onChange} value={value}>
+								<Radio value={'on'}>on</Radio>
+								<Radio value={'off'}>off</Radio>
+							</Radio.Group>
 						</div>
 					</div>
 					<button
@@ -151,7 +182,7 @@ export const FastfoodModal = ({
 					},
 				}}
 			>
-				<form action=''>
+				<form onSubmit={handleSubmit}>
 					{' '}
 					<h1>Qo’shish</h1>
 					<div className='d-flex align-items-center gap-5 mt-3'>
@@ -159,10 +190,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Do’’kon nomi</h4>
 							<input
+								ref={inputRef}
 								className='rounded me-3 form-control'
 								type='text'
-								name=''
-								id=''
+								name='sub_category_name'
+								id='sub_category_name'
 								placeholder='Evos'
 							/>
 						</span>
@@ -170,10 +202,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Telefon raqami</h4>
 							<input
+								ref={phoneInputRef}
 								className='rounded form-control'
 								type='text'
-								name=''
-								id=''
+								name='phone'
+								id='phone'
 								placeholder='+998999999999'
 							/>
 						</span>
@@ -183,10 +216,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Long</h4>
 							<input
+								ref={longInputRef}
 								className='rounded me-3 form-control'
 								type='text'
-								name=''
-								id=''
+								name='long'
+								id='long'
 								placeholder='41.32554974771851|'
 							/>
 						</span>
@@ -194,10 +228,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Lang</h4>
 							<input
+								ref={langInputRef}
 								className='rounded form-control'
 								type='text'
-								name=''
-								id=''
+								name='lang'
+								id='lang'
 								placeholder='41.32554974771851|'
 							/>
 						</span>
@@ -207,29 +242,23 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Manzil</h4>
 							<input
+								ref={locInputRef}
 								className='rounded me-4 form-control'
 								type='text'
-								name=''
-								id=''
+								name='location'
+								id='location'
 								placeholder='Qo’shtepa'
 							/>
 						</span>
 						<div>
 							<p className='m-0'>HOLAT</p>
-							<span className='me-4 fs-5'>
-								<input type='radio' name='status' id='' />
-								on
-							</span>
-							<span className='fs-5'>
-								<input type='radio' name='status' id='' />
-								off
-							</span>
+							<Radio.Group onChange={onChange} value={value}>
+								<Radio value={'on'}>on</Radio>
+								<Radio value={'off'}>off</Radio>
+							</Radio.Group>
 						</div>
 					</div>
-					<button
-						className='btn btn-dark mt-5 ms-5 w-50'
-						onClick={() => addSetModal(false)}
-					>
+					<button className='btn btn-dark mt-5 ms-5 w-50' type='submit'>
 						Qo’shish
 					</button>
 				</form>

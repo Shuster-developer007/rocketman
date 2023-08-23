@@ -15,42 +15,10 @@ export const SinglePage = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 
-	const obj = [
-		{
-			id: 1,
-			name: 'LAVASH',
-			count: 2,
-			isActive: 'disabled',
-		},
-		{
-			id: 2,
-			name: 'Gamburger',
-			count: 12,
-			isActive: 'disabled',
-		},
-		{
-			id: 3,
-			name: 'Pizza',
-			count: 5,
-			isActive: 'enabled',
-		},
-		{
-			id: 4,
-			name: 'KFC',
-			count: 5,
-			isActive: 'disabled',
-		},
-		{
-			id: 5,
-			name: 'Ichimliklar',
-			count: 5,
-			isActive: 'enabled',
-		},
-	];
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.product.product);
-	console.log(products);
+
 	const getProducts = async () => {
 		const data = await api.getProducts(id);
 		if (data.status === 200) {
@@ -95,7 +63,7 @@ export const SinglePage = () => {
 										products.map((item) => (
 											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
-													{item.id}
+													{item.second_id}
 												</th>
 												<td scope='row' className='jg text-center'>
 													<Link
@@ -108,23 +76,20 @@ export const SinglePage = () => {
 												<td className='jg text-center'>
 													{item.subProducts.length}
 												</td>
-												<td
-													className='jg text-center'
-													style={
-														item.status
-															? {
-																	backgroundColor: '#D9FFDA',
-																	color: '#008C06',
-																	border: 'transparent',
-															  }
-															: {
-																	backgroundColor: '#FFD9D9',
-																	color: '#BE0707',
-																	border: 'transparent',
-															  }
-													}
-												>
-													{item.status ? 'enabled' : 'disabled'}
+												<td className='jg text-center'>
+													{item.status == true ? (
+														<div className='d-flex justify-content-center align-items-center'>
+															<div className='enabled d-flex align-items-center justify-content-center'>
+																enabled
+															</div>
+														</div>
+													) : (
+														<div className='d-flex justify-content-center align-items-center '>
+															<div className='disabled text-danger justify-content-center align-items-center d-flex'>
+																disabled
+															</div>
+														</div>
+													)}
 												</td>
 												<td className='jg text-center'>
 													<button
@@ -149,6 +114,8 @@ export const SinglePage = () => {
 								</tbody>
 							</table>
 							<SModal
+								id={id}
+								getProducts={getProducts}
 								addModal={addModal}
 								addSetModal={addSetModal}
 								editModal={editModal}

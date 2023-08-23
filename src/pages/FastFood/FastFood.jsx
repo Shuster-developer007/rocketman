@@ -11,70 +11,17 @@ import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSubCategory } from '../../redux/subCategory/subCategoryAction';
-import axios from 'axios';
 
 export const FastFood = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 
-	// const obj = [
-	// 	{
-	// 		id: 1,
-	// 		markets: 'Fast food',
-	// 		count: 2,
-	// 		phoneNumber: +998937298025,
-	// 		address: 'Baliqchi',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		markets: 'Texnika',
-	// 		count: 12,
-	// 		phoneNumber: +998937298025,
-	// 		address: 'Baliqchi',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		markets: 'Gullar',
-	// 		count: 5,
-	// 		phoneNumber: +998937298025,
-	// 		address: 'Baliqchi',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		markets: 'Gullar',
-	// 		count: 5,
-	// 		phoneNumber: +998937298025,
-	// 		address: 'Baliqchi',
-	// 		isActive: 'disabled',
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		markets: 'Gullar',
-	// 		count: 5,
-	// 		phoneNumber: +998937298025,
-	// 		address: 'Baliqchi',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		markets: 'Gullar',
-	// 		count: 5,
-	// 		phoneNumber: +998937298025,
-	// 		address: 'Baliqchi',
-	// 		isActive: 'disabled',
-	// 	},
-	// ];
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const subCategories = useSelector((state) => state.subCategory.subCategory);
-	console.log(subCategories);
 
 	const getSubCategories = async () => {
 		const data = await api.getSubCategories(id);
-		console.log(data);
 		if (data.status === 200) {
 			dispatch(setSubCategory(data.data.data));
 		}
@@ -125,7 +72,7 @@ export const FastFood = () => {
 										subCategories.map((item) => (
 											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
-													{item.id}
+													{item.second_id}
 												</th>
 												<td scope='row' className='jg text-center'>
 													<Link
@@ -140,23 +87,20 @@ export const FastFood = () => {
 												</td>
 												<td className='jg text-center'>{item.phone}</td>
 												<td className='jg text-center'>{item.location}</td>
-												<td
-													className='jg text-center'
-													style={
-														item.status
-															? {
-																backgroundColor: '#D9FFDA',
-																color: '#008C06',
-																border: 'transparent',
-															}
-															: {
-																backgroundColor: '#FFD9D9',
-																color: '#BE0707',
-																border: 'transparent',
-															}
-													}
-												>
-													{item.status ? 'enabled' : 'disabled'}
+												<td className='jg text-center'>
+													{item.status == true ? (
+														<div className='d-flex justify-content-center align-items-center'>
+															<div className='enabled d-flex align-items-center justify-content-center'>
+																enabled
+															</div>
+														</div>
+													) : (
+														<div className='d-flex justify-content-center align-items-center '>
+															<div className='disabled text-danger justify-content-center align-items-center d-flex'>
+																disabled
+															</div>
+														</div>
+													)}
 												</td>
 												<td className='jg text-center'>
 													{' '}
@@ -182,6 +126,8 @@ export const FastFood = () => {
 								</tbody>
 							</table>
 							<FastfoodModal
+								id={id}
+								getSubCategories={getSubCategories}
 								editModal={editModal}
 								editSetModal={editSetModal}
 								addModal={addModal}

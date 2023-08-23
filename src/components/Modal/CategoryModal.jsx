@@ -1,4 +1,8 @@
 import Modal from 'react-modal';
+import { useRef, useState } from 'react';
+import { Radio } from 'antd';
+import { api } from '../../API/api';
+
 Modal.setAppElement('#root');
 
 export const CategoryModal = ({
@@ -6,6 +10,7 @@ export const CategoryModal = ({
 	addSetModal,
 	editModal,
 	editSetModal,
+	getCategories,
 }) => {
 	const styledBtn = {
 		position: 'absolute',
@@ -14,6 +19,33 @@ export const CategoryModal = ({
 		backgroundColor: 'green',
 		color: 'white',
 	};
+	const inputRef = useRef();
+	const [value, setValue] = useState(false);
+
+	const onChange = (e) => {
+		setValue(e.target.value);
+	};
+
+	const categoryPost = async (category) => {
+		const data = await api.postCategory(category);
+		if (data.status === 201) {
+			getCategories();
+		}
+	};
+
+	const handleSubmit = (evt) => {
+		evt.preventDefault();
+
+		const data = {
+			category_name: inputRef.current.value,
+			status: value === 'on' ? true : false,
+		};
+
+		categoryPost(data);
+		inputRef.current.value = '';
+		addSetModal(false);
+	};
+
 	return (
 		<>
 			<Modal
@@ -95,39 +127,24 @@ export const CategoryModal = ({
 					},
 				}}
 			>
-				<form action=''>
+				<form action='' onSubmit={handleSubmit}>
 					<h1>Qo’shish</h1>
 					<p>Kategoriya nomi</p>
 					<input
+						ref={inputRef}
 						className='rounded form-control'
 						type='text'
-						name=''
-						id=''
+						name='category'
+						id='category'
 						placeholder='masalan: texnika'
+						required
 					/>
 					<p className='mt-4'>Holat</p>
-					<span className='me-4 fs-5'>
-						<input
-							type='radio'
-							className='form-check-input'
-							name='status'
-							id=''
-						/>
-						on
-					</span>
-					<span className='fs-5'>
-						<input
-							type='radio'
-							className='form-check-input'
-							name='status'
-							id=''
-						/>
-						off
-					</span>
-					<button
-						className='btn btn-dark mt-5 w-100'
-						onClick={() => addSetModal(false)}
-					>
+					<Radio.Group onChange={onChange} value={value}>
+						<Radio value={'on'}>on</Radio>
+						<Radio value={'off'}>off</Radio>
+					</Radio.Group>
+					<button className='btn btn-dark mt-5 w-100' type='submit'>
 						Qo’shish
 					</button>
 				</form>
