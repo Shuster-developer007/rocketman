@@ -7,16 +7,20 @@ import { api } from '../../API/api'
 
 const Payment = () => {
     const [data, setData] = useState([])
-    localStorage.setItem("token" , "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
+    const [loading, setLoading] = useState(false)
+    localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getPayments = async () => {
         try {
-            const {data} = await api.getSettingsPayment();
+            setLoading(true)
+            const { data } = await api.getSettingsPayment();
             setData(data)
             // if (data.status === 200) {
             // 	dispatch(setCategory(data.data.data));
             // }
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -94,7 +98,7 @@ const Payment = () => {
                         </div>
 
                         <div className='d-flex mt-5 justify-content-between align-items-center'>
-                            <h2 className="title">To'lov turlari</h2>
+                            {loading ? (<h2 className="title">Loading...</h2>) : (<h2 className="title">To'lov turlari</h2>)}
                             <button type="button" className="btn-add d-flex gap-2 justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#createmodal">
                                 Qo'shish
                                 <div className='added_border'><i className="fa-solid fa-plus plus_icon"></i></div>

@@ -9,8 +9,11 @@ const SettingsDriver = () => {
 
 
     const [data, setData] = useState([])
+    const [loading, setLoading] = useState(false)
+
     const getDrivers = async () => {
         try {
+            setLoading(true)
             const { data } = await api.getSettingDrivers();
             setData(data)
             // if (data.status === 200) {
@@ -18,6 +21,8 @@ const SettingsDriver = () => {
             // }
         } catch (error) {
             console.log(error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -162,6 +167,8 @@ const SettingsDriver = () => {
                                 <div className='added_border'><i className="fa-solid fa-plus plus_icon"></i></div>
                             </button>
                         </div>
+                        
+                        {loading ? (<h3 className='py-1'>Loading...</h3>) : (<h3 className='py-1'>All drivers</h3>)}
                         <div className="orab mt-4">
                             <table className="mytable">
                                 <thead className='thread'>
