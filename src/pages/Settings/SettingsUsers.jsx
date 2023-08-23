@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
 import SettingsLinks from '../../components/SettingsLinks'
 import "../../styles/Settings/SettingUsers.css"
 import { api } from '../../API/api'
+import { toast } from 'react-toastify'
 
 
 const SettingsUsers = () => {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+    const usernameRef = useRef()
+    const passwordRef = useRef()
 
     const getAdmins = async () => {
         try {
@@ -36,14 +39,35 @@ const SettingsUsers = () => {
         try {
             setLoading(true)
             const { data } = await api.deleteAdmin(id);
-            setData(data)
+            if (data.status == 204) {
+                toast("Success deleted admin", { type: "success" })
+            }
             getAdmins()
         } catch (error) {
-            console.log(error.message);
+
         } finally {
             setLoading(false)
         }
     };
+
+
+    const handleCreateAdmin = async (event) => {
+        try {
+            event.preventDefault()
+            const createAdmin = {
+                "username": usernameRef.current.value,
+                "password": passwordRef.current.value,
+                "role": "admin"
+            }
+            const { data } = await api.createAdmin(createAdmin)
+            if (data.status == 201) {
+                toast("Success created admin", { type: "success" })
+            }
+            getAdmins()
+        } catch (error) {
+            toast(error.response.data.message, { type: "error" })
+        }
+    }
 
     return (
         <div>
@@ -58,15 +82,15 @@ const SettingsUsers = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form action="">
+                                <form action="" onSubmit={handleCreateAdmin}>
                                     <label htmlFor="admin_name" className='my-3'>Login</label>
-                                    <input type="text" className='form-control' placeholder='admin_name' id='admin_name' name='admin_name' />
+                                    <input type="text" ref={usernameRef} className='form-control' placeholder='admin_name' id='admin_name' name='admin_name' />
                                     <label htmlFor="password" className=' my-3'>Password</label>
-                                    <input type="password" className='form-control' placeholder='password' />
+                                    <input ref={passwordRef} type="password" className='form-control' placeholder='password' />
+                                    <div className="modal-footer d-flex justify-content-center align-items-center p-0 mt-4">
+                                        <button className="btn_modal m-0">Submit</button>
+                                    </div>
                                 </form>
-                            </div>
-                            <div className="modal-footer d-flex justify-content-center align-items-center">
-                                <button className="btn_modal">Submit</button>
                             </div>
                         </div>
                     </div>
