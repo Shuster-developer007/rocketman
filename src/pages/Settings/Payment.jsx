@@ -29,20 +29,6 @@ const Payment = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // const data = [
-    //     {
-    //         payment_type: "Click",
-    //         link: "https://click.uz/ru",
-    //         telegram_payment: "bilmadim",
-    //         status: true
-    //     },
-    //     {
-    //         payment_type: "Payme",
-    //         link: "nimadir link",
-    //         telegram_payment: "bilmadim",
-    //         status: false
-    //     },
-    // ]
 
     return (
         <div>
