@@ -11,51 +11,20 @@ import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
 import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProduct } from '../../redux/product/productAction';
 import { setSubProduct } from '../../redux/subProduct/subProductAction';
 
 export const Food = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 
-	// const obj = [
-	// 	{
-	// 		id: 1,
-	// 		name: 'LAVASH',
-	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
-	// 		price: '20 000 so’m',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		name: 'LAVASH',
-	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
-	// 		price: '20 000 so’m',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		name: 'LAVASH',
-	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
-	// 		price: '20 000 so’m',
-	// 		isActive: 'enabled',
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		name: 'LAVASH',
-	// 		desc: 'In tellus leo eleifend ut mollis lorem...',
-	// 		price: '20 000 so’m',
-	// 		isActive: 'disabled',
-	// 	},
-	// ];
-
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const subProducts = useSelector((state) => state.product.product);
+	const subProducts = useSelector((state) => state.subProduct.subProduct);
 	console.log(subProducts);
 
 	const getSubProducts = async () => {
 		const data = await api.getSubProducts(id);
+		console.log(data);
 		if (data.status === 200) {
 			dispatch(setSubProduct(data.data.data));
 		}
@@ -105,28 +74,25 @@ export const Food = () => {
 														to={'#'}
 														className='Item-link text-decoration-none text-dark'
 													>
-														{item.name}
+														{item.sub_product_name}
 													</Link>
 												</td>
-												<td className='jg text-center'>{item.desc}</td>
+												<td className='jg text-center'>{item.description}</td>
 												<td className='jg text-center'>{item.price}</td>
-												<td
-													className='jg text-center'
-													style={
-														item.isActive
-															? {
-																	backgroundColor: '#D9FFDA',
-																	color: '#008C06',
-																	border: 'transparent',
-															  }
-															: {
-																	backgroundColor: '#FFD9D9',
-																	color: '#BE0707',
-																	border: 'transparent',
-															  }
-													}
-												>
-													{item.status ? 'enabled' : 'disabled'}
+												<td className='jg text-center'>
+													{item.status == true ? (
+														<div className='d-flex justify-content-center align-items-center'>
+															<div className='enabled d-flex align-items-center justify-content-center'>
+																enabled
+															</div>
+														</div>
+													) : (
+														<div className='d-flex justify-content-center align-items-center '>
+															<div className='disabled text-danger justify-content-center align-items-center d-flex'>
+																disabled
+															</div>
+														</div>
+													)}
 												</td>
 												<td className='jg text-center'>
 													{' '}
@@ -153,6 +119,8 @@ export const Food = () => {
 								</tbody>
 							</table>
 							<FoodModal
+								id={id}
+								getSubProducts={getSubProducts}
 								addModal={addModal}
 								addSetModal={addSetModal}
 								editModal={editModal}

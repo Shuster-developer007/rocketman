@@ -1,11 +1,16 @@
+import { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import MOCKIMAGE from '../../assets/images/300.png';
+import { Radio } from 'antd';
+import { api } from '../../API/api';
 
 export const FoodModal = ({
 	addModal,
 	addSetModal,
 	editModal,
 	editSetModal,
+	id,
+	getSubProducts,
 }) => {
 	const styledBtn = {
 		position: 'absolute',
@@ -14,6 +19,22 @@ export const FoodModal = ({
 		backgroundColor: 'green',
 		color: 'white',
 	};
+
+	// 	{
+	//     "sub_product_name": "lavash",
+	//     "description": "fast food",
+	//     "status": false,
+	//     "price": 22000,
+	//     "image": "lavash",
+	//     "product": "64e660167e902167b623fffc"
+	// }
+
+	const [value, setValue] = useState(false);
+
+	const onChange = (e) => {
+		setValue(e.target.value);
+	};
+
 	return (
 		<>
 			<Modal
@@ -68,14 +89,10 @@ export const FoodModal = ({
 							</span>
 							<span>
 								<p className='mt-4'>Holat</p>
-								<span className='me-4 fs-5'>
-									<input type='radio' name='status' id='' />
-									on
-								</span>
-								<span className='fs-5'>
-									<input type='radio' name='status' id='' />
-									off
-								</span>
+								<Radio.Group onChange={onChange} value={value}>
+									<Radio value={'on'}>on</Radio>
+									<Radio value={'off'}>off</Radio>
+								</Radio.Group>
 							</span>
 						</div>
 						<div className='d-flex flex-column gap-5'>
@@ -117,6 +134,7 @@ export const FoodModal = ({
 					</button>
 				</div>
 			</Modal>
+
 			<Modal
 				isOpen={addModal}
 				onRequestClose={() => addSetModal(false)}
@@ -136,11 +154,11 @@ export const FoodModal = ({
 					},
 				}}
 			>
-				<div className='d-flex align-items-center gap-5'>
+				<form className='d-flex align-items-center gap-5'>
 					<div>
 						<img src={MOCKIMAGE} alt='MOCK IMAGE' width={300} height={300} />
 					</div>
-					<form className='d-flex align-items-center p-3 gap-3'>
+					<div className='d-flex align-items-center p-3 gap-3'>
 						<div className='d-flex flex-column'>
 							{' '}
 							<span>
@@ -168,24 +186,10 @@ export const FoodModal = ({
 							</span>
 							<span>
 								<p className='mt-4'>Holat</p>
-								<span className='me-4 fs-5'>
-									<input
-										type='radio'
-										className='form-check-input'
-										name='status'
-										id=''
-									/>
-									on
-								</span>
-								<span className='fs-5'>
-									<input
-										type='radio'
-										className='form-check-input'
-										name='status'
-										id=''
-									/>
-									off
-								</span>
+								<Radio.Group onChange={onChange} value={value}>
+									<Radio value={'on'}>on</Radio>
+									<Radio value={'off'}>off</Radio>
+								</Radio.Group>
 							</span>
 						</div>
 						<div className='d-flex flex-column gap-5'>
@@ -213,19 +217,16 @@ export const FoodModal = ({
 									/>
 								</span>
 							</span>
-							<button
-								className='btn btn-dark'
-								onClick={() => addSetModal(false)}
-							>
+							<button className='btn btn-dark' type='submit'>
 								Saqlash
 							</button>
 						</div>
-					</form>
+					</div>
 
 					<button style={styledBtn} onClick={() => addSetModal(false)}>
 						X
 					</button>
-				</div>
+				</form>
 			</Modal>
 		</>
 	);

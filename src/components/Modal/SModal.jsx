@@ -1,12 +1,48 @@
+import { useRef, useState } from 'react';
 import Modal from 'react-modal';
+import { Radio } from 'antd';
+import { api } from '../../API/api';
 
-export const SModal = ({ addModal, addSetModal, editModal, editSetModal }) => {
+export const SModal = ({
+	addModal,
+	addSetModal,
+	editModal,
+	editSetModal,
+	id,
+	getProducts,
+}) => {
 	const styledBtn = {
 		position: 'absolute',
 		top: 0,
 		right: 0,
 		backgroundColor: 'green',
 		color: 'white',
+	};
+	const inputRef = useRef();
+	const [value, setValue] = useState(false);
+
+	const onChange = (e) => {
+		setValue(e.target.value);
+	};
+
+	const productPost = async (product) => {
+		const data = await api.postProduct(product);
+		console.log(data);
+		if (data.status === 201) {
+			getProducts();
+		}
+	};
+
+	const handleSubmit = (evt) => {
+		evt.preventDefault();
+
+		productPost({
+			product_name: inputRef.current.value,
+			status: value === 'on' ? true : false,
+			sub_category: id,
+		});
+		inputRef.current.value = '';
+		addSetModal(false);
 	};
 	return (
 		<>
@@ -40,24 +76,10 @@ export const SModal = ({ addModal, addSetModal, editModal, editSetModal }) => {
 					placeholder='masalan: texnika'
 				/>
 				<p className='mt-4'>Holat</p>
-				<span className='me-4 fs-5'>
-					<input
-						type='radio'
-						className='form-check-input'
-						name='status'
-						id=''
-					/>
-					on
-				</span>
-				<span className='fs-5'>
-					<input
-						type='radio'
-						className='form-check-input'
-						name='status'
-						id=''
-					/>
-					off
-				</span>
+				<Radio.Group onChange={onChange} value={value}>
+					<Radio value={'on'}>on</Radio>
+					<Radio value={'off'}>off</Radio>
+				</Radio.Group>
 				<button
 					className='btn btn-dark mt-5 w-100'
 					onClick={() => addSetModal(false)}
@@ -91,39 +113,23 @@ export const SModal = ({ addModal, addSetModal, editModal, editSetModal }) => {
 					},
 				}}
 			>
-				<form action=''>
+				<form onSubmit={handleSubmit}>
 					<h1>Qo’shish</h1>
 					<p>Kategoriya nomi</p>
 					<input
+						ref={inputRef}
 						className='rounded form-control'
 						type='text'
-						name=''
-						id=''
+						name='product'
+						id='product'
 						placeholder='masalan: texnika'
 					/>
 					<p className='mt-4'>Holat</p>
-					<span className='me-4 fs-5'>
-						<input
-							type='radio'
-							className='form-check-input'
-							name='status'
-							id=''
-						/>
-						on
-					</span>
-					<span className='fs-5'>
-						<input
-							type='radio'
-							className='form-check-input'
-							name='status'
-							id=''
-						/>
-						off
-					</span>
-					<button
-						className='btn btn-dark mt-5 w-100'
-						onClick={() => addSetModal(false)}
-					>
+					<Radio.Group onChange={onChange} value={value}>
+						<Radio value={'on'}>on</Radio>
+						<Radio value={'off'}>off</Radio>
+					</Radio.Group>
+					<button className='btn btn-dark mt-5 w-100' type='submit'>
 						Qo’shish
 					</button>
 				</form>

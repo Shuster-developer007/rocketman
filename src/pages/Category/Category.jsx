@@ -11,57 +11,16 @@ import { api } from '../../API/api';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from '../../redux/category/categoryAction';
-import axios from 'axios';
 
 export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
-	// const obj = [
-	// 	{
-	// 		id: 1,
-	// 		category: 'Git hub ozgartirish',
-	// 		markets: 2,
-	// 		isComplated: false,
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		category: 'Texnika',
-	// 		markets: 12,
-	// 		isComplated: false,
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		category: 'Gullar',
-	// 		markets: 5,
-	// 		isComplated: false,
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		category: 'Gullar',
-	// 		markets: 5,
-	// 		isComplated: false,
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		category: 'Gullar',
-	// 		markets: 5,
-	// 		isComplated: false,
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		category: 'Gullar',
-	// 		markets: 5,
-	// 		isComplated: false,
-	// 	},
-	// ];
 
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.category.category);
-	console.log(categories);
 
 	const getCategories = async () => {
 		const data = await api.getCategories();
-		console.log(data);
 		if (data.status === 200) {
 			dispatch(setCategory(data.data.data));
 		}
@@ -115,7 +74,6 @@ export const Category = () => {
 													{item.subCategories.length}
 												</td>
 												<td className='jg text-center'>
-													{' '}
 													<button
 														className='btn'
 														onClick={() => editSetModal(true)}
@@ -124,7 +82,6 @@ export const Category = () => {
 													</button>
 												</td>
 												<td className='jg text-center'>
-													{' '}
 													<BtnSlider status={item.status} />
 												</td>
 											</tr>
@@ -142,6 +99,7 @@ export const Category = () => {
 								</tbody>
 							</table>
 							<CategoryModal
+								getCategories={getCategories}
 								addModal={addModal}
 								addSetModal={addSetModal}
 								editModal={editModal}
