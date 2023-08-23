@@ -4,6 +4,7 @@ import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import SettingsLinks from '../../components/SettingsLinks'
 import { api } from '../../API/api'
+import { toast } from 'react-toastify'
 
 const Payment = () => {
     const [data, setData] = useState([])
@@ -28,6 +29,18 @@ const Payment = () => {
         getPayments();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
+    const handleDeletePayment = async (id) => {
+        try {
+            const { data } = await api.deletePayment(id)
+            toast("Success deleted payment", { type: "success" })
+            getPayments()
+        } catch (error) {
+            toast(error.response.data.message, { type: "error" })
+        }
+    }
 
 
     return (
@@ -118,7 +131,7 @@ const Payment = () => {
                                             </td>
                                             <td className="jg">
                                                 <div className="d-flex justify-content-center align-items-center">
-                                                    <div className='setting_icon_delete my-3'>
+                                                    <div onClick={() => handleDeletePayment(item._id)} className='setting_icon_delete my-3'>
                                                         <i className="fa-solid fa-trash text-white"></i>
                                                     </div>
                                                 </div>

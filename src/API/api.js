@@ -17,6 +17,6 @@ export const api = {
     getAdmins: () => axios.get(BASE_URL + "/admins"),
     getComplaitns: () => axios.get(BASE_URL + "/complaints"),
     deleteAdmin: (id) => axios.delete(BASE_URL + "/delete/admin/" + id),
-    createAdmin: (createAdmin) => axios.post(BASE_URL + "/create/admin", createAdmin)
-
+    createAdmin: (createAdmin) => axios.post(BASE_URL + "/create/admin", createAdmin),
+    deletePayment: (id) => axios.delete(BASE_URL + "/payment/" + id)
 };

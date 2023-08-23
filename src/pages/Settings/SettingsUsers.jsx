@@ -34,14 +34,11 @@ const SettingsUsers = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
     const handleDeleteAdmin = async (id) => {
         try {
             setLoading(true)
             const { data } = await api.deleteAdmin(id);
-            if (data.status == 204) {
-                toast("Success deleted admin", { type: "success" })
-            }
+            toast("Success deleted admin", { type: "success" })
             getAdmins()
         } catch (error) {
 
@@ -49,7 +46,6 @@ const SettingsUsers = () => {
             setLoading(false)
         }
     };
-
 
     const handleCreateAdmin = async (event) => {
         try {
