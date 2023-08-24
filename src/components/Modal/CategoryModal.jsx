@@ -33,6 +33,18 @@ export const CategoryModal = ({
 		}
 	};
 
+	const handleEdit = async (id, category) => {
+		const newText = inputRef.current.value;
+		value === 'on' ? true : false;
+		if (newText !== '' && newText.trim()) {
+			category.category_name = newText;
+		}
+		const data = await api.updateTodo(id, category);
+		if (data.status === 200) {
+			getCategories();
+		}
+	};
+
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 

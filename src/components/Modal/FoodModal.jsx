@@ -100,23 +100,23 @@ export const FoodModal = ({
 							<span>
 								{' '}
 								<span className='d-flex flex-column mt-4'>
-									<label htmlFor='product'>Tovar nomi</label>
+									<label htmlFor='product'>Ma’lumot</label>
 									<input
 										type='text'
 										className='rounded form-control'
 										name='product'
 										id='product'
-										placeholder='masalan: Lavash Big'
+										placeholder='info...'
 									/>
 								</span>
 								<span className='d-flex flex-column mt-4'>
-									<label htmlFor='price'>Narxi</label>
+									<label htmlFor='price'>Rasmga link</label>
 									<input
 										type='text'
 										className='rounded form-control'
 										name='price'
 										id='price'
-										placeholder='masalan: 20 000'
+										placeholder='type the link here'
 									/>
 								</span>
 							</span>
@@ -197,23 +197,23 @@ export const FoodModal = ({
 							<span>
 								{' '}
 								<span className='d-flex flex-column mt-4'>
-									<label htmlFor='product'>Tovar nomi</label>
+									<label htmlFor='product'>Ma’lumot</label>
 									<input
 										type='text'
 										className='rounded form-control'
 										name='product'
 										id='product'
-										placeholder='masalan: Lavash Big'
+										placeholder='info...'
 									/>
 								</span>
 								<span className='d-flex flex-column mt-4'>
-									<label htmlFor='price'>Narxi</label>
+									<label htmlFor='price'>Rasmga link</label>
 									<input
 										type='text'
 										className='rounded form-control'
 										name='price'
 										id='price'
-										placeholder='masalan: 20 000'
+										placeholder='type the link here'
 									/>
 								</span>
 							</span>
