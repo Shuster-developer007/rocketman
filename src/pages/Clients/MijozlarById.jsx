@@ -1,10 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
 import "../../styles/Clients/MijozlarByid.css"
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { api } from '../../API/api'
 
 const MijozlarById = () => {
+    const { id } = useParams()
+    const [data, setData] = useState([])
+    const [user, setUser] = useState({})
+    const [loading, setLoading] = useState(false)
+
+    const userGetOne = async () => {
+        try {
+            setLoading(true)
+            const { data } = await api.getOneUser(id)
+            setUser(data)
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        userGetOne();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+    const orderfind = async () => {
+        try {
+            setLoading(true)
+            const { data } = await api.getOrder_user(id)
+            setData(data)
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        orderfind();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div>
             <Sidebar />
@@ -19,7 +58,7 @@ const MijozlarById = () => {
                                         <i className="fa-solid fa-angle-left"></i>
                                     </div>
                                 </Link>
-                                <h3>Timur Raxmatov</h3>
+                                {loading ? (<h3>Loading...</h3>) : <h3>{user?.data?.username}</h3>}
                             </div>
                             <select className="my-select" aria-label="Default select example">
                                 {/* <option selected></option> */}
@@ -29,11 +68,11 @@ const MijozlarById = () => {
                             </select>
                             <div>
                                 <p>Jami:</p>
-                                <h4 className='buyutrma'>4 ta buyurtma</h4>
+                                <h4 className='buyutrma'>{data?.data?.length}</h4>
                             </div>
                             <button className="phone-btn d-flex align-items-center justify-content-center gap-2">
                                 <i className="fa-solid fa-phone text-white"></i>
-                                <a className='text-decoration-none link' href="tel:">+998901342386</a>
+                                <a className='text-decoration-none link' href="tel:">{user?.data?.phone}</a>
                             </button>
                         </div>
                         <div className="orab">
@@ -51,66 +90,20 @@ const MijozlarById = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>12.23.2009</td>
-                                        <td className='jg text-center'>2</td>
-                                        <td className='jg text-center'>12000</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                                        <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
-                                        <td className='jg text-center text-danger'>bekor</td>
-                                        <td className='jg m-auto text-center fs-4'>...</td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>12.23.2009</td>
-                                        <td className='jg text-center'>2</td>
-                                        <td className='jg text-center'>12000</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                                        <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
-                                        <td className='jg text-center yashil'>yakun</td>
-                                        <td className='jg m-auto text-center fs-4'>...</td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>12.23.2009</td>
-                                        <td className='jg text-center'>2</td>
-                                        <td className='jg text-center'>12000</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                                        <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
-                                        <td className='jg text-center text-warning'>buyurtma</td>
-                                        <td className='jg m-auto text-center fs-4'>...</td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>12.23.2009</td>
-                                        <td className='jg text-center'>2</td>
-                                        <td className='jg text-center'>12000</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                                        <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
-                                        <td className='jg text-center text-primary'>qabul</td>
-                                        <td className='jg m-auto text-center fs-4'>...</td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>12.23.2009</td>
-                                        <td className='jg text-center'>2</td>
-                                        <td className='jg text-center'>12000</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                                        <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
-                                        <td className='jg text-center text-success'>tayyorlanmoqda</td>
-                                        <td className='jg m-auto text-center fs-4'>...</td>
-                                    </tr>
-                                    <tr className='tr'>
-                                        <th className='jg text-center' cope="row">1</th>
-                                        <td className='jg text-center'>12.23.2009</td>
-                                        <td className='jg text-center'>2</td>
-                                        <td className='jg text-center'>12000</td>
-                                        <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                                        <td className='jg'><div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div></td>
-                                        <td className='jg text-center purple'>yetkazish</td>
-                                        <td className='jg m-auto text-center fs-4'>...</td>
-                                    </tr>
+                                    {data?.data?.map((item) => (
+                                        <tr key={item._id} className='tr'>
+                                            <th className='jg text-center' cope="row">1</th>
+                                            <td className='jg text-center'>{(item.createdAt).slice(0, 10)}</td>
+                                            <td className='jg text-center'>{item.items.map((price) => (
+                                                (price.count + price.count)
+                                            ))}</td>
+                                            <td className='jg text-center'>{item.total_price}</td>
+                                            <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
+                                            <td className='jg'>{item.driver == null ? (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>no connected</div></div>) : <div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div>}</td>
+                                            <td className={`jg text-center ${item.status}`}>{item.status}</td>
+                                            <td className='jg m-auto text-center fs-4'>...</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

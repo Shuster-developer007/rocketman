@@ -34,5 +34,8 @@ export const api = {
 	updatedPayment: (id, updatePayment) => axios.put(BASE_URL + "/payment/" + id, updatePayment),
 	deleteTakliflar: (id) => axios.delete(BASE_URL + "/complaint/" + id),
 	updateDriver: (id, updatedDriver) => axios.put(BASE_URL + "/update/driver/" + id, updatedDriver),
-	getOneDriver: (id) => axios.get(BASE_URL + "/driver/" + id)
+	getOneDriver: (id) => axios.get(BASE_URL + "/driver/" + id),
+	getClient: () => axios.get(BASE_URL + "/users"),
+	getOrder_user: (id) => axios.get(BASE_URL + "/order/user/" + id),
+	getOneUser: (id) => axios.get(BASE_URL + "/user/" + id)
 };
