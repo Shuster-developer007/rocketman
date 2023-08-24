@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
 import "../../styles/Settings/SettingsDriver.css"
 import SettingsLinks from '../../components/SettingsLinks'
 import { api } from '../../API/api'
+import { toast } from 'react-toastify'
 
 const SettingsDriver = () => {
 
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+    const drivernameRef = useRef()
+    const driverbirthdayRef = useRef()
+    const driverphoneRef = useRef()
+    const driverautonumRef = useRef()
+    const drivertypeRef = useRef()
+    const driverstatusOnRef = useRef()
+    const driverstatusOfRef = useRef()
+
+
 
     const getDrivers = async () => {
         try {
@@ -31,6 +41,27 @@ const SettingsDriver = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+    const handleCreateDriver = async (event) => {
+        try {
+            const driverCreate = {
+                "driver_full_name": drivernameRef.current.value,
+                "driver_birthday": driverbirthdayRef.current.value,
+                "driver_phone": driverphoneRef.current.value,
+                "car_number": driverautonumRef.current.value,
+                "type": drivertypeRef.current.value,
+                "status": driverstatusOfRef.current.value || driverstatusOnRef.current.value
+            }
+            const { data } = await api.createDriver(driverCreate)
+            getDrivers()
+            if (data.status == 201) {
+                toast("Success created driver", { type: "success" })
+            }
+        } catch (error) {
+            toast(error.response.data.message, { type: "error" })
+        }
+    }
+
     return (
         <div>
             <Sidebar />
@@ -44,43 +75,43 @@ const SettingsDriver = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form action="">
+                                <form action="" onSubmit={handleCreateDriver}>
                                     <div className='d-flex  justify-content-between'>
                                         <div>
                                             <label htmlFor="driver_name" className='my-2'>Driver name</label>
-                                            <input type="text" className='form-control' placeholder='name' id='driver_name' name='driver_name' />
+                                            <input ref={drivernameRef} type="text" className='form-control' placeholder='name' id='driver_name' name='driver_name' />
                                         </div>
                                         <div>
                                             <label htmlFor="date" className=' my-2'>D.O.B</label>
-                                            <input type="text" className='form-control 100' name='date' id='date' placeholder='masalan:22.11.1999' />
+                                            <input ref={driverbirthdayRef} type="text" className='form-control 100' name='date' id='date' placeholder='masalan:22.11.1999' />
                                         </div>
                                     </div>
                                     <div className='d-flex justify-content-between'>
                                         <div>
                                             <label htmlFor="phone" className='my-2'>Telefon raqami</label>
-                                            <input type="text" className='form-control' placeholder='+998 _ _ _ _ _ _ _ _ _' id='phone' name='phone' />
+                                            <input ref={driverphoneRef} type="text" className='form-control' placeholder='+998 _ _ _ _ _ _ _ _ _' id='phone' name='phone' />
                                         </div>
                                         <div>
                                             <label htmlFor="auto_number" className=' my-2'>Autoraqam</label>
-                                            <input type="text" className='form-control 100' name='auto_number' id='auto_number' placeholder='masalan:20 C 777 BB' />
+                                            <input ref={driverautonumRef} type="text" className='form-control 100' name='auto_number' id='auto_number' placeholder='masalan:20 C 777 BB' />
                                         </div>
                                     </div>
                                     <div className="d-flex align-items-center">
                                         <div>
                                             <label htmlFor="type" className='my-2'>Turi</label>
-                                            <input type="text" className='form-control' placeholder='masalan: Tico' id='type' name='type' />
+                                            <input ref={drivertypeRef} type="text" className='form-control' placeholder='masalan: Tico' id='type' name='type' />
                                         </div>
                                         <div className='input_cheks'>
                                             <label htmlFor="status" className='mt-4'>Holat</label>
                                             <div className='d-flex gap-4'>
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                                    <input defaultValue={true} ref={driverstatusOnRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                                                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                         on
                                                     </label>
                                                 </div>
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  />
+                                                    <input defaultValue={false} ref={driverstatusOfRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
                                                     <label className="form-check-label" htmlFor="flexRadioDefault2">
                                                         of
                                                     </label>
@@ -91,7 +122,7 @@ const SettingsDriver = () => {
                                 </form>
                             </div>
                             <div className="modal-footer d-flex justify-content-center align-items-center">
-                                <button className="btn_modal">Submit</button>
+                                <button onClick={() => handleCreateDriver()} type='submit' className="btn_modal">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -167,7 +198,7 @@ const SettingsDriver = () => {
                                 <div className='added_border'><i className="fa-solid fa-plus plus_icon"></i></div>
                             </button>
                         </div>
-                        
+
                         {loading ? (<h3 className='py-1'>Loading...</h3>) : (<h3 className='py-1'>All drivers</h3>)}
                         <div className="orab mt-4">
                             <table className="mytable">

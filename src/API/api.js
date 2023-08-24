@@ -25,7 +25,7 @@ export const api = {
 
 
 
-    postCategory: (category) =>
+	postCategory: (category) =>
 		axios.post(BASE_URL + '/create/category', category),
 	postSubCategory: (subCategory) =>
 		axios.post(BASE_URL + '/create/subcategory', subCategory),
@@ -34,5 +34,9 @@ export const api = {
 		axios.post(BASE_URL + '/create/sub_product', subProduct),
 
 
-		updateCategory:(id, category) => axios.put(BASE_URL + '/category/' + id, category)
+	updateCategory: (id, category) => axios.put(BASE_URL + '/category/' + id, category),
+
+
+
+	createDriver: (driverCreate) => axios.post(BASE_URL + '/create/driver', driverCreate)
 };
