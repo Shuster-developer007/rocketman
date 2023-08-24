@@ -38,5 +38,6 @@ export const api = {
 
 
 
-	createDriver: (driverCreate) => axios.post(BASE_URL + '/create/driver', driverCreate)
+	createDriver: (driverCreate) => axios.post(BASE_URL + '/create/driver', driverCreate),
+	createPayment: (createPayment) => axios.post(BASE_URL + "/create/payment", createPayment)
 };

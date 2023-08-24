@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "../../styles/Settings/Payment.css"
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
@@ -9,6 +9,13 @@ import { toast } from 'react-toastify'
 const Payment = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+    const payment_typeRef = useRef()
+    const payment_telegramRef = useRef()
+    const linkRef = useRef()
+    const paymentStatusOnRef = useRef()
+    const paymentStatusOfRef = useRef()
+
+
     localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getPayments = async () => {
         try {
@@ -29,6 +36,24 @@ const Payment = () => {
         getPayments();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+    const handleCreatePayment = async () => {
+        try {
+            console.log(paymentStatusOfRef.current.value);
+            const create_payment = {
+                "payment_type": payment_typeRef.current.value,
+                "telegram_payment": payment_telegramRef.current.value,
+                "link": linkRef.current.value,
+                "status": paymentStatusOfRef.current.value || paymentStatusOnRef.current.value
+            }
+            const { data } = await api.createPayment(create_payment)
+            console.log(data);
+            getPayments()
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 
@@ -61,6 +86,8 @@ const Payment = () => {
                                     <input type="text" className='form-control' placeholder='Payment name' id='name' name='name' />
                                     <label htmlFor="telegram_btn_name" className=' my-3'>Telegram button name</label>
                                     <input type="text" className='form-control' id='telegram_btn_name' placeholder='masalan : click' />
+                                    <label htmlFor="link" className=' my-3'>Link</label>
+                                    <input type="text" className='form-control' id='link' placeholder='link' />
                                 </form>
                             </div>
                             <div className="modal-footer d-flex justify-content-center align-items-center">
@@ -77,15 +104,34 @@ const Payment = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form action="">
+                                <form action="" onSubmit={handleCreatePayment}>
                                     <label htmlFor="name" className='my-3'>Nomi</label>
-                                    <input type="text" className='form-control' placeholder='Payment name' id='name' name='name' />
+                                    <input ref={payment_typeRef} type="text" className='form-control' placeholder='Payment name' id='name' name='name' />
                                     <label htmlFor="telegram_btn_name" className=' my-3'>Telegram button name</label>
-                                    <input type="text" className='form-control' id='telegram_btn_name' placeholder='masalan : click' />
+                                    <input ref={payment_telegramRef} type="text" className='form-control' id='telegram_btn_name' placeholder='masalan : click' />
+                                    <label htmlFor="link" className=' my-3'>Link</label>
+                                    <input ref={linkRef} type="text" className='form-control' id='link' placeholder='link' />
+                                    <div className=''>
+                                        <label htmlFor="status" className='mt-3'>Holat</label>
+                                        <div className='d-flex gap-4'>
+                                            <div className="form-check">
+                                                <input defaultValue={true} ref={paymentStatusOnRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                                    on
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input defaultValue={false} ref={paymentStatusOfRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                                    of
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div className="modal-footer d-flex justify-content-center align-items-center">
-                                <button className="btn_modal">Submit</button>
+                                <button type='submit' onClick={() => handleCreatePayment()} className="btn_modal">Submit</button>
                             </div>
                         </div>
                     </div>
