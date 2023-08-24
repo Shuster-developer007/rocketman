@@ -3,13 +3,14 @@ import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
 import "../../styles/Takliflar/Takliflar.css"
 import { api } from '../../API/api'
+import { toast } from 'react-toastify'
 
 const Takliflar = () => {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
-    const getPayments = async () => {
+    const getComplaints = async () => {
         try {
             setLoading(true)
             const { data } = await api.getComplaitns();
@@ -25,9 +26,22 @@ const Takliflar = () => {
     };
 
     useEffect(() => {
-        getPayments();
+        getComplaints();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+    const handleDeleteComplaint = async (id) => {
+        try {
+            const data = await api.deleteTakliflar(id)
+            if (data.status == 204) {
+                getComplaints()
+                toast("Success deleted complaint", { type: "success" })
+            }
+        } catch (error) {
+            toast("Delete qilishda xatolik mavjud", { type: "error" })
+        }
+    }
 
     return (
         <div>
@@ -70,7 +84,7 @@ const Takliflar = () => {
                                     <p className='parag'>{item.description}</p>
                                     <div className='icons d-flex align-items-center gap-4'>
                                         <div data-bs-toggle="modal" data-bs-target="#dispatchmodal" className='share'><i className="fa-solid fa-share "></i></div>
-                                        <div className='delete'><i className="fa-solid fa-trash text-danger  deleteicon"></i></div>
+                                        <div onClick={() => handleDeleteComplaint(item._id)} className='delete'><i className="fa-solid fa-trash text-danger  deleteicon"></i></div>
                                     </div>
                                 </div>
                             ))}

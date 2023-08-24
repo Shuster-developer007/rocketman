@@ -20,11 +20,6 @@ export const api = {
 	createAdmin: (createAdmin) =>
 		axios.post(BASE_URL + '/create/admin', createAdmin),
 	deletePayment: (id) => axios.delete(BASE_URL + '/payment/' + id),
-
-
-
-
-
 	postCategory: (category) =>
 		axios.post(BASE_URL + '/create/category', category),
 	postSubCategory: (subCategory) =>
@@ -32,12 +27,12 @@ export const api = {
 	postProduct: (product) => axios.post(BASE_URL + '/create/product', product),
 	postSubProduct: (subProduct) =>
 		axios.post(BASE_URL + '/create/sub_product', subProduct),
-
-
 	updateCategory: (id, category) => axios.put(BASE_URL + '/category/' + id, category),
-
-
-
 	createDriver: (driverCreate) => axios.post(BASE_URL + '/create/driver', driverCreate),
-	createPayment: (createPayment) => axios.post(BASE_URL + "/create/payment", createPayment)
+	createPayment: (createPayment) => axios.post(BASE_URL + "/create/payment", createPayment),
+	getOnePayment: (id) => axios.get(BASE_URL + "/payment/" + id),
+	updatedPayment: (id, updatePayment) => axios.put(BASE_URL + "/payment/" + id, updatePayment),
+	deleteTakliflar: (id) => axios.delete(BASE_URL + "/complaint/" + id),
+	updateDriver: (id, updatedDriver) => axios.put(BASE_URL + "/update/driver/" + id, updatedDriver),
+	getOneDriver: (id) => axios.get(BASE_URL + "/driver/" + id)
 };

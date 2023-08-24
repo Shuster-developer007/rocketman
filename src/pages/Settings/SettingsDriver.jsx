@@ -10,7 +10,11 @@ const SettingsDriver = () => {
 
 
     const [data, setData] = useState([])
+    const [driver, setDriver] = useState({})
     const [loading, setLoading] = useState(false)
+    const [id, setId] = useState('')
+
+    // Create Refs
     const drivernameRef = useRef()
     const driverbirthdayRef = useRef()
     const driverphoneRef = useRef()
@@ -18,8 +22,12 @@ const SettingsDriver = () => {
     const drivertypeRef = useRef()
     const driverstatusOnRef = useRef()
     const driverstatusOfRef = useRef()
-
-
+    // update Refs
+    const editdrivernameRef = useRef()
+    const editdriverbirthdayRef = useRef()
+    const editdriverphoneRef = useRef()
+    const editdriverautonumberRef = useRef()
+    const editdrivertypeRef = useRef()
 
     const getDrivers = async () => {
         try {
@@ -59,6 +67,37 @@ const SettingsDriver = () => {
             }
         } catch (error) {
             toast(error.response.data.message, { type: "error" })
+        }
+    }
+
+    const getOneDriver = async (id) => {
+        try {
+            setId(id)
+            const { data } = await api.getOneDriver(id)
+            setDriver(data)
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+
+    const handleUpdateDriver = async () => {
+        try {
+            const driverUpdate = {
+                "driver_full_name": editdrivernameRef.current.value,
+                "driver_birthday": editdriverbirthdayRef.current.value,
+                "driver_phone": editdriverphoneRef.current.value,
+                "car_number": editdriverautonumberRef.current.value,
+                "type": editdrivertypeRef.current.value,
+                "status": true
+            }
+            const { data } = await api.updateDriver(id, driverUpdate)
+            if (data.status == 202) {
+                toast("Success updated driver", { type: "success" })
+            }
+            getDrivers()
+        } catch (error) {
+            toast("Driver update qilishda xatolik mavjud", { type: "error" })
         }
     }
 
@@ -139,27 +178,27 @@ const SettingsDriver = () => {
                                     <div className='d-flex  justify-content-between'>
                                         <div>
                                             <label htmlFor="driver_name" className='my-2'>Driver name</label>
-                                            <input type="text" className='form-control' placeholder='name' id='driver_name' name='driver_name' />
+                                            <input defaultValue={driver?.data?.driver_full_name} ref={editdrivernameRef} type="text" className='form-control' placeholder='name' id='driver_name' name='driver_name' />
                                         </div>
                                         <div>
                                             <label htmlFor="date" className=' my-2'>D.O.B</label>
-                                            <input type="text" className='form-control 100' name='date' id='date' placeholder='masalan:22.11.1999' />
+                                            <input defaultValue={driver?.data?.driver_birthday} ref={editdriverbirthdayRef} type="text" className='form-control 100' name='date' id='date' placeholder='masalan:22.11.1999' />
                                         </div>
                                     </div>
                                     <div className='d-flex justify-content-between'>
                                         <div>
                                             <label htmlFor="phone" className='my-2'>Telefon raqami</label>
-                                            <input type="text" className='form-control' placeholder='+998 _ _ _ _ _ _ _ _ _' id='phone' name='phone' />
+                                            <input defaultValue={driver?.data?.driver_phone} ref={editdriverphoneRef} type="text" className='form-control' placeholder='+998 _ _ _ _ _ _ _ _ _' id='phone' name='phone' />
                                         </div>
                                         <div>
                                             <label htmlFor="auto_number" className=' my-2'>Autoraqam</label>
-                                            <input type="text" className='form-control 100' name='auto_number' id='auto_number' placeholder='masalan:20 C 777 BB' />
+                                            <input defaultValue={driver?.data?.car_number} ref={editdriverautonumberRef} type="text" className='form-control 100' name='auto_number' id='auto_number' placeholder='masalan:20 C 777 BB' />
                                         </div>
                                     </div>
                                     <div className="d-flex align-items-center">
                                         <div>
                                             <label htmlFor="type" className='my-2'>Turi</label>
-                                            <input type="text" className='form-control' placeholder='masalan: Tico' id='type' name='type' />
+                                            <input defaultValue={driver?.data?.type} ref={editdrivertypeRef} type="text" className='form-control' placeholder='masalan: Tico' id='type' name='type' />
                                         </div>
                                         <div className='input_cheks'>
                                             <label htmlFor="status" className='mt-4'>Holat</label>
@@ -182,7 +221,7 @@ const SettingsDriver = () => {
                                 </form>
                             </div>
                             <div className="modal-footer d-flex justify-content-center align-items-center">
-                                <button className="btn_modal">Submit</button>
+                                <button onClick={() => handleUpdateDriver()} className="btn_modal">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -224,7 +263,7 @@ const SettingsDriver = () => {
                                             <td className='jg text-center'>{item.car_number}</td>
                                             <td className='jg text-center'>{item.type}</td>
                                             <td className='jg text-success'>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled d-flex align-items-center justify-content-center'>enabled</div></div>) : (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
-                                            <td data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
+                                            <td onClick={() => getOneDriver(item._id)} data-bs-toggle="modal" data-bs-target="#editmodal" className='jg d-flex align-items-center justify-content-center py-3'><div className='setting_icon_edit'>
                                                 <i className="fa-solid fa-marker text-white"></i>
                                             </div>
                                             </td>

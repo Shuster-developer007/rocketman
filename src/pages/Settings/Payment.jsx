@@ -8,13 +8,19 @@ import { toast } from 'react-toastify'
 
 const Payment = () => {
     const [data, setData] = useState([])
+    const [payment, setPayment] = useState({})
+    const [id, setId] = useState()
     const [loading, setLoading] = useState(false)
+    const editPayment_typeRef = useRef()
+    const editpayment_telegramRef = useRef()
+    const editlinkRef = useRef()
+    const editpaymentStatusOnRef = useRef()
+    const editpaymentStatusOfRef = useRef()
     const payment_typeRef = useRef()
     const payment_telegramRef = useRef()
     const linkRef = useRef()
     const paymentStatusOnRef = useRef()
     const paymentStatusOfRef = useRef()
-
 
     localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getPayments = async () => {
@@ -54,6 +60,33 @@ const Payment = () => {
             console.log(error);
         }
     }
+    const getOnePaymentOrEdit = async (id) => {
+        try {
+            setId(id)
+            const { data } = await api.getOnePayment(id)
+            setPayment(data)
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    const handleupdatedPayment = async () => {
+        try {
+            const update_payment = {
+                "payment_type": editPayment_typeRef.current.value,
+                "link": editlinkRef.current.value,
+                "status": false,
+                "telegram_payment": editpayment_telegramRef.current.value,
+            }
+            const data = await api.updatedPayment(id, update_payment)
+            if (data.status == 202) {
+                getPayments()
+                toast("Success updated payment", { type: "success" })
+            }
+        } catch (error) {
+            toast("Update qilishda xatolik yuz berdi")
+        }
+    }
 
 
 
@@ -81,17 +114,34 @@ const Payment = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form action="">
+                                <form action="" >
                                     <label htmlFor="name" className='my-3'>Nomi</label>
-                                    <input type="text" className='form-control' placeholder='Payment name' id='name' name='name' />
+                                    <input defaultValue={payment?.data?.payment_type} ref={editPayment_typeRef} type="text" className='form-control' placeholder={payment?.data?.payment_type} id='name' name='name' />
                                     <label htmlFor="telegram_btn_name" className=' my-3'>Telegram button name</label>
-                                    <input type="text" className='form-control' id='telegram_btn_name' placeholder='masalan : click' />
+                                    <input defaultValue={payment?.data?.telegram_payment} ref={editpayment_telegramRef} type="text" className='form-control' id='telegram_btn_name' placeholder='masalan : click' />
                                     <label htmlFor="link" className=' my-3'>Link</label>
-                                    <input type="text" className='form-control' id='link' placeholder='link' />
+                                    <input defaultValue={payment?.data?.link} ref={editlinkRef} type="text" className='form-control' id='link' placeholder='link' />
+                                    <div className=''>
+                                        <label htmlFor="status" className='mt-3'>Holat</label>
+                                        <div className='d-flex gap-4'>
+                                            <div className="form-check">
+                                                <input defaultValue={true} ref={editpaymentStatusOnRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                                    on
+                                                </label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input defaultValue={false} ref={editpaymentStatusOfRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                                    of
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div className="modal-footer d-flex justify-content-center align-items-center">
-                                <button className="btn_modal">Submit</button>
+                                <button type='submit' onClick={() => handleupdatedPayment()} className="btn_modal">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -104,7 +154,7 @@ const Payment = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form action="" onSubmit={handleCreatePayment}>
+                                <form action="" >
                                     <label htmlFor="name" className='my-3'>Nomi</label>
                                     <input ref={payment_typeRef} type="text" className='form-control' placeholder='Payment name' id='name' name='name' />
                                     <label htmlFor="telegram_btn_name" className=' my-3'>Telegram button name</label>
@@ -165,11 +215,11 @@ const Payment = () => {
                                     {data?.data?.map((item) => (
                                         <tr className='tr' key={item._id}>
                                             <th className='jg text-center' cope="row">{item.payment_type}</th>
-                                            <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>{item.payment_type}</td>
+                                            <td className='jg text-center d-flex align-items-center justify-content-center gap-2 py-4'><i className="fa-solid fa-credit-card text-warning"></i>{item.telegram_payment}</td>
                                             <td className='jg text-center'><a href={item.link} target='_blank'><i className="fa-solid fa-link"></i></a></td>
                                             <td className='jg '>{item.status == true ? (<div className='d-flex justify-content-center align-items-center'><div className='enabled text-success d-flex align-items-center justify-content-center'>enabled</div></div>) : (<div className='d-flex justify-content-center align-items-center '><div className="disabled text-danger justify-content-center align-items-center d-flex">disabled</div></div>)}</td>
                                             <td className="jg">
-                                                <div className='d-flex justify-content-center align-items-center'>
+                                                <div onClick={() => getOnePaymentOrEdit(item._id)} className='d-flex justify-content-center align-items-center'>
                                                     <div data-bs-toggle="modal" data-bs-target="#editmodal" className='setting_icon_edit'>
                                                         <i className="fa-solid fa-marker text-white"></i>
                                                     </div>
