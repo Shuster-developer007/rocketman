@@ -32,4 +32,7 @@ export const api = {
 	postProduct: (product) => axios.post(BASE_URL + '/create/product', product),
 	postSubProduct: (subProduct) =>
 		axios.post(BASE_URL + '/create/sub_product', subProduct),
+
+
+		updateCategory:(id, category) => axios.put(BASE_URL + '/category/' + id, category)
 };

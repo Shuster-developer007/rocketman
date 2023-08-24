@@ -72,12 +72,12 @@ export const Food = () => {
 												<td scope='row' className='jg text-center'>
 													<Link
 														to={'#'}
-														className='Item-link text-decoration-none text-dark'
+														className='Item-link text-decoration-none text-dark w-50'
 													>
 														{item.sub_product_name}
 													</Link>
 												</td>
-												<td className='jg text-center'>{item.description}</td>
+												<td className='jg text-center w-50'>{item.description}</td>
 												<td className='jg text-center'>{item.price}</td>
 												<td className='jg text-center'>
 													{item.status == true ? (
