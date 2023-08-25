@@ -119,9 +119,9 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.map((item) => (
+                  {data?.data?.map((item,index) => (
                     <tr className='tr' key={item._id}>
-                      <th className='jg text-center' cope="row">1</th>
+                      <th className='jg text-center' cope="row">{index+1}</th>
                       <td className='jg text-center'>{(item?.created_at)?.slice(4, 11) + (item?.created_at)?.slice(16, 21)}</td>
                       <td className='jg text-center'>{item?.user?.username}</td>
                       <td className='jg text-center'>{item?.user?.phone}</td>

@@ -89,9 +89,9 @@ const MijozlarById = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data?.data?.map((item) => (
+                                    {data?.data?.map((item , index) => (
                                         <tr key={item._id} className='tr'>
-                                            <th className='jg text-center' cope="row">1</th>
+                                            <th className='jg text-center' cope="row">{index + 1}</th>
                                             <td className='jg text-center'>{(item.createdAt).slice(0, 10)}</td>
                                             <td className='jg text-center'>{item.items.map((price) => (
                                                 (price.count + price.count)

@@ -121,9 +121,9 @@ const SettingsUsers = () => {
 
                             {loading ? (<h2>Loading</h2>) : (<h2>Available users</h2>)}
                             <div className='setting_card_users'>
-                                {data?.data?.map((item) => (
+                                {data?.data?.map((item , index) => (
                                     <div key={item._id} className='user_setting d-flex justify-content-between'>
-                                        <div><h6>1.{item.username}</h6></div>
+                                        <div><h6>{index + 1}.{item.username}</h6></div>
                                         <div className='d-flex gap-3'>
                                             <div className='setting_icon_edit' data-bs-toggle="modal" data-bs-target="#editUserModal">
                                                 <i className="fa-solid fa-marker text-white"></i>
