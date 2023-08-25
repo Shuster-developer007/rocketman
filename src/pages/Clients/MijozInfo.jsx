@@ -1,10 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import "../../styles/Clients/MijozInfo.css"
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { api } from '../../API/api';
 
 const MijozInfo = () => {
+
+    const [loading, setLoading] = useState(false)
+    const [data, setData] = useState({})
+    const { id } = useParams()
+    console.log(data);
+    const orderfindInfo = async () => {
+        try {
+            setLoading(true)
+            const { data } = await api.getOneOrderInfo(id)
+            console.log(data);
+            setData(data)
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        orderfindInfo();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div>
             <Sidebar />
@@ -21,14 +45,14 @@ const MijozInfo = () => {
                                                 <i className="fa-solid fa-angle-left"></i>
                                             </div>
                                         </Link>
-                                        <h4>Timur Raxmatov</h4>
+                                        <h4>{data?.data?.user?.username}</h4>
                                     </div>
                                     <div>
                                         <p className='text-secondary'>Buyurtma vaqti:</p>
-                                        <h6 className='buyutrma'>May 22, 11:23</h6>
+                                        <h6 className='buyutrma'>{(data?.data?.created_at)?.slice(4, 10) + (data?.data?.created_at)?.slice(15, 25)}</h6>
                                     </div>
                                     <button className="phone-btn">
-                                        +998901342386
+                                        {data?.data?.user?.phone}
                                     </button>
                                 </div>
                             </div>
@@ -42,14 +66,14 @@ const MijozInfo = () => {
                                 </div>
                                 <div className='d-flex flex-column align-items-center'>
                                     <h5 className='text-center'>Holat</h5>
-                                    <button className="holat-btn">
-                                        yakun
+                                    <button className={`holat-btn ${data?.data?.status} `}>
+                                        {data?.data?.status}
                                     </button>
                                 </div>
                                 <div className='d-flex flex-column align-items-center'>
                                     <h5>Driver</h5>
                                     <button className="btn-driver">
-                                        01 | S 777 AA
+                                        {data?.data?.driver == null ? ("no content") : (data?.data?.driver?.car_number)}
                                     </button>
                                 </div>
                             </div>

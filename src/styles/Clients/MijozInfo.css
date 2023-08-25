@@ -15,9 +15,8 @@
     width: 120px;
     height: 35px;
     border-radius: 14px;
-    border: none;
-    background-color: #D9FFDA;
-    color: green;
+    border: 1px solid rgba(0, 0, 0, 0.414);
+    background-color: rgba(128, 128, 128, 0.16);
 }
 
 .bh {

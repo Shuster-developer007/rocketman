@@ -37,5 +37,9 @@ export const api = {
 	getOneDriver: (id) => axios.get(BASE_URL + "/driver/" + id),
 	getClient: () => axios.get(BASE_URL + "/users"),
 	getOrder_user: (id) => axios.get(BASE_URL + "/order/user/" + id),
-	getOneUser: (id) => axios.get(BASE_URL + "/user/" + id)
+	getOneUser: (id) => axios.get(BASE_URL + "/user/" + id),
+	getOneOrderInfo: (id) => axios.get(BASE_URL + "/order/" + id),
+	getOrders: () => axios.get(BASE_URL + "/orders"),
+	getOrderDriver: () => axios.get(BASE_URL + "/driver/enabled"),
+	addDriverOrder: (id, driver_id) => axios.put(BASE_URL + "/add/driver/" + id, driver_id)
 };

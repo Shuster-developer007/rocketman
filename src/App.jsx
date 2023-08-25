@@ -27,7 +27,7 @@ function App() {
 				<Route path='/takliflar' element={<Takliflar />} />
 				<Route path='/mijozlar' element={<Mijozlar />} />
 				<Route path='/mijozlar/:id' element={<MijozlarById />} />
-				<Route path='/mijozlar/info' element={<MijozInfo />} />
+				<Route path='/mijozlar/info/:id' element={<MijozInfo />} />
 				<Route path='/settings/payment' element={<Payment />} />
 				<Route path='/settings/change' element={<SettingChange />} />
 				<Route path='/settings/users' element={<SettingsUsers />} />

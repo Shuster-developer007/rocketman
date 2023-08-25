@@ -101,7 +101,7 @@ const MijozlarById = () => {
                                             <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
                                             <td className='jg'>{item.driver == null ? (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>no connected</div></div>) : <div className='d-flex align-items-center justify-content-center '><div className='auto_number'>01 | S 777 AA</div></div>}</td>
                                             <td className={`jg text-center ${item.status}`}>{item.status}</td>
-                                            <td className='jg m-auto text-center fs-4'>...</td>
+                                            <td className='jg m-auto text-center fs-4'><Link to={`/mijozlar/info/${item._id}`} className='text-decoration-none text-dark'>...</Link></td>
                                         </tr>
                                     ))}
                                 </tbody>
