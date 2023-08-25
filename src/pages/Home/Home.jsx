@@ -4,18 +4,20 @@ import Header from '../../components/Header';
 import "../../styles/Home/Home.css"
 import { api } from '../../API/api';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [modal, setModal] = useState(false)
   const [data, setData] = useState([])
   const [order_id, setId] = useState('')
+  const [count, setCount] = useState(1)
   const [data_driver, setData_Driver] = useState([])
   const [loading, setLoading] = useState(false)
 
   const findOrders = async () => {
     try {
       setLoading(true)
-      const { data } = await api.getOrders()
+      const { data } = await api.getOrders(count + "")
       setData(data)
     } catch (error) {
       console.log(error.message);
@@ -43,7 +45,7 @@ const Home = () => {
 
   const addDriver = async (id) => {
     try {
-      
+
       const body = {
         "driver": id
       }
@@ -124,21 +126,22 @@ const Home = () => {
                       <td className='jg text-center'>{item?.user?.username}</td>
                       <td className='jg text-center'>{item?.user?.phone}</td>
                       <td className='jg text-center'>{item?.items?.map((item) => (
-                        item.count
+                        item?.count
                       ))}</td>
                       <td className='jg text-center'>{item?.total_price}</td>
                       <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
-                      <td className='jg'>{item?.driver == null ? (<div onClick={() => setId(item._id)} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item.driver.car_number}</div></div>)}</td>
+                      <td className='jg'>{item?.driver == null ? (<div onClick={() => setId(item?._id)} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item?.driver?.car_number}</div></div>)}</td>
                       <td className={`jg text-center ${item?.status}`}>{item?.status}</td>
-                      <td className='jg m-auto text-center fs-2'>...</td>
+                      <td className='jg m-auto text-center fs-2'><Link className='text-decoration-none text-dark' to={`/mijozlar/info/${item?._id}`}>...</Link></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <div className='d-flex next'>
+              <div className='d-flex next align-items-center'>
                 <div className="bor">
                   <i className="fa-solid fa-angle-left"></i>
                 </div>
+                {count}
                 <div className="bor">
                   <i className="fa-solid fa-angle-right "></i>
                 </div>

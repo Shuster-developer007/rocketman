@@ -6,7 +6,6 @@ import { Link, useParams } from 'react-router-dom';
 import { api } from '../../API/api';
 
 const MijozInfo = () => {
-
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState({})
     const { id } = useParams()
@@ -26,7 +25,6 @@ const MijozInfo = () => {
 
     useEffect(() => {
         orderfindInfo();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -40,7 +38,7 @@ const MijozInfo = () => {
                             <div className="jadval">
                                 <div className='topdiv  d-flex justify-content-between'>
                                     <div className="mijoz d-flex align-items-center gap-3">
-                                        <Link to='/mijozlar' className='text-dark text-decoration-none '>
+                                        <Link to={`/mijozlar/${data?.data?.user?._id}`} className='text-dark text-decoration-none '>
                                             <div className="bor">
                                                 <i className="fa-solid fa-angle-left"></i>
                                             </div>
@@ -62,7 +60,7 @@ const MijozInfo = () => {
                                         <p>Manzil</p>
                                         <i className="fa-solid fa-location-dot text-danger fs-5"></i>
                                     </div>
-                                    <p className='d-flex gap-1 align-items-center mt-2'><i className="fa-solid fa-paste fs-5"></i> Copy address link</p>
+                                    <p onCopy={data?.data?.location} className='d-flex gap-1 align-items-center mt-2'><i className="fa-solid fa-paste fs-5"></i> Copy address link</p>
                                 </div>
                                 <div className='d-flex flex-column align-items-center'>
                                     <h5 className='text-center'>Holat</h5>

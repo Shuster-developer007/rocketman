@@ -13,6 +13,10 @@
 }
 
 
+.dropdown_icon {
+    margin-bottom: 0.6rem;
+}
+
 .inp {
     padding-left: 1rem;
     width: 350px;
