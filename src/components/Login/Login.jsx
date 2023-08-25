@@ -1,24 +1,32 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { api } from '../../API/api';
 import { Logo } from '../../assets/images';
 import './Login.css';
 
 export const Login = () => {
+	const navigate = useNavigate();
 	const initialValues = {
-		email: '',
+		username: '',
 		password: '',
 	};
-	const onSubmit = (values) => {
-		console.log(values);
+	const onSubmit = async (values) => {
+		const data = await api.login(values);
+		console.log(data.data);
+		if (data.data.status === 200) {
+			localStorage.setItem('token', data.data.token);
+			localStorage.setItem('admin', data.data.data.username);
+			navigate('/');
+		}
 	};
 
 	const validationSchema = Yup.object({
-		email: Yup.string()
-			.email('Invalid format your email')
+		username: Yup.string()
+			.min(2, 'Username must be longer then 2')
 			.required('Required!'),
 		password: Yup.string()
-			.min(3, 'Password must be longer then 3')
-			.max(8, 'Password must be shorter then 8')
+			.min(5, 'Password must be longer then 3')
 			.required('Required!'),
 	});
 
@@ -38,15 +46,15 @@ export const Login = () => {
 						<div className='mb-4 loginIcon'>
 							<Field
 								className='form-control ps-4'
-								type='email'
-								name='email'
-								id='email'
+								type='text'
+								name='username'
+								id='username'
 								placeholder='Login...'
 							/>
 							<ErrorMessage
 								component={'div'}
 								className='text-danger position-absolute'
-								name='email'
+								name='username'
 							/>
 						</div>
 						<div className='mb-4 passIcon'>
