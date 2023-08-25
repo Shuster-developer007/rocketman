@@ -248,9 +248,9 @@ const SettingsDriver = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data?.data?.map((item) => (
+                                    {data?.data?.map((item, index) => (
                                         <tr className='tr' key={item._id}>
-                                            <th className='jg text-center' cope="row">1</th>
+                                            <th className='jg text-center' cope="row">{index + 1}</th>
                                             <td className='jg text-center'>{item.driver_full_name}</td>
                                             <td className='jg text-center'>{item.driver_birthday}</td>
                                             <td className='jg text-center'>{item.driver_phone}</td>
