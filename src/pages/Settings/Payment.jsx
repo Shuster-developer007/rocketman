@@ -26,15 +26,11 @@ const Payment = () => {
         setValue(e.target.value);
     };
 
-    localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getPayments = async () => {
         try {
             setLoading(true)
             const { data } = await api.getSettingsPayment();
             setData(data)
-            // if (data.status === 200) {
-            // 	dispatch(setCategory(data.data.data));
-            // }
         } catch (error) {
             console.log(error.message);
         } finally {

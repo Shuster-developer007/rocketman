@@ -19,9 +19,6 @@ const SettingsUsers = () => {
             setLoading(true)
             const { data } = await api.getAdmins();
             setData(data)
-            // if (data.status === 200) {
-            // 	dispatch(setCategory(data.data.data));
-            // }
         } catch (error) {
             console.log(error.message);
         } finally {
@@ -31,7 +28,6 @@ const SettingsUsers = () => {
 
     useEffect(() => {
         getAdmins();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleDeleteAdmin = async (id) => {
@@ -41,7 +37,7 @@ const SettingsUsers = () => {
             toast("Success deleted admin", { type: "success" })
             getAdmins()
         } catch (error) {
-
+            
         } finally {
             setLoading(false)
         }
