@@ -27,29 +27,19 @@ export const api = {
 	postProduct: (product) => axios.post(BASE_URL + '/create/product', product),
 	postSubProduct: (subProduct) =>
 		axios.post(BASE_URL + '/create/sub_product', subProduct),
-	updateCategory: (id, category) =>
-		axios.put(BASE_URL + '/category/' + id, category),
-	createDriver: (driverCreate) =>
-		axios.post(BASE_URL + '/create/driver', driverCreate),
-	createPayment: (createPayment) =>
-		axios.post(BASE_URL + '/create/payment', createPayment),
-	getOnePayment: (id) => axios.get(BASE_URL + '/payment/' + id),
-	updatedPayment: (id, updatePayment) =>
-		axios.put(BASE_URL + '/payment/' + id, updatePayment),
-	deleteTakliflar: (id) => axios.delete(BASE_URL + '/complaint/' + id),
-	updateDriver: (id, updatedDriver) =>
-		axios.put(BASE_URL + '/update/driver/' + id, updatedDriver),
-	getOneDriver: (id) => axios.get(BASE_URL + '/driver/' + id),
-	getClient: () => axios.get(BASE_URL + '/users'),
-	getOrder_user: (id) => axios.get(BASE_URL + '/order/user/' + id),
-	getOneUser: (id) => axios.get(BASE_URL + '/user/' + id),
-	getOneOrderInfo: (id) => axios.get(BASE_URL + '/order/' + id),
-	getOrders: (count) => axios.get(BASE_URL + '/orders?page=' + count),
-	getOrderDriver: () => axios.get(BASE_URL + '/driver/enabled'),
-	addDriverOrder: (id, driver_id) =>
-		axios.put(BASE_URL + '/add/driver/' + id, driver_id),
-
-
-		
-	login: (admin) => axios.post(BASE_URL + '/login', admin),
+	updateCategory: (id, category) => axios.put(BASE_URL + '/category/' + id, category),
+	createDriver: (driverCreate) => axios.post(BASE_URL + '/create/driver', driverCreate),
+	createPayment: (createPayment) => axios.post(BASE_URL + "/create/payment", createPayment),
+	getOnePayment: (id) => axios.get(BASE_URL + "/payment/" + id),
+	updatedPayment: (id, updatePayment) => axios.put(BASE_URL + "/payment/" + id, updatePayment),
+	deleteTakliflar: (id) => axios.delete(BASE_URL + "/complaint/" + id),
+	updateDriver: (id, updatedDriver) => axios.put(BASE_URL + "/update/driver/" + id, updatedDriver),
+	getOneDriver: (id) => axios.get(BASE_URL + "/driver/" + id),
+	getClient: () => axios.get(BASE_URL + "/users"),
+	getOrder_user: (id) => axios.get(BASE_URL + "/order/user/" + id),
+	getOneUser: (id) => axios.get(BASE_URL + "/user/" + id),
+	getOneOrderInfo: (id) => axios.get(BASE_URL + "/order/" + id),
+	getOrders: (count) => axios.get(BASE_URL + "/orders?page=" + count),
+	getOrderDriver: () => axios.get(BASE_URL + "/driver/enabled"),
+	addDriverOrder: (id, driver_id) => axios.put(BASE_URL + "/add/driver/" + id, driver_id)
 };
