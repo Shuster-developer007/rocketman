@@ -9,7 +9,6 @@ const Takliflar = () => {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getComplaints = async () => {
         try {
             setLoading(true)

@@ -5,10 +5,6 @@ import '../styles/Header/Header.css';
 
 const Header = () => {
 
-    const handleRemoveToken = async () => {
-        localStorage.clear()
-    }
-
     const username = localStorage.getItem('admin') || 'John Doe';
     return (
         <header className='header'>
@@ -32,7 +28,7 @@ const Header = () => {
                         </button>
                         <Link
                             to={'/login'}
-                            onClick={() => handleRemoveToken()}
+                            onClick={() => localStorage.clear()}
                             className='dropdown-menu text-center text-decoration-none'
                         >
                             Log out

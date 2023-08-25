@@ -44,4 +44,7 @@ export const api = {
 	addDriverOrder: (id, driver_id) => axios.put(BASE_URL + "/add/driver/" + id, driver_id),
 
 	login: (admin) => axios.post(BASE_URL + '/login', admin),
+
+	updateStatusOrder: (id, status) => axios.put(BASE_URL + '/update/order/status/' + id, status)
+
 };

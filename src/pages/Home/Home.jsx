@@ -5,14 +5,35 @@ import "../../styles/Home/Home.css"
 import { api } from '../../API/api';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { Radio } from 'antd';
 
 const Home = () => {
   const [modal, setModal] = useState(false)
   const [data, setData] = useState([])
   const [order_id, setId] = useState('')
   const [count, setCount] = useState(1)
+  const [statusId, setStatus] = useState('')
   const [data_driver, setData_Driver] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const [value, setValue] = useState(false);
+
+  const onChange = (e) => {
+    setValue(e.target.value);
+  };
+
+
+  const handleEditStatusOrder = async () => {
+    try {
+      const { data } = await api.updateStatusOrder(statusId, { status: value })
+      if (data.status == 202) {
+        findOrders()
+        toast("Success updated status", { type: "success" })
+      }
+    } catch (error) {
+      toast(error?.response?.data?.message, { type: 'error' })
+    }
+  }
 
   const findOrders = async () => {
     try {
@@ -69,6 +90,32 @@ const Home = () => {
       <Sidebar />
       <div className='ummumiy'>
         <Header />
+        <div>
+          <div className="modal fade" id="editstatusmodal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Status Order</h1>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                </div>
+                <div className="modal-body">
+                  <Radio.Group className='d-flex flex-column gap-3' onChange={onChange} value={value}>
+                    <Radio value={'buyurtma'}>buyurtma</Radio>
+                    <Radio value={'qabul'}>qabul</Radio>
+                    <Radio value={'yetkazish'}>yetkazish</Radio>
+                    <Radio value={'yakun'}>yakun</Radio>
+                    <Radio value={'bekor'}>bekor</Radio>
+                  </Radio.Group>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" onClick={() => handleEditStatusOrder()} className="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="offcanvas offcanvas-end bg-dark" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
           <div className="offcanvas-header">
             {loading ? (<h5 className="offcanvas-title text-white" id="offcanvasRightLabel">Loading..</h5>) : (<h5 className="offcanvas-title text-white" id="offcanvasRightLabel">All Drivers</h5>)}
@@ -131,7 +178,7 @@ const Home = () => {
                       <td className='jg text-center'>{item?.total_price}</td>
                       <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
                       <td className='jg'>{item?.driver == null ? (<div onClick={() => setId(item?._id)} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item?.driver?.car_number}</div></div>)}</td>
-                      <td className={`jg text-center ${item?.status}`}>{item?.status}</td>
+                      <td data-bs-toggle="modal" onClick={() => setStatus(item?._id)} data-bs-target="#editstatusmodal" className={`jg text-center ${item?.status}`}>{item?.status}</td>
                       <td className='jg m-auto text-center fs-2'><Link className='text-decoration-none text-dark' to={`/mijozlar/info/${item?._id}`}>...</Link></td>
                     </tr>
                   ))}
