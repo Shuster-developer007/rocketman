@@ -5,6 +5,7 @@ import "../../styles/Settings/SettingsDriver.css"
 import SettingsLinks from '../../components/SettingsLinks'
 import { api } from '../../API/api'
 import { toast } from 'react-toastify'
+import { Radio } from 'antd'
 
 const SettingsDriver = () => {
 
@@ -13,6 +14,7 @@ const SettingsDriver = () => {
     const [driver, setDriver] = useState({})
     const [loading, setLoading] = useState(false)
     const [id, setId] = useState('')
+    const [value, setValue] = useState(false);
 
     // Create Refs
     const drivernameRef = useRef()
@@ -28,6 +30,13 @@ const SettingsDriver = () => {
     const editdriverphoneRef = useRef()
     const editdriverautonumberRef = useRef()
     const editdrivertypeRef = useRef()
+
+
+
+    const onChange = (e) => {
+        setValue(e.target.value);
+    };
+
 
     const getDrivers = async () => {
         try {
@@ -58,7 +67,7 @@ const SettingsDriver = () => {
                 "driver_phone": driverphoneRef.current.value,
                 "car_number": driverautonumRef.current.value,
                 "type": drivertypeRef.current.value,
-                "status": driverstatusOfRef.current.value || driverstatusOnRef.current.value
+                "status": value == 'on' ? true : false
             }
             const { data } = await api.createDriver(driverCreate)
             getDrivers()
@@ -82,6 +91,7 @@ const SettingsDriver = () => {
 
 
     const handleUpdateDriver = async () => {
+
         try {
             const driverUpdate = {
                 "driver_full_name": editdrivernameRef.current.value,
@@ -89,7 +99,7 @@ const SettingsDriver = () => {
                 "driver_phone": editdriverphoneRef.current.value,
                 "car_number": editdriverautonumberRef.current.value,
                 "type": editdrivertypeRef.current.value,
-                "status": true
+                "status": value === 'on' ? true : false
             }
             const { data } = await api.updateDriver(id, driverUpdate)
             if (data.status == 202) {
@@ -122,13 +132,13 @@ const SettingsDriver = () => {
                                         </div>
                                         <div>
                                             <label htmlFor="date" className=' my-2'>D.O.B</label>
-                                            <input ref={driverbirthdayRef} type="text" className='form-control 100' name='date' id='date' placeholder='masalan:22.11.1999' />
+                                            <input ref={driverbirthdayRef} type="text" className='form-control 100' name='date' id='date' placeholder='masalan: 22/11/1999' />
                                         </div>
                                     </div>
                                     <div className='d-flex justify-content-between'>
                                         <div>
                                             <label htmlFor="phone" className='my-2'>Telefon raqami</label>
-                                            <input ref={driverphoneRef} type="text" className='form-control' placeholder='+998 _ _ _ _ _ _ _ _ _' id='phone' name='phone' />
+                                            <input ref={driverphoneRef} type="text" className='form-control' placeholder='998 _ _ _ _ _ _ _ _ _' id='phone' name='phone' />
                                         </div>
                                         <div>
                                             <label htmlFor="auto_number" className=' my-2'>Autoraqam</label>
@@ -143,18 +153,10 @@ const SettingsDriver = () => {
                                         <div className='input_cheks'>
                                             <label htmlFor="status" className='mt-4'>Holat</label>
                                             <div className='d-flex gap-4'>
-                                                <div className="form-check">
-                                                    <input defaultValue={true} ref={driverstatusOnRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                    <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                                        on
-                                                    </label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input defaultValue={false} ref={driverstatusOfRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                                    <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                                        of
-                                                    </label>
-                                                </div>
+                                                <Radio.Group onChange={onChange} value={value}>
+                                                    <Radio value={'on'}>on</Radio>
+                                                    <Radio value={'off'}>off</Radio>
+                                                </Radio.Group>
                                             </div>
                                         </div>
                                     </div>
@@ -203,18 +205,10 @@ const SettingsDriver = () => {
                                         <div className='input_cheks'>
                                             <label htmlFor="status" className='mt-4'>Holat</label>
                                             <div className='d-flex gap-4'>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                    <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                                        on
-                                                    </label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                                    <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                                        of
-                                                    </label>
-                                                </div>
+                                                <Radio.Group onChange={onChange} value={value}>
+                                                    <Radio value={'on'}>on</Radio>
+                                                    <Radio value={'off'}>off</Radio>
+                                                </Radio.Group>
                                             </div>
                                         </div>
                                     </div>

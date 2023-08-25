@@ -47,8 +47,9 @@ export const CategoryModal = ({
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
-
+		
 		const data = {
+
 			category_name: inputRef.current.value,
 			status: value === 'on' ? true : false,
 		};

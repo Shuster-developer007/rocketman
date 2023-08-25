@@ -5,22 +5,26 @@ import Sidebar from '../../components/Sidebar'
 import SettingsLinks from '../../components/SettingsLinks'
 import { api } from '../../API/api'
 import { toast } from 'react-toastify'
+import { Radio } from 'antd'
 
 const Payment = () => {
     const [data, setData] = useState([])
     const [payment, setPayment] = useState({})
     const [id, setId] = useState()
     const [loading, setLoading] = useState(false)
+    const [value, setValue] = useState(false);
+
     const editPayment_typeRef = useRef()
     const editpayment_telegramRef = useRef()
     const editlinkRef = useRef()
-    const editpaymentStatusOnRef = useRef()
-    const editpaymentStatusOfRef = useRef()
     const payment_typeRef = useRef()
     const payment_telegramRef = useRef()
     const linkRef = useRef()
-    const paymentStatusOnRef = useRef()
-    const paymentStatusOfRef = useRef()
+
+
+    const onChange = (e) => {
+        setValue(e.target.value);
+    };
 
     localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZGZmYmE1Zjc4OWE0Yjg1MzY1ODBhMCIsInJvbGUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjkyNzQ2MTA2fQ.7MZtuGzUggp2VLX1nCI4461qG6fcS1uopAKDoveHoPU")
     const getPayments = async () => {
@@ -46,16 +50,17 @@ const Payment = () => {
 
     const handleCreatePayment = async () => {
         try {
-            console.log(paymentStatusOfRef.current.value);
             const create_payment = {
                 "payment_type": payment_typeRef.current.value,
                 "telegram_payment": payment_telegramRef.current.value,
                 "link": linkRef.current.value,
-                "status": paymentStatusOfRef.current.value || paymentStatusOnRef.current.value
+                "status": value === 'on' ? true : false
             }
             const { data } = await api.createPayment(create_payment)
-            console.log(data);
-            getPayments()
+            if (data.status == 201) {
+                getPayments()
+                toast("Success created Payment")
+            }
         } catch (error) {
             console.log(error);
         }
@@ -75,7 +80,7 @@ const Payment = () => {
             const update_payment = {
                 "payment_type": editPayment_typeRef.current.value,
                 "link": editlinkRef.current.value,
-                "status": false,
+                "status": value == 'on' ? true : false,
                 "telegram_payment": editpayment_telegramRef.current.value,
             }
             const data = await api.updatedPayment(id, update_payment)
@@ -124,18 +129,10 @@ const Payment = () => {
                                     <div className=''>
                                         <label htmlFor="status" className='mt-3'>Holat</label>
                                         <div className='d-flex gap-4'>
-                                            <div className="form-check">
-                                                <input defaultValue={true} ref={editpaymentStatusOnRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                                    on
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input defaultValue={false} ref={editpaymentStatusOfRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                                    of
-                                                </label>
-                                            </div>
+                                            <Radio.Group onChange={onChange} value={value}>
+                                                <Radio value={'on'}>on</Radio>
+                                                <Radio value={'off'}>off</Radio>
+                                            </Radio.Group>
                                         </div>
                                     </div>
                                 </form>
@@ -164,18 +161,10 @@ const Payment = () => {
                                     <div className=''>
                                         <label htmlFor="status" className='mt-3'>Holat</label>
                                         <div className='d-flex gap-4'>
-                                            <div className="form-check">
-                                                <input defaultValue={true} ref={paymentStatusOnRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                                    on
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input defaultValue={false} ref={paymentStatusOfRef} className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                                    of
-                                                </label>
-                                            </div>
+                                            <Radio.Group onChange={onChange} value={value}>
+                                                <Radio value={'on'}>on</Radio>
+                                                <Radio value={'off'}>off</Radio>
+                                            </Radio.Group>
                                         </div>
                                     </div>
                                 </form>
