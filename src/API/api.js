@@ -43,7 +43,5 @@ export const api = {
 	getOrderDriver: () => axios.get(BASE_URL + "/driver/enabled"),
 	addDriverOrder: (id, driver_id) => axios.put(BASE_URL + "/add/driver/" + id, driver_id),
 
-
-
 	login: (admin) => axios.post(BASE_URL + '/login', admin),
 };

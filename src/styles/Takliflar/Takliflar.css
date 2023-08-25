@@ -42,20 +42,6 @@
     justify-content: center;
 }
 
-.share:hover {
-    width: 45px;
-    height: 45px;
-    transition: 0.3s;
-    font-size: 20px;
-}
-
-
-.delete:hover {
-    width: 45px;
-    height: 45px;
-    transition: 0.3s;
-    font-size: 20px;
-}
 
 
 
