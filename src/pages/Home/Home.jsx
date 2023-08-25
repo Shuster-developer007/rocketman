@@ -119,15 +119,15 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.map((item,index) => (
+                  {data?.data?.map((item, index) => (
                     <tr className='tr' key={item._id}>
-                      <th className='jg text-center' cope="row">{index+1}</th>
+                      <th className='jg text-center' cope="row">{index + 1}</th>
                       <td className='jg text-center'>{(item?.created_at)?.slice(4, 11) + (item?.created_at)?.slice(16, 21)}</td>
                       <td className='jg text-center'>{item?.user?.username}</td>
                       <td className='jg text-center'>{item?.user?.phone}</td>
-                      <td className='jg text-center'>{item?.items?.map((item) => (
-                        item?.count
-                      ))}</td>
+                      <td className='jg text-center'>{item?.items?.reduce((sum, item) => (
+                        sum += item?.count
+                      ), 0)}</td>
                       <td className='jg text-center'>{item?.total_price}</td>
                       <td className='jg text-center'><i className="fa-solid fa-location-dot text-danger fs-5"></i></td>
                       <td className='jg'>{item?.driver == null ? (<div onClick={() => setId(item?._id)} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='d-flex align-items-center justify-content-center '><div className='auto_number'><i className="fa-solid fa-plus "></i></div></div>) : (<div className='d-flex align-items-center justify-content-center '><div className='auto_number'>{item?.driver?.car_number}</div></div>)}</td>
