@@ -1,39 +1,32 @@
 .setting_link {
-    width: 100px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 18px;
+  width: 100px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+  transition: all 350ms ease;
 }
 
-
 .setting_active_link {
-    width: 100px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    background-color: #2E3444;
-    color: white;
-    align-items: center;
-    border-radius: 18px;
+  width: 100px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  background-color: #2e3444;
+  color: white;
+  align-items: center;
+  border-radius: 18px;
 }
 
 .setting_link:hover {
-    background-color:  #2E3444;
-    color: white;
+  background-color: #2e3444;
+  color: white;
 }
 
-
-
-
-.settings{
-    border: 1px solid rgba(128, 128, 128, 0.507);
-    width: 350px;
-    justify-content: center;
-    border-radius: 18px;
+.settings {
+  border: 1px solid rgba(128, 128, 128, 0.507);
+  width: 350px;
+  justify-content: center;
+  border-radius: 18px;
 }
-
-
-
-
