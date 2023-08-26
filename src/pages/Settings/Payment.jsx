@@ -94,12 +94,17 @@ const Payment = () => {
   };
 
   const handleDeletePayment = async (id) => {
-    try {
-      const { data } = await api.deletePayment(id);
-      toast("Success deleted payment", { type: "success" });
-      getPayments();
-    } catch (error) {
-      toast(error.response.data.message, { type: "error" });
+    const sorov = confirm("siz bu paymentni o'chirishga ishonchiz komilmi");
+    if(sorov == true) {
+        try {
+          const { data } = await api.deletePayment(id);
+          toast("Success deleted payment", { type: "success" });
+          getPayments();
+        } catch (error) {
+          toast(error.response.data.message, { type: "error" });
+        }
+    }else if(sorov == false) {
+        return;
     }
   };
 

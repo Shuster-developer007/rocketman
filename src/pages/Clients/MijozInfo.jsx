@@ -10,8 +10,6 @@ const MijozInfo = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
   const [order, setOrder] = useState([]);
-  console.log(data);
-  console.log(order);
   const { id } = useParams();
   const orderfindInfo = async () => {
     try {
@@ -91,7 +89,7 @@ const MijozInfo = () => {
                 </div>
                 <div className="d-flex flex-column align-items-center">
                   <h5 className="text-center">Holat</h5>
-                  <button className={`holat-btn ${data?.data?.status} `}>
+                  <button className={`holat-btn-${data?.data?.status} `}>
                     {data?.data?.status}
                   </button>
                 </div>
@@ -99,7 +97,7 @@ const MijozInfo = () => {
                   <h5>Driver</h5>
                   <button className="btn-driver">
                     {data?.data?.driver == null
-                      ? "no content"
+                      ? "no selected"
                       : data?.data?.driver?.car_number}
                   </button>
                 </div>
@@ -110,9 +108,6 @@ const MijozInfo = () => {
                     <tr>
                       <th className="hg text-center" scope="col">
                         Mahsulotlar
-                      </th>
-                      <th className="hg text-center" scope="col">
-                        To'lov
                       </th>
                       <th className="hg text-center" scope="col">
                         Soni
@@ -126,24 +121,31 @@ const MijozInfo = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {order?.data?.map((item , index) => (
+                    {order?.data?.map((item, index) => (
                       <tr className="tr">
                         <td className="hg text-center">
                           {item.sub_product_name}
                         </td>
-                        <td className="hg text-center">{data?.data?.items[index].count}</td>
-                        <td className="hg text-center">{data?.data?.payment_type?.payment_type}</td>
                         <td className="hg text-center">
-                          {item.price}
+                          {data?.data?.items[index].count}
                         </td>
-                        <td className="jg text-center">{data?.data?.items?.[index].count * item.price}</td>
+                        <td className="hg text-center">{item.price}</td>
+                        <td className="jg text-center">
+                          {data?.data?.items?.[index].count * item.price}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <div className="py-3">
-                  <p className="text-center text-secondary">Jami:</p>
-                  <h5 className="text-center som">54 000 so'm</h5>
+                <div className="py-3 d-flex  align-items-center justify-content-around">
+                  <div className="">
+                    <p className="text-center text-secondary">Tolov tizimi: </p>
+                    <h5 className="text-center tizim "><i className="fa-solid fa-credit-card text-warning fs-5"></i> {data?.data?.payment_type?.payment_type}</h5>
+                  </div>
+                  <div>
+                    <p className="text-center text-secondary">Jami:</p>
+                    <h5 className="text-center som">54 000 so'm</h5>
+                  </div>
                 </div>
               </div>
             </div>

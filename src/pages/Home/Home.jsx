@@ -32,6 +32,7 @@ const Home = () => {
       const { data } = await api.updateStatusOrder(statusId, { status: value });
       if (data.status == 202) {
         findOrders();
+        getAllDriver()
         toast("Success updated status", { type: "success" });
       }
     } catch (error) {

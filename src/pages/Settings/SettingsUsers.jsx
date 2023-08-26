@@ -26,25 +26,6 @@ const SettingsUsers = () => {
 		}
 	};
 
-	const handleUpdateAdmin = async () => {
-		try {
-			const body = {
-				username: editUsernameRef.current.value,
-				password: editPasswordRef.current.value,
-			};
-			const { data } = await api.editAdmin(admin_id, body);
-			if (data.status == 400 && data.name == 'ValidationError') {
-				toast("Iltimos ma'lumotlarni to'g'ri to'ldiring", { type: 'warning' });
-			}
-			if (data?.status == 202) {
-				getAdmins();
-				toast('Success updated admin', { type: 'success' });
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	const getAdmins = async () => {
 		try {
 			setLoading(true);
@@ -60,18 +41,6 @@ const SettingsUsers = () => {
 	useEffect(() => {
 		getAdmins();
 	}, []);
-
-	const handleDeleteAdmin = async (id) => {
-		try {
-			setLoading(true);
-			const { data } = await api.deleteAdmin(id);
-			toast('Success deleted admin', { type: 'success' });
-			getAdmins();
-		} catch (error) {
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	const handleCreateAdmin = async (event) => {
 		try {

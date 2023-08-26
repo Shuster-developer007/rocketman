@@ -19,6 +19,59 @@
     background-color: rgba(128, 128, 128, 0.16);
 }
 
+
+.tizim {
+    margin-top: -1rem;
+}
+
+.holat-btn-buyurtma {
+    width: 125px;
+    height: 35px;
+    border: none;
+    border-radius: 17px;
+    background-color: #FFF7D9;
+    color: #937200;
+}
+
+
+.holat-btn-bekor {
+    width: 125px;
+    height: 35px;
+    border: none;
+    border-radius: 17px;
+    background-color: #FFD9D9;
+    color: #BE0707;
+}
+
+.holat-btn-yakun {
+    width: 125px;
+    height: 35px;
+    border: none;
+    border-radius: 17px;
+    background-color: #D9FFDA;
+    color: #008C06;
+}
+
+.holat-btn-yetkazish {
+    width: 125px;
+    height: 35px;
+    border: none;
+    border-radius: 17px;
+    background-color: #E7D9FF;
+    color: #320088;
+}
+
+
+.holat-btn-qabul {
+    width: 125px;
+    height: 35px;
+    border: none;
+    border-radius: 17px;
+    background-color: #D9EDFF;
+    color: #004D92;
+}
+
+
 .bh {
     display: flex;
     justify-content: center;
