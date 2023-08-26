@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "../../styles/Clients/MijozlarByid.css";
+import { Select } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../../API/api";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const MijozlarById = () => {
+  const onChanges = (value) => {
+    console.log(`selected ${value}`);
+  };
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [user, setUser] = useState({});
@@ -76,12 +80,41 @@ const MijozlarById = () => {
                   <h3>{user?.data?.username}</h3>
                 )}
               </div>
-              <select className="my-select" aria-label="Default select example">
-                {/* <option selected></option> */}
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <Select
+                className="my_select"
+                showSearch
+                defaultValue="Barchasi"
+                placeholder="Select a status"
+                optionFilterProp="children"
+                onChange={onChanges}
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                options={[
+                  {
+                    value: "barchasi",
+                    label: "Barchasi",
+                  },
+                  {
+                    value: "bekor",
+                    label: "Bekor",
+                  },
+                  {
+                    value: "yakun",
+                    label: "Yakun",
+                  },
+                  {
+                    value: "yetkazish",
+                    label: "Yetkazish",
+                  },
+                  {
+                    value: "tayyorlanmoqda",
+                    label: "Tayyorlanmoqda",
+                  },
+                ]}
+              />
               <div>
                 <p>Jami:</p>
                 <h4 className="buyutrma">{data?.data?.length}</h4>
