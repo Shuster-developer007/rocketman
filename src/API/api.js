@@ -55,4 +55,5 @@ export const api = {
     axios.put(BASE_URL + "/update/order/status/" + id, status),
   getOneAdmin: (id) => axios.get(BASE_URL + "/admin/" + id),
   editAdmin: (id, body) => axios.put(BASE_URL + "/update/admin/" + id, body),
+  getSubProductOrder: (id) => axios.get(BASE_URL + "/order/sub_products/" + id)
 };
