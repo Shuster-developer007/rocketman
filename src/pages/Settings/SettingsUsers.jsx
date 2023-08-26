@@ -33,8 +33,8 @@ const SettingsUsers = () => {
         password: editPasswordRef.current.value,
       };
       const { data } = await api.editAdmin(admin_id, body);
-      if(data.status == 400 && data.name == 'ValidationError') {
-        toast("Iltimos ma'lumotlarni to'g'ri to'ldiring" , {type: "warning"})
+      if (data.status == 400 && data.name == "ValidationError") {
+        toast("Iltimos ma'lumotlarni to'g'ri to'ldiring", { type: "warning" });
       }
       if (data?.status == 202) {
         getAdmins();
@@ -62,14 +62,19 @@ const SettingsUsers = () => {
   }, []);
 
   const handleDeleteAdmin = async (id) => {
-    try {
-      setLoading(true);
-      const { data } = await api.deleteAdmin(id);
-      toast("Success deleted admin", { type: "success" });
-      getAdmins();
-    } catch (error) {
-    } finally {
-      setLoading(false);
+    const sorov = confirm("siz bu adminni o'chirishga ishonchiz komilmi");
+    if (sorov == true) {
+      try {
+        setLoading(true);
+        const { data } = await api.deleteAdmin(id);
+        toast("Success deleted admin", { type: "success" });
+        getAdmins();
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    } else if(sorov == false) {
+        return;
     }
   };
 
