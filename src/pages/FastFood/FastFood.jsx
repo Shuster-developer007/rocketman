@@ -15,18 +15,10 @@ import { setSubCategory } from '../../redux/subCategory/subCategoryAction';
 export const FastFood = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
-	const [oneId, setOneId] = useState('');
 
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const subCategories = useSelector((state) => state.subCategory.subCategory);
-
-	const fastFoodEdit = async (fastFoodId) => {
-		const { data } = await api.getSubCategoryById(fastFoodId);
-		if (data.status === 200) {
-			setOneId(data.data?._id);
-		}
-	};
 
 	const getSubCategories = async () => {
 		const data = await api.getSubCategories(id);
@@ -110,10 +102,7 @@ export const FastFood = () => {
 														</div>
 													)}
 												</td>
-												<td
-													className='jg text-center'
-													onClick={() => fastFoodEdit(item._id)}
-												>
+												<td className='jg text-center'>
 													{' '}
 													<button
 														className='btn'
@@ -138,7 +127,6 @@ export const FastFood = () => {
 							</table>
 							<FastfoodModal
 								id={id}
-								oneId={oneId}
 								getSubCategories={getSubCategories}
 								editModal={editModal}
 								editSetModal={editSetModal}
