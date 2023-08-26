@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 // import { Item } from '../../components/Item';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './Food.css';
 import { GrEdit } from 'react-icons/gr';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import { useState } from 'react';
-import { FoodModal } from '../../components/Modal/foodModal';
+import { FoodModal } from '../../components/Modal/FoodModal';
 import React_Skeleton from '../../components/React_Skeleton/React_Skeleton';
 import { api } from '../../API/api';
 import { useEffect } from 'react';
@@ -16,17 +16,26 @@ import { setSubProduct } from '../../redux/subProduct/subProductAction';
 export const Food = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
+	const [oneId, setOneId] = useState('');
+	const [link, setLink] = useState('');
 
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const subProducts = useSelector((state) => state.subProduct.subProduct);
-	console.log(subProducts);
 
 	const getSubProducts = async () => {
 		const data = await api.getSubProducts(id);
 		console.log(data);
 		if (data.status === 200) {
 			dispatch(setSubProduct(data.data.data));
+		}
+	};
+
+	const subProductEdit = async (subProductId) => {
+		const { data } = await api.getSubProductById(subProductId);
+		if (data.status === 200) {
+			setOneId(data.data?._id);
+			setLink(data.data.image);
 		}
 	};
 
@@ -64,20 +73,17 @@ export const Food = () => {
 								</thead>
 								<tbody className=''>
 									{subProducts.length ? (
-										subProducts.map((item) => (
+										subProducts.map((item, i) => (
 											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
-													{item.id}
+													{i + 1}
 												</th>
 												<td scope='row' className='jg text-center'>
-													<Link
-														to={'#'}
-														className='Item-link text-decoration-none text-dark w-50'
-													>
-														{item.sub_product_name}
-													</Link>
+													{item.sub_product_name}
 												</td>
-												<td className='jg text-center w-50'>{item.description}</td>
+												<td className='jg text-center w-50'>
+													{item.description}
+												</td>
 												<td className='jg text-center'>{item.price}</td>
 												<td className='jg text-center'>
 													{item.status == true ? (
@@ -94,7 +100,10 @@ export const Food = () => {
 														</div>
 													)}
 												</td>
-												<td className='jg text-center'>
+												<td
+													className='jg text-center'
+													onClick={() => subProductEdit(item._id)}
+												>
 													{' '}
 													<button
 														className='btn'
@@ -119,6 +128,8 @@ export const Food = () => {
 								</tbody>
 							</table>
 							<FoodModal
+								link={link}
+								oneId={oneId}
 								id={id}
 								getSubProducts={getSubProducts}
 								addModal={addModal}

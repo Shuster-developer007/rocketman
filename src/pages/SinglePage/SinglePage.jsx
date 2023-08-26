@@ -14,10 +14,19 @@ import { setProduct } from '../../redux/product/productAction';
 export const SinglePage = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
+	const [oneId, setOneId] = useState('');
 
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.product.product);
+
+	const productEdit = async (productId) => {
+		const { data } = await api.getProductById(productId);
+		console.log(data);
+		if (data.status === 200) {
+			setOneId(data.data?._id);
+		}
+	};
 
 	const getProducts = async () => {
 		const data = await api.getProducts(id);
@@ -91,7 +100,10 @@ export const SinglePage = () => {
 														</div>
 													)}
 												</td>
-												<td className='jg text-center'>
+												<td
+													className='jg text-center'
+													onClick={() => productEdit(item._id)}
+												>
 													<button
 														className='btn'
 														onClick={() => editSetModal(true)}
@@ -114,6 +126,7 @@ export const SinglePage = () => {
 								</tbody>
 							</table>
 							<SModal
+								oneId={oneId}
 								id={id}
 								getProducts={getProducts}
 								addModal={addModal}
