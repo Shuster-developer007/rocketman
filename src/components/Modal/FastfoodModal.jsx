@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import { api } from '../../API/api';
 import { Radio } from 'antd';
+import './Modal.css';
 
 export const FastfoodModal = ({
 	editModal,
@@ -10,20 +11,18 @@ export const FastfoodModal = ({
 	addSetModal,
 	getSubCategories,
 	id,
+	oneId,
 }) => {
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
-
 	const inputRef = useRef();
+	const eInputRef = useRef();
 	const locInputRef = useRef();
+	const eLocInputRef = useRef();
 	const phoneInputRef = useRef();
+	const ePhoneInputRef = useRef();
 	const longInputRef = useRef();
+	const eLongInputRef = useRef();
 	const langInputRef = useRef();
+	const eLangInputRef = useRef();
 	const [value, setValue] = useState(false);
 
 	const onChange = (e) => {
@@ -35,6 +34,26 @@ export const FastfoodModal = ({
 		console.log(data);
 		if (data.status === 201) {
 			getSubCategories();
+		}
+	};
+
+	const handleEdit = async () => {
+		try {
+			const body = {
+				sub_category_name: eInputRef.current.value,
+				location: eLocInputRef.current.value,
+				long: eLongInputRef.current.value,
+				lang: eLangInputRef.current.value,
+				phone: ePhoneInputRef.current.value,
+				status: value === 'on' ? true : false,
+			};
+			const { data } = await api.editSubCategory(oneId, body);
+			if (data.status === 202) {
+				getSubCategories();
+				editSetModal(false);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -80,7 +99,7 @@ export const FastfoodModal = ({
 					},
 				}}
 			>
-				<form action='' className='ps-5'>
+				<div className='ps-5'>
 					{' '}
 					<h1>Tahrirlash</h1>
 					<div className='d-flex align-items-center gap-5'>
@@ -88,10 +107,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Do’’kon nomi</h4>
 							<input
+								ref={eInputRef}
 								className='rounded me-3 form-control'
 								type='text'
-								name=''
-								id=''
+								name='sub_category_name'
+								id='sub_category_name'
 								placeholder='Evos'
 							/>
 						</span>
@@ -99,10 +119,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Telefon raqami</h4>
 							<input
+								ref={ePhoneInputRef}
 								className='rounded form-control'
 								type='text'
-								name=''
-								id=''
+								name='phone'
+								id='phone'
 								placeholder='+998999999999'
 							/>
 						</span>
@@ -112,10 +133,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Long</h4>
 							<input
+								ref={eLongInputRef}
 								className='rounded me-3 form-control'
 								type='text'
-								name=''
-								id=''
+								name='long'
+								id='long'
 								placeholder='41.32554974771851|'
 							/>
 						</span>
@@ -123,10 +145,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Lang</h4>
 							<input
+								ref={eLangInputRef}
 								className='rounded form-control'
 								type='text'
-								name=''
-								id=''
+								name='lang'
+								id='lang'
 								placeholder='41.32554974771851|'
 							/>
 						</span>
@@ -136,10 +159,11 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Manzil</h4>
 							<input
+								ref={eLocInputRef}
 								className='rounded me-4 form-control'
 								type='text'
-								name=''
-								id=''
+								name='loc'
+								id='loc'
 								placeholder='Qo’shtepa'
 							/>
 						</span>
@@ -153,13 +177,14 @@ export const FastfoodModal = ({
 					</div>
 					<button
 						className='btn btn-dark mt-5 ms-5 w-50'
-						onClick={() => editSetModal(false)}
+						type='submit'
+						onClick={() => handleEdit()}
 					>
 						Saqlash
 					</button>
-				</form>
+				</div>
 
-				<button style={styledBtn} onClick={() => editSetModal(false)}>
+				<button className='styledBtn' onClick={() => editSetModal(false)}>
 					X
 				</button>
 			</Modal>
@@ -264,8 +289,7 @@ export const FastfoodModal = ({
 				</form>
 
 				<button
-					className='rounded-0'
-					style={styledBtn}
+					className='rounded-0 styledBtn'
 					onClick={() => addSetModal(false)}
 				>
 					X

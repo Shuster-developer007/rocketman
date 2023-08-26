@@ -2,6 +2,7 @@ import Modal from 'react-modal';
 import { useRef, useState } from 'react';
 import { Radio } from 'antd';
 import { api } from '../../API/api';
+import './Modal.css';
 
 Modal.setAppElement('#root');
 
@@ -11,15 +12,10 @@ export const CategoryModal = ({
 	editModal,
 	editSetModal,
 	getCategories,
+	oneId,
 }) => {
-	const styledBtn = {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		backgroundColor: 'green',
-		color: 'white',
-	};
 	const inputRef = useRef();
+	const editInputRef = useRef();
 	const [value, setValue] = useState(false);
 
 	const onChange = (e) => {
@@ -33,23 +29,22 @@ export const CategoryModal = ({
 		}
 	};
 
-	const handleEdit = async (id, category) => {
-		const newText = inputRef.current.value;
-		value === 'on' ? true : false;
-		if (newText !== '' && newText.trim()) {
-			category.category_name = newText;
-		}
-		const data = await api.updateTodo(id, category);
-		if (data.status === 200) {
+	const handleEdit = async () => {
+		const body = {
+			category_name: editInputRef.current.value,
+			status: value === 'on' ? true : false,
+		};
+		const { data } = await api.editCategory(oneId, body);
+		if (data.status === 202) {
 			getCategories();
+			editSetModal(false);
 		}
 	};
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
-		
-		const data = {
 
+		const data = {
 			category_name: inputRef.current.value,
 			status: value === 'on' ? true : false,
 		};
@@ -80,43 +75,31 @@ export const CategoryModal = ({
 					},
 				}}
 			>
-				<form action=''>
+				<div>
 					<h1>Tahrirlash</h1>
 					<p>Kategoriya nomi</p>
 					<input
+						ref={editInputRef}
 						className='rounded form-control'
 						type='text'
-						name=''
-						id=''
+						name='category'
+						id='category'
 						placeholder='masalan: texnika'
 					/>
 					<p className='mt-4'>Holat</p>
-					<span className='me-4 fs-5'>
-						<input
-							type='radio'
-							className='form-check-input'
-							name='status'
-							id=''
-						/>
-						on
-					</span>
-					<span className='fs-5'>
-						<input
-							type='radio'
-							className='form-check-input'
-							name='status'
-							id=''
-						/>
-						off
-					</span>
+					<Radio.Group onChange={onChange} value={value}>
+						<Radio value={'on'}>on</Radio>
+						<Radio value={'off'}>off</Radio>
+					</Radio.Group>
 					<button
 						className='btn btn-dark mt-5 w-100'
-						onClick={() => editSetModal(false)}
+						type='submit'
+						onClick={() => handleEdit()}
 					>
-						Qo’shish
+						Saqlash
 					</button>
-				</form>
-				<button style={styledBtn} onClick={() => editSetModal(false)}>
+				</div>
+				<button className='styledBtn' onClick={() => editSetModal(false)}>
 					X
 				</button>
 			</Modal>
@@ -161,7 +144,7 @@ export const CategoryModal = ({
 						Qo’shish
 					</button>
 				</form>
-				<button style={styledBtn} onClick={() => addSetModal(false)}>
+				<button className='styledBtn' onClick={() => addSetModal(false)}>
 					X
 				</button>
 			</Modal>
