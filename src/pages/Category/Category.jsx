@@ -15,7 +15,8 @@ import { setCategory } from '../../redux/category/categoryAction';
 export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
-
+	const [oneId, setOneId] = useState('');
+	
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.category.category);
 
@@ -23,6 +24,13 @@ export const Category = () => {
 		const data = await api.getCategories();
 		if (data.status === 200) {
 			dispatch(setCategory(data.data.data));
+		}
+	};
+
+	const categoryEdit = async (categoryId) => {
+		const { data } = await api.getCategoryById(categoryId);
+		if (data.status === 200) {
+			setOneId(data.data?._id);
 		}
 	};
 
@@ -73,7 +81,10 @@ export const Category = () => {
 												<td className='jg text-center'>
 													{item.subCategories.length}
 												</td>
-												<td className='jg text-center'>
+												<td
+													className='jg text-center'
+													onClick={() => categoryEdit(item._id)}
+												>
 													<button
 														className='btn'
 														onClick={() => editSetModal(true)}
@@ -99,6 +110,7 @@ export const Category = () => {
 								</tbody>
 							</table>
 							<CategoryModal
+								oneId={oneId}
 								getCategories={getCategories}
 								addModal={addModal}
 								addSetModal={addSetModal}
