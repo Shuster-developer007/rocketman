@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "../../styles/Home/Home.css";
+import { Select } from "antd";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -9,6 +10,9 @@ import { Radio } from "antd";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const Home = () => {
+  const onChanges = (value) => {
+    console.log(`selected ${value}`);
+  };
   const [modal, setModal] = useState(false);
   const [data, setData] = useState([]);
   const [order_id, setId] = useState("");
@@ -230,23 +234,49 @@ const Home = () => {
             {loading ? (
               <h3>Loading ....</h3>
             ) : (
-              <select
-                className="form-select w-50"
-                aria-label="Default select example"
-              >
-                <option>Barchasi</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <Select
+                className="my_select"
+                showSearch
+                defaultValue='Barchasi'
+                placeholder="Select a status"
+                optionFilterProp="children"
+                onChange={onChanges}
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                options={[
+                  {
+                    value: "barchasi",
+                    label: "Barchasi",
+                  },
+                  {
+                    value: "bekor",
+                    label: "Bekor",
+                  },
+                  {
+                    value: "yakun",
+                    label: "Yakun",
+                  },
+                  {
+                    value: "yetkazish",
+                    label: "Yetkazish",
+                  },
+                  {
+                    value: "tayyorlanmoqda",
+                    label: "Tayyorlanmoqda",
+                  },
+                ]}
+              />
             )}
 
             <div className="orab">
               <table className="mytable">
                 <thead className="thread">
                   <tr>
-                    {thread?.map((item) => (
-                      <th className="jg text-center" scope="col">
+                    {thread?.map((item, index) => (
+                      <th key={index} className="jg text-center" scope="col">
                         {item}
                       </th>
                     ))}
@@ -318,10 +348,10 @@ const Home = () => {
                     ))
                   ) : (
                     <tr>
-                      {thread.map((item, i) => (
-                      <th key={i}>
-                        <React_Skeleton />
-                      </th>
+                      {thread?.map((item, index) => (
+                        <th key={index} className="jg text-center" scope="col">
+                          <React_Skeleton />
+                        </th>
                       ))}
                     </tr>
                   )}
