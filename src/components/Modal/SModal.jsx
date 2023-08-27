@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Radio } from 'antd';
 import { api } from '../../API/api';
 import './Modal.css';
+import { toast } from 'react-toastify';
 
 export const SModal = ({
 	addModal,
@@ -22,23 +23,41 @@ export const SModal = ({
 	};
 
 	const productPost = async (product) => {
-		const data = await api.postProduct(product);
-		console.log(data);
-		if (data.status === 201) {
-			getProducts();
+		try {
+			const data = await api.postProduct(product);
+			if (data.data?.status == 400 && data.data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+			if (data.status === 201) {
+				toast('Success created product', { type: 'success' });
+				getProducts();
+			}
+		} catch (error) {
+			toast(error.response.data.message, { type: 'error' });
 		}
 	};
 
 	const handleEdit = async () => {
-		const body = {
-			product_name: eInputRef.current.value,
-			status: value === 'on' ? true : false,
-		};
-		const { data } = await api.editProduct(oneId, body);
-		console.log(data);
-		if (data.status === 202) {
-			getProducts();
-			editSetModal(false);
+		try {
+			const body = {
+				product_name: eInputRef.current.value,
+				status: value === 'on' ? true : false,
+			};
+			const { data } = await api.editProduct(oneId._id, body);
+			if (data?.status == 400 && data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+			if (data.status === 202) {
+				toast('Success updated product', { type: 'success' });
+				getProducts();
+				editSetModal(false);
+			}
+		} catch (error) {
+			toast('Subcategory update qilishda xatolik mavjud', { type: 'error' });
 		}
 	};
 
@@ -81,6 +100,7 @@ export const SModal = ({
 					<p>Kategoriya nomi</p>
 					<input
 						ref={eInputRef}
+						defaultValue={oneId.product_name}
 						className='rounded form-control'
 						type='text'
 						name='product'

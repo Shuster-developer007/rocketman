@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { api } from '../../API/api';
 import { Radio } from 'antd';
 import './Modal.css';
+import { toast } from 'react-toastify';
 
 export const FastfoodModal = ({
 	editModal,
@@ -30,10 +31,19 @@ export const FastfoodModal = ({
 	};
 
 	const subCategoryPost = async (subCategory) => {
-		const data = await api.postSubCategory(subCategory);
-		console.log(data);
-		if (data.status === 201) {
-			getSubCategories();
+		try {
+			const data = await api.postSubCategory(subCategory);
+			if (data.data?.status == 400 && data.data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+			if (data.status === 201) {
+				toast('Success created subcategory', { type: 'success' });
+				getSubCategories();
+			}
+		} catch (error) {
+			toast(error.response.data.message, { type: 'error' });
 		}
 	};
 
@@ -47,13 +57,20 @@ export const FastfoodModal = ({
 				phone: ePhoneInputRef.current.value,
 				status: value === 'on' ? true : false,
 			};
-			const { data } = await api.editSubCategory(oneId, body);
+			const { data } = await api.editSubCategory(oneId._id, body);
+			if (data?.status == 400 && data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+
 			if (data.status === 202) {
+				toast('Success updated subcategory', { type: 'success' });
 				getSubCategories();
 				editSetModal(false);
 			}
 		} catch (error) {
-			console.log(error);
+			toast('Subcategory update qilishda xatolik mavjud', { type: 'error' });
 		}
 	};
 
@@ -108,6 +125,7 @@ export const FastfoodModal = ({
 							<h4>Do’’kon nomi</h4>
 							<input
 								ref={eInputRef}
+								defaultValue={oneId.sub_category_name}
 								className='rounded me-3 form-control'
 								type='text'
 								name='sub_category_name'
@@ -120,6 +138,7 @@ export const FastfoodModal = ({
 							<h4>Telefon raqami</h4>
 							<input
 								ref={ePhoneInputRef}
+								defaultValue={oneId.phone}
 								className='rounded form-control'
 								type='text'
 								name='phone'
@@ -134,6 +153,7 @@ export const FastfoodModal = ({
 							<h4>Long</h4>
 							<input
 								ref={eLongInputRef}
+								defaultValue={oneId.long}
 								className='rounded me-3 form-control'
 								type='text'
 								name='long'
@@ -146,6 +166,7 @@ export const FastfoodModal = ({
 							<h4>Lang</h4>
 							<input
 								ref={eLangInputRef}
+								defaultValue={oneId.lang}
 								className='rounded form-control'
 								type='text'
 								name='lang'
@@ -160,6 +181,7 @@ export const FastfoodModal = ({
 							<h4>Manzil</h4>
 							<input
 								ref={eLocInputRef}
+								defaultValue={oneId.location}
 								className='rounded me-4 form-control'
 								type='text'
 								name='loc'

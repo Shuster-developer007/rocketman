@@ -17,7 +17,6 @@ export const Food = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 	const [oneId, setOneId] = useState('');
-	const [link, setLink] = useState('');
 
 	const { id } = useParams();
 	const dispatch = useDispatch();
@@ -34,8 +33,7 @@ export const Food = () => {
 	const subProductEdit = async (subProductId) => {
 		const { data } = await api.getSubProductById(subProductId);
 		if (data.status === 200) {
-			setOneId(data.data?._id);
-			setLink(data?.data?.image);
+			setOneId(data.data);
 		}
 	};
 
@@ -128,7 +126,6 @@ export const Food = () => {
 								</tbody>
 							</table>
 							<FoodModal
-								link={link}
 								oneId={oneId}
 								id={id}
 								getSubProducts={getSubProducts}

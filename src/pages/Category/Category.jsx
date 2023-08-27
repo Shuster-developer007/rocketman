@@ -16,7 +16,6 @@ export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 	const [oneId, setOneId] = useState('');
-	
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.category.category);
 
@@ -30,7 +29,7 @@ export const Category = () => {
 	const categoryEdit = async (categoryId) => {
 		const { data } = await api.getCategoryById(categoryId);
 		if (data.status === 200) {
-			setOneId(data.data?._id);
+			setOneId(data.data);
 		}
 	};
 
@@ -116,6 +115,7 @@ export const Category = () => {
 								addSetModal={addSetModal}
 								editModal={editModal}
 								editSetModal={editSetModal}
+								categories={categories}
 							/>
 							<div className='d-flex next border-top'>
 								<div className='bor'>
