@@ -44,7 +44,7 @@ export const api = {
 	getOrder_user: (id) => axios.get(BASE_URL + '/order/user/' + id),
 	getOneUser: (id) => axios.get(BASE_URL + '/user/' + id),
 	getOneOrderInfo: (id) => axios.get(BASE_URL + '/order/' + id),
-	getOrders: (count) => axios.get(BASE_URL + '/orders?page=' + count),
+	getOrders: (status) => axios.get(BASE_URL + '/orders?status=' + status),
 	getOrderDriver: () => axios.get(BASE_URL + '/driver/enabled'),
 	addDriverOrder: (id, driver_id) =>
 		axios.put(BASE_URL + '/add/driver/' + id, driver_id),

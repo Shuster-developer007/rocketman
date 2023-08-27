@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "../../styles/Home/Home.css";
@@ -10,21 +10,21 @@ import { Radio } from "antd";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const Home = () => {
-  const onChanges = (value) => {
-    console.log(`selected ${value}`);
-  };
-  const [modal, setModal] = useState(false);
   const [data, setData] = useState([]);
   const [order_id, setId] = useState("");
-  const [count, setCount] = useState(1);
+  const [select, setSelect] = useState("barchasi");
   const [statusId, setStatus] = useState("");
   const [data_driver, setData_Driver] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [value, setValue] = useState(false);
 
   const onChange = (e) => {
     setValue(e.target.value);
+  };
+  const onChanges = (value) => {
+    console.log(value);
+    setSelect(value);
+    findOrders();
   };
 
   const handleEditStatusOrder = async () => {
@@ -32,7 +32,7 @@ const Home = () => {
       const { data } = await api.updateStatusOrder(statusId, { status: value });
       if (data.status == 202) {
         findOrders();
-        getAllDriver()
+        getAllDriver();
         toast("Success updated status", { type: "success" });
       }
     } catch (error) {
@@ -43,7 +43,7 @@ const Home = () => {
   const findOrders = async () => {
     try {
       setLoading(true);
-      const { data } = await api.getOrders(count + "");
+      const { data } = await api.getOrders(select);
       setData(data);
     } catch (error) {
       console.log(error.message);
@@ -232,45 +232,40 @@ const Home = () => {
         </div>
         <section className="py-5">
           <div className="container px-4">
-            {loading ? (
-              <h3>Loading ....</h3>
-            ) : (
-              <Select
-                className="my_select"
-                showSearch
-                defaultValue='Barchasi'
-                placeholder="Select a status"
-                optionFilterProp="children"
-                onChange={onChanges}
-                filterOption={(input, option) =>
-                  (option?.label ?? "")
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                options={[
-                  {
-                    value: "barchasi",
-                    label: "Barchasi",
-                  },
-                  {
-                    value: "bekor",
-                    label: "Bekor",
-                  },
-                  {
-                    value: "yakun",
-                    label: "Yakun",
-                  },
-                  {
-                    value: "yetkazish",
-                    label: "Yetkazish",
-                  },
-                  {
-                    value: "tayyorlanmoqda",
-                    label: "Tayyorlanmoqda",
-                  },
-                ]}
-              />
-            )}
+            <Select
+              className="my_select"
+              showSearch
+              placeholder="Select a status"
+              optionFilterProp="children"
+              onChange={onChanges}
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={[
+                {
+                  value: "barchasi",
+                  label: "Barchasi",
+                },
+                {
+                  value: "bekor",
+                  label: "Bekor",
+                },
+                {
+                  value: "yakun",
+                  label: "Yakun",
+                },
+                {
+                  value: "yetkazish",
+                  label: "Yetkazish",
+                },
+                {
+                  value: "tayyorlanmoqda",
+                  label: "Tayyorlanmoqda",
+                },
+              ]}
+            />
 
             <div className="orab">
               <table className="mytable">
@@ -362,7 +357,7 @@ const Home = () => {
                 <div className="bor">
                   <i className="fa-solid fa-angle-left"></i>
                 </div>
-                {count}
+                1
                 <div className="bor">
                   <i className="fa-solid fa-angle-right "></i>
                 </div>
