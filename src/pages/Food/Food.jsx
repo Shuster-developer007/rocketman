@@ -28,15 +28,15 @@ export const Food = () => {
   const dispatch = useDispatch();
   const subProducts = useSelector((state) => state.subProduct.subProduct);
 
-  const getSubProducts = async () => {
-    const data = await api.getSubProducts(id);
+  const getSubProducts = async (page) => {
+    const {data} = await api.getSubProducts(id , page);
     setPagenation({
       page: data?.info?.page,
-      totalPage: data?.data?.data?.info?.pages,
-      pageLimit: data?.data?.data?.info?.limit,
+      totalPage: data?.data?.info?.pages,
+      pageLimit: data?.data?.info?.limit,
     });
     if (data.status === 200) {
-      dispatch(setSubProduct(data.data.data));
+      dispatch(setSubProduct(data?.data?.subproducts));
     }
   };
 
@@ -150,7 +150,7 @@ export const Food = () => {
                   defaultCurrent={1}
                   total={pagenation.totalPage * pagenation.pageLimit}
                   defaultPageSize={pagenation.pageLimit}
-                  onChange={(pageNumber) => get(pageNumber)}
+                  onChange={(pageNumber) => getSubProducts(pageNumber)}
                 />
               </div>
             </div>
