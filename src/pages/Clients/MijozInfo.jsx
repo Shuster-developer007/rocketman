@@ -5,6 +5,7 @@ import "../../styles/Clients/MijozInfo.css";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../../API/api";
 import { date } from "yup";
+import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const MijozInfo = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,6 @@ const MijozInfo = () => {
     try {
       setLoading(true);
       const { data } = await api.getOneOrderInfo(id);
-      console.log(data);
       setData(data);
     } catch (error) {
       console.log(error);
@@ -60,7 +60,7 @@ const MijozInfo = () => {
                         <i className="fa-solid fa-angle-left"></i>
                       </div>
                     </Link>
-                    <h4>{data?.data?.user?.username}</h4>
+                    <h4>{data?.data?.user ? ((data?.data?.user?.username)) : (<React_Skeleton />)}</h4>
                   </div>
                   <div>
                     <p className="text-secondary">Buyurtma vaqti:</p>

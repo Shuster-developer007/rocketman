@@ -8,29 +8,31 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Radio } from "antd";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
+import ReactPaginate from "react-paginate";
 
-const Home = () => {
+const Home = ({datas ,setPageCount , pageCount}) => {
   const [data, setData] = useState([]);
   const [order_id, setId] = useState("");
-  const [select, setSelect] = useState("barchasi");
+  const [select, setSelect] = useState("");
   const [statusId, setStatus] = useState("");
   const [data_driver, setData_Driver] = useState([]);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
 
+  let count = 1 
+
   const onChange = (e) => {
     setValue(e.target.value);
   };
-  const onChanges = (value) => {
-    console.log(value);
-    setSelect(value);
-    findOrders();
+
+  const handlePageClick = (evt) => {
+    setPageCount(evt.selected + 1);
   };
 
   const handleEditStatusOrder = async () => {
     try {
       const { data } = await api.updateStatusOrder(statusId, { status: value });
-      if (data.status == 202) {
+      if (data?.status == 202) {
         findOrders();
         getAllDriver();
         toast("Success updated status", { type: "success" });
@@ -40,10 +42,11 @@ const Home = () => {
     }
   };
 
-  const findOrders = async () => {
+  const findOrders = async (select = "barchasi") => {
     try {
       setLoading(true);
       const { data } = await api.getOrders(select);
+      console.log(data);
       setData(data);
     } catch (error) {
       console.log(error.message);
@@ -60,7 +63,7 @@ const Home = () => {
     try {
       setLoading(true);
       const { data } = await api.getOrderDriver();
-      setData_Driver(data.data);
+      setData_Driver(data?.data);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -87,7 +90,7 @@ const Home = () => {
         driver: id,
       };
       const { data } = await api.addDriverOrder(order_id, body);
-      if (data.status == 201) {
+      if (data?.status == 201) {
         toast("Success added driver", { type: "success" });
       }
       getAllDriver();
@@ -237,7 +240,7 @@ const Home = () => {
               showSearch
               placeholder="Select a status"
               optionFilterProp="children"
-              onChange={onChanges}
+              onChange={(value) => findOrders(value)}
               filterOption={(input, option) =>
                 (option?.label ?? "")
                   .toLowerCase()
@@ -354,13 +357,26 @@ const Home = () => {
                 </tbody>
               </table>
               <div className="d-flex next align-items-center">
-                <div className="bor">
+                <div  className="bor">
                   <i className="fa-solid fa-angle-left"></i>
                 </div>
-                1
-                <div className="bor">
+                
+                <div  className="bor">
                   <i className="fa-solid fa-angle-right "></i>
-                </div>
+                </div> 
+                <ReactPaginate
+                  containerClassName="pagination justify-content-center"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  onPageChange={(evt) => handlePageClick(evt)}
+                  pageCount={Math.ceil(data?.info?.pages)}
+                  initialPage={pageCount}
+                  nextLabel="Next"
+                  previousLabel="Prev"
+                  previousLinkClassName="btn btn-primary"
+                  nextLinkClassName="btn btn-primary"
+                  activeClassName="active"
+                />
               </div>
             </div>
           </div>

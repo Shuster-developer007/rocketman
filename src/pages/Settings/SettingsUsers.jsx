@@ -17,11 +17,17 @@ const SettingsUsers = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
+ 
+
   const getOneAdmin = async (id) => {
     try {
+      console.log(id);
+      console.log(admin_id);
       setId(id);
       const { data } = await api.getOneAdmin(id);
+      // console.log(admin);
       setAdmin(data);
+      console.log(admin);
     } catch (error) {
       console.log(error);
     }
@@ -179,24 +185,24 @@ const SettingsUsers = () => {
               </div>
               <div className="modal-body">
                 <form action="">
-                  <label htmlFor="admin_name" className="my-3">
+                  <label htmlFor="username" className="my-3">
                     Username
                   </label>
                   <input
                     type="text"
                     ref={editUsernameRef}
                     className="form-control"
-                    defaultValue={admin.username}
-                    placeholder="admin_name"
-                    id="admin_name"
-                    name="admin_name"
+                    defaultValue={admin?.username}
+                    placeholder="username"
+                    id="username"
+                    name="username"
                   />
-                  <label htmlFor="password" className=" my-3">
+                  <label htmlFor="password_ad" className=" my-3">
                     Password
                   </label>
                   <input
                     ref={editPasswordRef}
-                    defaultValue={admin.password}
+                    // defaultValue={admin?.password}
                     type="password"
                     className="form-control"
                     placeholder="password"
@@ -234,7 +240,7 @@ const SettingsUsers = () => {
                     </div>
                     <div className="d-flex gap-3">
                       <div
-                        onClick={() => getOneAdmin(item._id)}
+                        onClick={() => getOneAdmin(item?._id)}
                         className="setting_icon_edit"
                         data-bs-toggle="modal"
                         data-bs-target="#editUserModal"

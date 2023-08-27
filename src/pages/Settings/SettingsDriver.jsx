@@ -398,8 +398,8 @@ const SettingsDriver = () => {
               <table className="mytable">
                 <thead className="thread">
                   <tr>
-                    {title?.map((item) => (
-                      <th className="jg text-center" scope="col">
+                    {title?.map((item , index) => (
+                      <th key={index} className="jg text-center" scope="col">
                         {item}
                       </th>
                     ))}
@@ -434,7 +434,7 @@ const SettingsDriver = () => {
                         )}
                       </td>
                       <td
-                        onClick={() => getOneDriver(item._id)}
+                        onClick={() => getOneDriver(item?._id)}
                         data-bs-toggle="modal"
                         data-bs-target="#editmodal"
                         className="jg d-flex align-items-center justify-content-center py-3"
