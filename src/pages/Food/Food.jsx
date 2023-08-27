@@ -36,7 +36,7 @@ export const Food = () => {
       pageLimit: data?.data?.info?.limit,
     });
     if (data.status === 200) {
-      dispatch(setSubProduct(data?.data?.subproducts));
+      dispatch(setSubProduct(data?.data));
     }
   };
 
@@ -80,7 +80,7 @@ export const Food = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {subProducts.length ? (
+                  {subProducts?.length ? (
                     subProducts.map((item, i) => (
                       <tr key={item._id} className="table-borderless">
                         <th scope="row" className="jg text-center">
