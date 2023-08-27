@@ -6,11 +6,10 @@ import { Select } from "antd";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { Radio } from "antd";
+import { Radio, Pagination } from "antd";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
-import ReactPaginate from "react-paginate";
 
-const Home = ({datas ,setPageCount , pageCount}) => {
+const Home = () => {
   const [data, setData] = useState([]);
   const [order_id, setId] = useState("");
   const [select, setSelect] = useState("");
@@ -18,15 +17,14 @@ const Home = ({datas ,setPageCount , pageCount}) => {
   const [data_driver, setData_Driver] = useState([]);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
-
-  let count = 1 
+  const [pagenation, setPagenation] = useState({
+    page: 1,
+    totalPage: 1,
+    pageLimit: 6,
+  });
 
   const onChange = (e) => {
     setValue(e.target.value);
-  };
-
-  const handlePageClick = (evt) => {
-    setPageCount(evt.selected + 1);
   };
 
   const handleEditStatusOrder = async () => {
@@ -42,12 +40,19 @@ const Home = ({datas ,setPageCount , pageCount}) => {
     }
   };
 
-  const findOrders = async (select = "barchasi") => {
+  const findOrders = async (select = "barchasi", page) => {
     try {
       setLoading(true);
-      const { data } = await api.getOrders(select);
+      const { data } = await api.getOrders(select, page);
       console.log(data);
+      setSelect(select);
       setData(data);
+
+      setPagenation({
+        page: data?.info?.page,
+        totalPage: data?.info?.pages,
+        pageLimit: data?.info?.limit,
+      });
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -120,7 +125,10 @@ const Home = ({datas ,setPageCount , pageCount}) => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel">
+                  <h1
+                    className="modal-title fs-5"
+                    id="exampleModalLabel"
+                  >
                     Edit Status Order
                   </h1>
                   <button
@@ -275,7 +283,11 @@ const Home = ({datas ,setPageCount , pageCount}) => {
                 <thead className="thread">
                   <tr>
                     {thread?.map((item, index) => (
-                      <th key={index} className="jg text-center" scope="col">
+                      <th
+                        key={index}
+                        className="jg text-center"
+                        scope="col"
+                      >
                         {item}
                       </th>
                     ))}
@@ -284,8 +296,14 @@ const Home = ({datas ,setPageCount , pageCount}) => {
                 <tbody>
                   {data?.data?.length ? (
                     data?.data?.map((item, index) => (
-                      <tr className="tr" key={item._id}>
-                        <th className="jg text-center" cope="row">
+                      <tr
+                        className="tr"
+                        key={item._id}
+                      >
+                        <th
+                          className="jg text-center"
+                          cope="row"
+                        >
                           {index + 1}
                         </th>
                         <td className="jg text-center">
@@ -348,7 +366,11 @@ const Home = ({datas ,setPageCount , pageCount}) => {
                   ) : (
                     <tr>
                       {thread?.map((item, index) => (
-                        <th key={index} className="jg text-center" scope="col">
+                        <th
+                          key={index}
+                          className="jg text-center"
+                          scope="col"
+                        >
                           <React_Skeleton />
                         </th>
                       ))}
@@ -357,25 +379,19 @@ const Home = ({datas ,setPageCount , pageCount}) => {
                 </tbody>
               </table>
               <div className="d-flex next align-items-center">
-                <div  className="bor">
+                {/* <div className="bor">
                   <i className="fa-solid fa-angle-left"></i>
                 </div>
-                
-                <div  className="bor">
+                {page}
+                <div className="bor">
                   <i className="fa-solid fa-angle-right "></i>
-                </div> 
-                <ReactPaginate
-                  containerClassName="pagination justify-content-center"
-                  pageClassName="page-item"
-                  pageLinkClassName="page-link"
-                  onPageChange={(evt) => handlePageClick(evt)}
-                  pageCount={Math.ceil(data?.info?.pages)}
-                  initialPage={pageCount}
-                  nextLabel="Next"
-                  previousLabel="Prev"
-                  previousLinkClassName="btn btn-primary"
-                  nextLinkClassName="btn btn-primary"
-                  activeClassName="active"
+                </div> */}
+                <Pagination
+                  simple
+                  defaultCurrent={1}
+                  total={pagenation.totalPage * pagenation.pageLimit}
+                  defaultPageSize={pagenation.pageLimit}
+                  onChange={(pageNumber) => findOrders(select, pageNumber)}
                 />
               </div>
             </div>
