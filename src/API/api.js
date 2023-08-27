@@ -13,7 +13,7 @@ export const api = {
     axios.get(BASE_URL + `/subcategories/${id}?page=${page}`),
   getSettingsPayment: () => axios.get(BASE_URL + "/payments"),
   getSettingDrivers: () => axios.get(BASE_URL + "/drivers"),
-  getProducts: (id) => axios.get(BASE_URL + "/products/" + id),
+  getProducts: (id , page) => axios.get(BASE_URL + `/products/${id}?page=${page}`),
   getSubProducts: (id) => axios.get(BASE_URL + "/sub_products/" + id),
   getAdmins: () => axios.get(BASE_URL + "/admins"),
   getComplaitns: () => axios.get(BASE_URL + "/complaints"),
