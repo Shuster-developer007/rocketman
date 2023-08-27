@@ -6,6 +6,7 @@ import SettingsLinks from "../../components/SettingsLinks";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
 import { Radio } from "antd";
+import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const Payment = () => {
   const [data, setData] = useState([]);
@@ -95,18 +96,27 @@ const Payment = () => {
 
   const handleDeletePayment = async (id) => {
     const sorov = confirm("siz bu paymentni o'chirishga ishonchiz komilmi");
-    if(sorov == true) {
-        try {
-          const { data } = await api.deletePayment(id);
-          toast("Success deleted payment", { type: "success" });
-          getPayments();
-        } catch (error) {
-          toast(error.response.data.message, { type: "error" });
-        }
-    }else if(sorov == false) {
-        return;
+    if (sorov == true) {
+      try {
+        const { data } = await api.deletePayment(id);
+        toast("Success deleted payment", { type: "success" });
+        getPayments();
+      } catch (error) {
+        toast(error.response.data.message, { type: "error" });
+      }
+    } else if (sorov == false) {
+      return;
     }
   };
+
+  const title = [
+    "NOMI",
+    "TELEGRAM BUTTON NAME",
+    "LINK",
+    "HOLAT",
+    "TAHRIRLASH",
+    "O'CHIRISH",
+  ];
 
   return (
     <div>
@@ -306,28 +316,15 @@ const Payment = () => {
               <table className="mytable">
                 <thead className="thread">
                   <tr>
-                    <th className="jg text-center" scope="col">
-                      NOMI
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      TELEGRAM BUTTON NAME
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      LINK
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      HOLAT
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      TAHRIRLASH
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      O'CHIRISH
-                    </th>
+                    {title?.map((item) => (
+                      <th className="jg text-center" scope="col">
+                        {item}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.map((item) => (
+                  {data?.data?.length ? (data?.data?.map((item) => (
                     <tr className="tr" key={item._id}>
                       <th className="jg text-center" cope="row">
                         {item.payment_type}
@@ -381,7 +378,13 @@ const Payment = () => {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  ))) : (<tr>
+                    {title?.map((item, index) => (
+                      <th key={index} className="jg text-center" scope="col">
+                        <React_Skeleton />
+                      </th>
+                    ))}
+                  </tr>)}
                 </tbody>
               </table>
             </div>

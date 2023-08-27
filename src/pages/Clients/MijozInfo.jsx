@@ -124,14 +124,14 @@ const MijozInfo = () => {
                     {order?.data?.map((item, index) => (
                       <tr className="tr">
                         <td className="hg text-center">
-                          {item.sub_product_name}
+                          {item?.sub_product_name}
                         </td>
                         <td className="hg text-center">
                           {data?.data?.items[index].count}
                         </td>
-                        <td className="hg text-center">{item.price}</td>
+                        <td className="hg text-center">{item?.price}</td>
                         <td className="jg text-center">
-                          {data?.data?.items?.[index].count * item.price}
+                          {data?.data?.items?.[index].count * item?.price}
                         </td>
                       </tr>
                     ))}
