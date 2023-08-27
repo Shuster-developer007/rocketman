@@ -8,11 +8,11 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 if (token) axios.defaults.headers.common["token"] = token;
 
 export const api = {
-  getCategories: (page) => axios.get(BASE_URL + `/categories?page=1`),
+  getCategories: (page) => axios.get(BASE_URL + `/categories?page=${page}`),
   getSubCategories: (id, page) =>
     axios.get(BASE_URL + `/subcategories/${id}?page=${page}`),
   getSettingsPayment: () => axios.get(BASE_URL + "/payments"),
-  getSettingDrivers: () => axios.get(BASE_URL + "/drivers"),
+  getSettingDrivers: (page) => axios.get(BASE_URL + `/drivers?page=${page}`),
   getProducts: (id , page) => axios.get(BASE_URL + `/products/${id}?page=${page}`),
   getSubProducts: (id , page) => axios.get(BASE_URL + `/sub_products/${id}?page=${page}` ),
   getAdmins: () => axios.get(BASE_URL + "/admins"),

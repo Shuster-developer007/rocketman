@@ -43,12 +43,9 @@ const Home = () => {
   const findOrders = async (select = "barchasi", page) => {
     try {
       setLoading(true);
-      console.log(page);
       const { data } = await api.getOrders(select, page);
-      console.log(data);
       setSelect(select);
       setData(data);
-
       setPagenation({
         page: data?.info?.page,
         totalPage: data?.info?.pages,

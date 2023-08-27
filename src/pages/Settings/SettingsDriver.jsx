@@ -5,7 +5,7 @@ import "../../styles/Settings/SettingsDriver.css";
 import SettingsLinks from "../../components/SettingsLinks";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
-import { Radio } from "antd";
+import { Pagination, Radio } from "antd";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const SettingsDriver = () => {
@@ -29,19 +29,27 @@ const SettingsDriver = () => {
   const editdriverphoneRef = useRef();
   const editdriverautonumberRef = useRef();
   const editdrivertypeRef = useRef();
+  const [pagenation, setPagenation] = useState({
+    page: 1,
+    totalPage: 1,
+    pageLimit: 6,
+  });
 
   const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const getDrivers = async () => {
+  const getDrivers = async (page) => {
     try {
       setLoading(true);
-      const { data } = await api.getSettingDrivers();
-      setData(data);
-      // if (data.status === 200) {
-      // 	dispatch(setCategory(data.data.data));
-      // }
+      const { data } = await api.getSettingDrivers(page);
+      console.log(data?.data?.info);
+      setPagenation({
+        page: data?.info?.page,
+        totalPage: data?.info?.pages,
+        pageLimit: data?.info?.limit,
+      });
+      setData(data?.data?.drivers);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -406,7 +414,7 @@ const SettingsDriver = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.length ? (data?.data?.map((item, index) => (
+                  {data?.length ? (data?.map((item, index) => (
                     <tr className="tr" key={item._id}>
                       <th className="jg text-center" cope="row">
                         {index + 1}
@@ -453,13 +461,14 @@ const SettingsDriver = () => {
                   </tr>)}
                 </tbody>
               </table>
-              <div className="d-flex next">
-                <div className="bor">
-                  <i className="fa-solid fa-angle-left"></i>
-                </div>
-                <div className="bor">
-                  <i className="fa-solid fa-angle-right "></i>
-                </div>
+              <div className="d-flex next align-items-center">
+                <Pagination
+                  simple
+                  defaultCurrent={1}
+                  total={pagenation.totalPage * pagenation.pageLimit}
+                  defaultPageSize={pagenation.pageLimit}
+                  onChange={(pageNumber) => getDrivers(pageNumber)}
+                />
               </div>
             </div>
           </div>

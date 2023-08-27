@@ -31,7 +31,7 @@ export const Food = () => {
   const getSubProducts = async (page) => {
     const {data} = await api.getSubProducts(id , page);
     setPagenation({
-      page: data?.info?.page,
+      page: data?.data?.info?.page,
       totalPage: data?.data?.info?.pages,
       pageLimit: data?.data?.info?.limit,
     });

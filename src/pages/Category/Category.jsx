@@ -27,6 +27,7 @@ export const Category = () => {
 
   const getCategories = async (pageNumber) => {
     const { data } = await api.getCategories(pageNumber);
+	console.log(data?.info);
     setPagenation({
       page: data?.info?.page,
       totalPage: data?.data?.info?.pages,
