@@ -35,7 +35,7 @@ export const Food = () => {
 		const { data } = await api.getSubProductById(subProductId);
 		if (data.status === 200) {
 			setOneId(data.data?._id);
-			setLink(data.data.image);
+			setLink(data?.data?.image);
 		}
 	};
 
