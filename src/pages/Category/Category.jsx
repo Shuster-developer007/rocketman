@@ -78,7 +78,7 @@ export const Category = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {categories.length ? (
+                  {categories?.length ? (
                     categories.map((item) => (
                       <tr key={item._id} className="table-borderless">
                         <th scope="row" className="jg text-center">
