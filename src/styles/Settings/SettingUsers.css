@@ -9,6 +9,11 @@
 }
 
 
+.skeleton_name {
+    margin-top: 2rem;
+}
+
+
 .added_border {
     display: flex;
     align-items: center;

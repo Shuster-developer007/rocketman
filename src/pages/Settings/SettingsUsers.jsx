@@ -5,6 +5,7 @@ import SettingsLinks from "../../components/SettingsLinks";
 import "../../styles/Settings/SettingUsers.css";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
+import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const SettingsUsers = () => {
   const [data, setData] = useState([]);
@@ -221,7 +222,7 @@ const SettingsUsers = () => {
             <div className="thor mt-5">
               {loading ? <h2>Loading</h2> : <h2>Available users</h2>}
               <div className="setting_card_users">
-                {data?.data?.map((item, index) => (
+                {data?.data?.length ? (data?.data?.map((item, index) => (
                   <div
                     key={item._id}
                     className="user_setting d-flex justify-content-between"
@@ -248,7 +249,32 @@ const SettingsUsers = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))) : (
+                  <div
+                    className="user_setting d-flex justify-content-between align-items-center"
+                  >
+                    <div>
+                      <h6 className=" h-50 px-5 skeleton_name">
+                        <React_Skeleton />
+                      </h6>
+                    </div>
+                    <div className="d-flex gap-3">
+                      <div
+                        className="setting_icon_edit"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editUserModal"
+                      >
+                        <React_Skeleton />
+                      </div>
+                      <div
+                        
+                        className="setting_icon_delete"
+                      >
+                        <React_Skeleton />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="d-flex justify-content-end">
                 <button
