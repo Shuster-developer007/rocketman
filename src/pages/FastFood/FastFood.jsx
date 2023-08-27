@@ -42,8 +42,7 @@ export const FastFood = () => {
       pageLimit: data?.data?.data?.info?.limit,
     });
     if (data.status === 200) {
-      console.log(data);
-      dispatch(setSubCategory(data.data?.data));
+      dispatch(setSubCategory(data.data?.data?.subcategories));
     }
   };
 
@@ -88,7 +87,7 @@ export const FastFood = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {subCategories?.length ? (
+                  {subCategories.length ? (
                     subCategories.map((item) => (
                       <tr key={item._id} className="table-borderless">
                         <th scope="row" className="jg text-center">

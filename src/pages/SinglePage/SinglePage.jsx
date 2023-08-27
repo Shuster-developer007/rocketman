@@ -42,7 +42,7 @@ export const SinglePage = () => {
       pageLimit: data?.data?.info?.limit,
     });
     if (data.status === 200) {
-      dispatch(setProduct(data?.data));
+      dispatch(setProduct(data?.data?.products));
     }
   };
 
