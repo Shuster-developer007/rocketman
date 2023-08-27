@@ -14,6 +14,11 @@ const SettingsDriver = () => {
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState("");
   const [value, setValue] = useState(false);
+  const [pagenation, setPagenation] = useState({
+    page: 1,
+    totalPage: 1,
+    pageLimit: 6,
+  });
 
   // Create Refs
   const drivernameRef = useRef();
@@ -29,21 +34,16 @@ const SettingsDriver = () => {
   const editdriverphoneRef = useRef();
   const editdriverautonumberRef = useRef();
   const editdrivertypeRef = useRef();
-  const [pagenation, setPagenation] = useState({
-    page: 1,
-    totalPage: 1,
-    pageLimit: 6,
-  });
 
   const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const getDrivers = async (page) => {
+  const getAllDrivers = async (pageNumber) => {
     try {
+      console.log(pageNumber);
       setLoading(true);
-      const { data } = await api.getSettingDrivers(page);
-      console.log(data?.data?.info);
+      const { data } = await api.getSettingDrivers(pageNumber);
       setPagenation({
         page: data?.info?.page,
         totalPage: data?.info?.pages,
@@ -58,7 +58,7 @@ const SettingsDriver = () => {
   };
 
   useEffect(() => {
-    getDrivers();
+    getAllDrivers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,7 +78,7 @@ const SettingsDriver = () => {
           type: "warning",
         });
       }
-      getDrivers();
+      getAllDrivers();
       if (data.status == 201) {
         toast("Success created driver", { type: "success" });
       }
@@ -127,7 +127,7 @@ const SettingsDriver = () => {
       if (data.status == 202) {
         toast("Success updated driver", { type: "success" });
       }
-      getDrivers();
+      getAllDrivers();
     } catch (error) {
       toast("Driver update qilishda xatolik mavjud", { type: "error" });
     }
@@ -462,13 +462,15 @@ const SettingsDriver = () => {
                 </tbody>
               </table>
               <div className="d-flex next align-items-center">
+              <div className="d-flex next align-items-center">
                 <Pagination
                   simple
                   defaultCurrent={1}
-                  total={pagenation.totalPage * pagenation.pageLimit}
-                  defaultPageSize={pagenation.pageLimit}
-                  onChange={(pageNumber) => getDrivers(pageNumber)}
+                  total={pagenation?.totalPage * pagenation?.pageLimit}
+                  defaultPageSize={pagenation?.pageLimit}
+                  onChange={(pageNumber) => getAllDrivers(pageNumber)}
                 />
+              </div>
               </div>
             </div>
           </div>
