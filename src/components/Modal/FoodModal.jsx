@@ -4,6 +4,7 @@ import MOCKIMAGE from '../../assets/images/300.png';
 import { Radio } from 'antd';
 import { api } from '../../API/api';
 import './Modal.css';
+import { toast } from 'react-toastify';
 
 export const FoodModal = ({
 	addModal,
@@ -12,7 +13,6 @@ export const FoodModal = ({
 	editSetModal,
 	id,
 	getSubProducts,
-	link,
 	oneId,
 }) => {
 	const [value, setValue] = useState(false);
@@ -30,26 +30,48 @@ export const FoodModal = ({
 	const eLinkRef = useRef();
 
 	const subProductPost = async (subProduct) => {
-		const data = await api.postSubProduct(subProduct);
-		console.log(data);
-		if (data.status === 201) {
-			getSubProducts();
+		try {
+			const data = await api.postSubProduct(subProduct);
+			console.log(data);
+
+			if (data.data?.status == 400 && data.data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+
+			if (data.status === 201) {
+				toast('Success created subproduct', { type: 'success' });
+				getSubProducts();
+			}
+		} catch (error) {
+			toast(error.response.data.message, { type: 'error' });
 		}
 	};
 
 	const handleEdit = async () => {
-		const body = {
-			sub_product_name: eInputRef.current.value,
-			description: eDescRef.current.value,
-			status: value === 'on' ? true : false,
-			price: +ePriceRef.current.value,
-			image: eLinkRef.current.value,
-		};
-		const { data } = await api.editSubProduct(oneId, body);
-		console.log(data);
-		if (data.status === 202) {
-			getSubProducts();
-			editSetModal(false);
+		try {
+			const body = {
+				sub_product_name: eInputRef.current.value,
+				description: eDescRef.current.value,
+				status: value === 'on' ? true : false,
+				price: +ePriceRef.current.value,
+				image: eLinkRef.current.value,
+			};
+			const { data } = await api.editSubProduct(oneId._id, body);
+			console.log(data);
+			if (data?.status == 400 && data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+			if (data.status === 202) {
+				toast('Success updated subproduct', { type: 'success' });
+				getSubProducts();
+				editSetModal(false);
+			}
+		} catch (error) {
+			toast('Subproduct update qilishda xatolik mavjud', { type: 'error' });
 		}
 	};
 
@@ -96,7 +118,7 @@ export const FoodModal = ({
 				<div className='d-flex align-items-center gap-5'>
 					<div className=''>
 						<img
-							src={link}
+							src={oneId.image}
 							className='img-fluid rounded'
 							alt='MOCK IMAGE'
 							width={300}
@@ -113,6 +135,7 @@ export const FoodModal = ({
 									<label htmlFor='product'>Tovar nomi</label>
 									<input
 										ref={eInputRef}
+										defaultValue={oneId.sub_product_name}
 										type='text'
 										className='rounded form-control'
 										name='product'
@@ -124,6 +147,7 @@ export const FoodModal = ({
 									<label htmlFor='price'>Narxi</label>
 									<input
 										ref={ePriceRef}
+										defaultValue={oneId.price}
 										type='text'
 										className='rounded form-control'
 										name='price'
@@ -148,6 +172,7 @@ export const FoodModal = ({
 									<label htmlFor='product'>Ma’lumot</label>
 									<input
 										ref={eDescRef}
+										defaultValue={oneId.description}
 										type='text'
 										className='rounded form-control'
 										name='product'
@@ -159,6 +184,7 @@ export const FoodModal = ({
 									<label htmlFor='price'>Rasmga link</label>
 									<input
 										ref={eLinkRef}
+										defaultValue={oneId.image}
 										type='text'
 										className='rounded form-control'
 										name='price'

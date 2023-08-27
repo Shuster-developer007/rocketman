@@ -24,7 +24,7 @@ export const FastFood = () => {
 	const fastFoodEdit = async (fastFoodId) => {
 		const { data } = await api.getSubCategoryById(fastFoodId);
 		if (data.status === 200) {
-			setOneId(data.data?._id);
+			setOneId(data.data);
 		}
 	};
 

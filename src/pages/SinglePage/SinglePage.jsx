@@ -24,7 +24,7 @@ export const SinglePage = () => {
 		const { data } = await api.getProductById(productId);
 		console.log(data);
 		if (data.status === 200) {
-			setOneId(data.data?._id);
+			setOneId(data.data);
 		}
 	};
 

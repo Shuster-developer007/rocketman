@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { Radio } from 'antd';
 import { api } from '../../API/api';
 import './Modal.css';
+import { toast } from 'react-toastify';
 
 Modal.setAppElement('#root');
 
@@ -16,28 +17,49 @@ export const CategoryModal = ({
 }) => {
 	const inputRef = useRef();
 	const editInputRef = useRef();
-	const [value, setValue] = useState(false);
-
+	const [value, setValue] = useState(1);
 	const onChange = (e) => {
 		setValue(e.target.value);
 	};
 
 	const categoryPost = async (category) => {
-		const data = await api.postCategory(category);
-		if (data.status === 201) {
-			getCategories();
+		try {
+			const data = await api.postCategory(category);
+			console.log(data);
+			if (data.data?.status == 400 && data.data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+			if (data.status === 201) {
+				toast('Success created category', { type: 'success' });
+				getCategories();
+			}
+		} catch (error) {
+			toast(error.response.data.message, { type: 'error' });
 		}
 	};
 
 	const handleEdit = async () => {
-		const body = {
-			category_name: editInputRef.current.value,
-			status: value === 'on' ? true : false,
-		};
-		const { data } = await api.editCategory(oneId, body);
-		if (data.status === 202) {
-			getCategories();
-			editSetModal(false);
+		try {
+			const body = {
+				category_name: editInputRef.current.value,
+				status: value === 'on' ? true : false,
+			};
+			const { data } = await api.editCategory(oneId._id, body);
+			console.log(data);
+			if (data?.status == 400 && data?.name == 'ValidationError') {
+				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
+					type: 'warning',
+				});
+			}
+			if (data.status === 202) {
+				toast('Success updated driver', { type: 'success' });
+				getCategories();
+				editSetModal(false);
+			}
+		} catch (error) {
+			toast('Category update qilishda xatolik mavjud', { type: 'error' });
 		}
 	};
 
@@ -80,6 +102,7 @@ export const CategoryModal = ({
 					<p>Kategoriya nomi</p>
 					<input
 						ref={editInputRef}
+						defaultValue={oneId.category_name}
 						className='rounded form-control'
 						type='text'
 						name='category'
@@ -88,8 +111,8 @@ export const CategoryModal = ({
 					/>
 					<p className='mt-4'>Holat</p>
 					<Radio.Group onChange={onChange} value={value}>
-						<Radio value={'on'}>on</Radio>
-						<Radio value={'off'}>off</Radio>
+						<Radio value={1}>on</Radio>
+						<Radio value={2}>off</Radio>
 					</Radio.Group>
 					<button
 						className='btn btn-dark mt-5 w-100'
