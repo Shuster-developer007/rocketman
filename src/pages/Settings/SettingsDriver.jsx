@@ -6,6 +6,7 @@ import SettingsLinks from "../../components/SettingsLinks";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
 import { Radio } from "antd";
+import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const SettingsDriver = () => {
   const [data, setData] = useState([]);
@@ -87,6 +88,17 @@ const SettingsDriver = () => {
       console.log(error.message);
     }
   };
+
+  const title = [
+    "ID",
+    "FAMILIYA ISMI",
+    "D.O.B",
+    "TELEFON RAQAM",
+    "AUTORAQAM",
+    "TURI",
+    "HOLAT",
+    "TAHRIRLASH",
+  ];
 
   const handleUpdateDriver = async () => {
     try {
@@ -386,34 +398,15 @@ const SettingsDriver = () => {
               <table className="mytable">
                 <thead className="thread">
                   <tr>
-                    <th className="jg text-center" scope="col">
-                      ID
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      FAMILIYA ISMI
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      D.O.B
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      TELEFON RAQAM
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      AUTORAQAM
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      TURI
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      HOLAT
-                    </th>
-                    <th className="jg text-center" scope="col">
-                      TAHRIRLASH
-                    </th>
+                    {title?.map((item) => (
+                      <th className="jg text-center" scope="col">
+                        {item}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.map((item, index) => (
+                  {data?.data?.length ? (data?.data?.map((item, index) => (
                     <tr className="tr" key={item._id}>
                       <th className="jg text-center" cope="row">
                         {index + 1}
@@ -451,7 +444,13 @@ const SettingsDriver = () => {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  ))) : (<tr>
+                    {title?.map((item, index) => (
+                      <th key={index} className="jg text-center" scope="col">
+                        <React_Skeleton />
+                      </th>
+                    ))}
+                  </tr>)}
                 </tbody>
               </table>
               <div className="d-flex next">
