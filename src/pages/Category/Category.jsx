@@ -129,13 +129,6 @@ export const Category = () => {
                 categories={categories}
               />
               <div className="d-flex next align-items-center">
-                {/* <div className="bor">
-                  <i className="fa-solid fa-angle-left"></i>
-                </div>
-                {page}
-                <div className="bor">
-                  <i className="fa-solid fa-angle-right "></i>
-                </div> */}
                 <Pagination
                   simple
                   defaultCurrent={1}
