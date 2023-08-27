@@ -8,7 +8,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 if (token) axios.defaults.headers.common['token'] = token;
 
 export const api = {
-	getCategories: () => axios.get(BASE_URL + '/categories'),
+	getCategories: (page) => axios.get(BASE_URL + `/categories?page=${page}`),
 	getSubCategories: (id) => axios.get(BASE_URL + '/subcategories/' + id),
 	getSettingsPayment: () => axios.get(BASE_URL + '/payments'),
 	getSettingDrivers: () => axios.get(BASE_URL + '/drivers'),
