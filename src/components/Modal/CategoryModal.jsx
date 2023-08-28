@@ -17,7 +17,7 @@ export const CategoryModal = ({
 }) => {
 	const inputRef = useRef();
 	const editInputRef = useRef();
-	const [value, setValue] = useState(1);
+	const [value, setValue] = useState(false);
 	const onChange = (e) => {
 		setValue(e.target.value);
 	};
@@ -111,8 +111,8 @@ export const CategoryModal = ({
 					/>
 					<p className='mt-4'>Holat</p>
 					<Radio.Group onChange={onChange} value={value}>
-						<Radio value={1}>on</Radio>
-						<Radio value={2}>off</Radio>
+						<Radio value={'on'}>on</Radio>
+						<Radio value={'off'}>off</Radio>
 					</Radio.Group>
 					<button
 						className='btn btn-dark mt-5 w-100'
