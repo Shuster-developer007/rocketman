@@ -31,7 +31,7 @@ const Header = ({ setInputVal }) => {
 						<Link
 							to={'/login'}
 							onClick={() => localStorage.clear()}
-							className='dropdown-menu text-center text-decoration-none'
+							className='dropdown-menu drop_dawn text-center text-decoration-none'
 						>
 							Log out
 						</Link>

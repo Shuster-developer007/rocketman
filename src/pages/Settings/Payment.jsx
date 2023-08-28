@@ -14,6 +14,9 @@ const Payment = () => {
   const [id, setId] = useState();
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
+  const [payment_type , setPayment_type] = useState('')
+  const [payment_telg , setPayment_telg] = useState('')
+  const [payment_link , setPayment_link] = useState('')
 
   const editPayment_typeRef = useRef();
   const editpayment_telegramRef = useRef();
@@ -68,9 +71,11 @@ const Payment = () => {
   };
   const getOnePaymentOrEdit = async (id) => {
     try {
-      setId(id);
       const { data } = await api.getOnePayment(id);
-      setPayment(data);
+      setPayment_type(data?.data?.payment_type)
+      setPayment_link(data?.data?.link)
+      setPayment_telg(data?.data?.telegram_payment)
+      setPayment(data?.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -79,12 +84,12 @@ const Payment = () => {
   const handleupdatedPayment = async () => {
     try {
       const update_payment = {
-        payment_type: editPayment_typeRef.current.value,
-        link: editlinkRef.current.value,
+        payment_type: payment_type,
+        link: payment_link,
         status: value == "on" ? true : false,
-        telegram_payment: editpayment_telegramRef.current.value,
+        telegram_payment: payment_telg,
       };
-      const data = await api.updatedPayment(id, update_payment);
+      const data = await api.updatedPayment(payment._id, update_payment);
       if (data.status == 202) {
         getPayments();
         toast("Success updated payment", { type: "success" });
@@ -149,8 +154,8 @@ const Payment = () => {
                     Nomi
                   </label>
                   <input
-                    defaultValue={payment?.data?.payment_type}
-                    ref={editPayment_typeRef}
+                    value={payment_type}
+                    onChange={(e) => setPayment_type(e.target.value)}
                     type="text"
                     className="form-control"
                     placeholder={payment?.data?.payment_type}
@@ -162,8 +167,8 @@ const Payment = () => {
                     Telegram button name
                   </label>
                   <input
-                    defaultValue={payment?.data?.telegram_payment}
-                    ref={editpayment_telegramRef}
+                    value={payment_telg}
+                    onChange={(e) => setPayment_telg(e.target.value)}
                     type="text"
                     className="form-control"
                     id="telegram_btn_name"
@@ -174,8 +179,8 @@ const Payment = () => {
                     Link
                   </label>
                   <input
-                    defaultValue={payment?.data?.link}
-                    ref={editlinkRef}
+                    value={payment_link}
+                    onChange={(e) => setPayment_link(e.target.value)}
                     type="text"
                     className="form-control"
                     id="link"

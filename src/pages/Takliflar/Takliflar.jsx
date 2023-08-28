@@ -87,14 +87,43 @@ const Takliflar = () => {
           <div className="container px-4 py-5">
             <div className="div">
               <h3>Taklif va Shifoyatlar </h3>
-              {data?.data?.length ? (
-                data?.data?.map((item) => (
+              {loading ? (
+                <div className="morke py-4  d-flex justify-content-between">
+                  <div className="topmor d-flex gap-3">
+                    <div className="user">
+                      <React_Skeleton />
+                    </div>
+                    <div>
+                      <h5>
+                        <React_Skeleton />
+                      </h5>
+                    </div>
+                  </div>
+
+                  <p className="parag">
+                    <React_Skeleton />
+                  </p>
+                  <div className="icons d-flex align-items-center gap-4">
+                    <div
+                      data-bs-toggle="modal"
+                      data-bs-target="#dispatchmodal"
+                      className="share"
+                    >
+                      <React_Skeleton />
+                    </div>
+                    <div className="delete">
+                      <React_Skeleton />
+                    </div>
+                  </div>
+                </div>
+              ) : data?.data?.length ? (
+                data?.data?.map((item , index) => (
                   <div
                     key={item._id}
                     className="morke py-4  d-flex justify-content-between"
                   >
                     <div className="topmor d-flex gap-3">
-                      <div className="user">22</div>
+                      <div className="user">{index  + 1}</div>
                       <div>
                         <h5>{item.username}</h5>
                         <p className="text-secondary sana">
@@ -124,31 +153,7 @@ const Takliflar = () => {
                 ))
               ) : (
                 <div className="morke py-4  d-flex justify-content-between">
-                  <div className="topmor d-flex gap-3">
-                    <div className="user">
-                      <React_Skeleton />
-                    </div>
-                    <div>
-                      <h5><React_Skeleton /></h5>
-                    </div>
-                  </div>
-                               
-                  <p className="parag"><React_Skeleton /></p>
-                  <div className="icons d-flex align-items-center gap-4">
-                    <div
-                      data-bs-toggle="modal"
-                      data-bs-target="#dispatchmodal"
-                      className="share"
-                    >
-                     <React_Skeleton />
-                    </div>
-                    <div
-                      
-                      className="delete"
-                    >
-                      <React_Skeleton />
-                    </div>
-                  </div>
+                  <h2>Ma'lumotlar yo'q</h2>
                 </div>
               )}
             </div>

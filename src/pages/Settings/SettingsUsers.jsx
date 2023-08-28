@@ -6,26 +6,24 @@ import "../../styles/Settings/SettingUsers.css";
 import { api } from "../../API/api";
 import { toast } from "react-toastify";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
+import { date } from "yup";
 
 const SettingsUsers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [admin, setAdmin] = useState(null);
-  const [username, setUserName] = useState('')
-  const [password, setPassword] = useState('') 
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const editUsernameRef = useRef();
   const editPasswordRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
 
-
-
-
   const handleClick = async (id) => {
     try {
       const { data } = await api.getOneAdmin(id);
-      setUserName(data.data.username)
-      setPassword('')
+      setUserName(data.data.username);
+      setPassword("");
       setAdmin(data?.data);
     } catch (error) {
       console.log(error);
@@ -50,7 +48,7 @@ const SettingsUsers = () => {
         toast("Success updated admin", { type: "success" });
       }
     } catch (error) {
-      console.log(error);
+      toast(error.response.data.message, { type: "error" });
     }
   };
 
@@ -83,8 +81,8 @@ const SettingsUsers = () => {
       } finally {
         setLoading(false);
       }
-    } else if(sorov == false) {
-        return;
+    } else if (sorov == false) {
+      return;
     }
   };
 
@@ -153,7 +151,6 @@ const SettingsUsers = () => {
                     Password
                   </label>
                   <input
-                  
                     ref={passwordRef}
                     type="password"
                     className="form-control"
@@ -205,7 +202,6 @@ const SettingsUsers = () => {
                     Password
                   </label>
                   <input
-                   
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
@@ -235,37 +231,37 @@ const SettingsUsers = () => {
             <div className="thor mt-5">
               {loading ? <h2>Loading</h2> : <h2>Available users</h2>}
               <div className="setting_card_users">
-                {data?.data?.length ? (data?.data?.map((item, index) => (
-                  <div
-                    key={item._id}
-                    className="user_setting d-flex justify-content-between"
-                  >
-                    <div>
-                      <h6>
-                        {index + 1}.{item?.username}
-                      </h6>
-                    </div>
-                    <div className="d-flex gap-3">
-                      <div
-                        onClick={() => handleClick(item._id)}
-                        className="setting_icon_edit"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editUserModal"
-                      >
-                        <i className="fa-solid fa-marker text-white"></i>
+                {data?.data?.length ? (
+                  data?.data?.map((item, index) => (
+                    <div
+                      key={item._id}
+                      className="user_setting d-flex justify-content-between"
+                    >
+                      <div>
+                        <h6>
+                          {index + 1}.{item?.username}
+                        </h6>
                       </div>
-                      <div
-                        onClick={() => handleDeleteAdmin(item._id)}
-                        className="setting_icon_delete"
-                      >
-                        <i className="fa-solid fa-trash text-white"></i>
+                      <div className="d-flex gap-3">
+                        <div
+                          onClick={() => handleClick(item._id)}
+                          className="setting_icon_edit"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editUserModal"
+                        >
+                          <i className="fa-solid fa-marker text-white"></i>
+                        </div>
+                        <div
+                          onClick={() => handleDeleteAdmin(item._id)}
+                          className="setting_icon_delete"
+                        >
+                          <i className="fa-solid fa-trash text-white"></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))) : (
-                  <div
-                    className="user_setting d-flex justify-content-between align-items-center"
-                  >
+                  ))
+                ) : (
+                  <div className="user_setting d-flex justify-content-between align-items-center">
                     <div>
                       <h6 className=" h-50 px-5 skeleton_name">
                         <React_Skeleton />
@@ -279,10 +275,7 @@ const SettingsUsers = () => {
                       >
                         <React_Skeleton />
                       </div>
-                      <div
-                        
-                        className="setting_icon_delete"
-                      >
+                      <div className="setting_icon_delete">
                         <React_Skeleton />
                       </div>
                     </div>

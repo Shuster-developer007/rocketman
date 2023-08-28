@@ -12,7 +12,11 @@ const SettingsDriver = () => {
   const [data, setData] = useState([]);
   const [driver, setDriver] = useState({});
   const [loading, setLoading] = useState(false);
-  const [id, setId] = useState("");
+  const [drivername , setDriverName] = useState('')
+  const [driverbirthday , setDriverbirthday] = useState('')
+  const [driverphone , setDriverphone] = useState('')
+  const [autoNumber , setAutoNumber] = useState('')
+  const [drivertype , setDriverType] = useState('')
   const [value, setValue] = useState(false);
   const [pagenation, setPagenation] = useState({
     page: 1,
@@ -41,7 +45,6 @@ const SettingsDriver = () => {
 
   const getAllDrivers = async (pageNumber) => {
     try {
-      console.log(pageNumber);
       setLoading(true);
       const { data } = await api.getSettingDrivers(pageNumber);
       setPagenation({
@@ -89,9 +92,14 @@ const SettingsDriver = () => {
 
   const getOneDriver = async (id) => {
     try {
-      setId(id);
       const { data } = await api.getOneDriver(id);
-      setDriver(data);
+      setDriverName(data?.data?.driver_full_name)
+      setDriverbirthday(data?.data?.driver_birthday)
+      setDriverphone(data?.data?.driver_phone)
+      setAutoNumber(data?.data?.car_number)
+      setDriverType(data?.data?.type)
+      setDriverType(data?.data?.type)
+      setDriver(data?.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -111,14 +119,16 @@ const SettingsDriver = () => {
   const handleUpdateDriver = async () => {
     try {
       const driverUpdate = {
-        driver_full_name: editdrivernameRef.current.value,
-        driver_birthday: editdriverbirthdayRef.current.value,
-        driver_phone: editdriverphoneRef.current.value,
-        car_number: editdriverautonumberRef.current.value,
-        type: editdrivertypeRef.current.value,
+        driver_full_name: drivername,
+        driver_birthday: driverbirthday,
+        driver_phone: driverphone,
+        car_number:autoNumber,
+        type: drivertype,
         status: value === "on" ? true : false,
       };
-      const { data } = await api.updateDriver(id, driverUpdate);
+      console.log(driver._id);
+      const { data } = await api.updateDriver(driver._id, driverUpdate);
+      console.log(data);
       if (data?.status == 400 && data?.name == "ValidationError") {
         toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
           type: "warning",
@@ -284,8 +294,8 @@ const SettingsDriver = () => {
                         Driver name
                       </label>
                       <input
-                        defaultValue={driver?.data?.driver_full_name}
-                        ref={editdrivernameRef}
+                        value={drivername}
+                        onChange={(e) => setDriverName(e.target.value)}
                         type="text"
                         className="form-control"
                         placeholder="name"
@@ -298,8 +308,8 @@ const SettingsDriver = () => {
                         D.O.B
                       </label>
                       <input
-                        defaultValue={driver?.data?.driver_birthday}
-                        ref={editdriverbirthdayRef}
+                        value={driverbirthday}
+                        onChange={(e) => setDriverbirthday(e.target.value)}
                         type="text"
                         className="form-control 100"
                         name="date"
@@ -314,8 +324,8 @@ const SettingsDriver = () => {
                         Telefon raqami
                       </label>
                       <input
-                        defaultValue={driver?.data?.driver_phone}
-                        ref={editdriverphoneRef}
+                        value={driverphone}
+                        onChange={(e) => setDriverphone(e.target.value)}
                         type="text"
                         className="form-control"
                         placeholder="+998 _ _ _ _ _ _ _ _ _"
@@ -328,8 +338,8 @@ const SettingsDriver = () => {
                         Autoraqam
                       </label>
                       <input
-                        defaultValue={driver?.data?.car_number}
-                        ref={editdriverautonumberRef}
+                       value={autoNumber}
+                        onChange={(e) => setAutoNumber(e.target.value)}
                         type="text"
                         className="form-control 100"
                         name="auto_number"
@@ -344,8 +354,8 @@ const SettingsDriver = () => {
                         Turi
                       </label>
                       <input
-                        defaultValue={driver?.data?.type}
-                        ref={editdrivertypeRef}
+                        value={drivertype}
+                        onChange={(e) => setDriverType(e.target.value)}
                         type="text"
                         className="form-control"
                         placeholder="masalan: Tico"
