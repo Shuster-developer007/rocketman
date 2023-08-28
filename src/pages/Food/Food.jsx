@@ -84,7 +84,7 @@ export const Food = () => {
 										subProducts.map((item, i) => (
 											<tr key={item._id} className='table-borderless'>
 												<th scope='row' className='jg text-center'>
-													{i + 1}
+													{item?.second_id}
 												</th>
 												<td scope='row' className='jg text-center'>
 													{item.sub_product_name}
