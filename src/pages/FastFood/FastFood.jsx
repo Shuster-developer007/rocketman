@@ -35,7 +35,7 @@ export const FastFood = () => {
   };
 
   const getSubCategories = async (page) => {
-    const data = await api.getSubCategories(id , page);
+    const data = await api.getSubCategories(id, page);
     setPagenation({
       page: data?.info?.page,
       totalPage: data?.data?.data?.info?.pages,
@@ -45,131 +45,131 @@ export const FastFood = () => {
       console.log(data);
       dispatch(setSubCategory(data?.data?.data?.subcategories));
     }
-  };
 
-  useEffect(() => {
-    getSubCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    useEffect(() => {
+      getSubCategories();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  const title = [
-    "ID",
-    "DO'KONLAR",
-    "TOVAR SONI",
-    "TELEFON RAQAM",
-    "MANZIL",
-    "HOLAT",
-    "TAHRIRLASH",
-  ];
+    const title = [
+      "ID",
+      "DO'KONLAR",
+      "TOVAR SONI",
+      "TELEFON RAQAM",
+      "MANZIL",
+      "HOLAT",
+      "TAHRIRLASH",
+    ];
 
-  return (
-    <>
-      <Sidebar />
-      <div className="ummumiy">
-        <Header />
-        <section className="py-4">
-          <div className="container px-4">
-            <button
-              className="btn btn-success categoryBtn"
-              onClick={() => addSetModal(true)}
-            >
-              Qo’shish +
-            </button>
-            <div className="category mt-3">
-              <table className="table table-hover table-borderless">
-                <thead className="thread">
-                  <tr className="table-dark">
-                    {title.map((el, i) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <th key={i} scope="col" className="jg text-center">
-                        {el}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="">
-                  {subCategories?.length ? (
-                    subCategories.map((item) => (
-                      <tr key={item._id} className="table-borderless">
-                        <th scope="row" className="jg text-center">
-                          {item.second_id}
-                        </th>
-                        <td scope="row" className="jg text-center">
-                          <Link
-                            to={item._id}
-                            className="Item-link text-decoration-none text-dark"
-                          >
-                            {item.sub_category_name}
-                          </Link>
-                        </td>
-                        <td className="jg text-center">
-                          {item.products.length}
-                        </td>
-                        <td className="jg text-center">{item.phone}</td>
-                        <td className="jg text-center">{item.location}</td>
-                        <td className="jg text-center">
-                          {item.status == true ? (
-                            <div className="d-flex justify-content-center align-items-center">
-                              <div className="enabled d-flex align-items-center justify-content-center">
-                                enabled
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="d-flex justify-content-center align-items-center ">
-                              <div className="disabled text-danger justify-content-center align-items-center d-flex">
-                                disabled
-                              </div>
-                            </div>
-                          )}
-                        </td>
-                        <td
-                          className="jg text-center"
-                          onClick={() => fastFoodEdit(item._id)}
-                        >
-                          {" "}
-                          <button
-                            className="btn"
-                            onClick={() => editSetModal(true)}
-                          >
-                            <GrEdit color="green" size={20} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
+    return (
+      <>
+        <Sidebar />
+        <div className="ummumiy">
+          <Header />
+          <section className="py-4">
+            <div className="container px-4">
+              <button
+                className="btn btn-success categoryBtn"
+                onClick={() => addSetModal(true)}
+              >
+                Qo’shish +
+              </button>
+              <div className="category mt-3">
+                <table className="table table-hover table-borderless">
+                  <thead className="thread">
+                    <tr className="table-dark">
                       {title.map((el, i) => (
                         // eslint-disable-next-line react/jsx-key
-                        <td key={i}>
-                          <React_Skeleton />
-                        </td>
+                        <th key={i} scope="col" className="jg text-center">
+                          {el}
+                        </th>
                       ))}
                     </tr>
-                  )}
-                </tbody>
-              </table>
-              <FastfoodModal
-                id={id}
-                oneId={oneId}
-                getSubCategories={getSubCategories}
-                editModal={editModal}
-                editSetModal={editSetModal}
-                addModal={addModal}
-                addSetModal={addSetModal}
-              />
-              <div className="d-flex next align-items-center">
-                <Pagination
-                  simple
-                  defaultCurrent={1}
-                  total={pagenation.totalPage * pagenation.pageLimit}
-                  defaultPageSize={pagenation.pageLimit}
-                  onChange={(pageNumber) => getSubCategories(pageNumber)}
+                  </thead>
+                  <tbody className="">
+                    {subCategories.length ? (
+                      subCategories.map((item) => (
+                        <tr key={item._id} className="table-borderless">
+                          <th scope="row" className="jg text-center">
+                            {item.second_id}
+                          </th>
+                          <td scope="row" className="jg text-center">
+                            <Link
+                              to={item._id}
+                              className="Item-link text-decoration-none text-dark"
+                            >
+                              {item.sub_category_name}
+                            </Link>
+                          </td>
+                          <td className="jg text-center">
+                            {item.products.length}
+                          </td>
+                          <td className="jg text-center">{item.phone}</td>
+                          <td className="jg text-center">{item.location}</td>
+                          <td className="jg text-center">
+                            {item.status == true ? (
+                              <div className="d-flex justify-content-center align-items-center">
+                                <div className="enabled d-flex align-items-center justify-content-center">
+                                  enabled
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="d-flex justify-content-center align-items-center ">
+                                <div className="disabled text-danger justify-content-center align-items-center d-flex">
+                                  disabled
+                                </div>
+                              </div>
+                            )}
+                          </td>
+                          <td
+                            className="jg text-center"
+                            onClick={() => fastFoodEdit(item._id)}
+                          >
+                            {" "}
+                            <button
+                              className="btn"
+                              onClick={() => editSetModal(true)}
+                            >
+                              <GrEdit color="green" size={20} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        {title.map((el, i) => (
+                          // eslint-disable-next-line react/jsx-key
+                          <td key={i}>
+                            <React_Skeleton />
+                          </td>
+                        ))}
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+                <FastfoodModal
+                  id={id}
+                  oneId={oneId}
+                  getSubCategories={getSubCategories}
+                  editModal={editModal}
+                  editSetModal={editSetModal}
+                  addModal={addModal}
+                  addSetModal={addSetModal}
                 />
+                <div className="d-flex next align-items-center">
+                  <Pagination
+                    simple
+                    defaultCurrent={1}
+                    total={pagenation.totalPage * pagenation.pageLimit}
+                    defaultPageSize={pagenation.pageLimit}
+                    onChange={(pageNumber) => getSubCategories(pageNumber)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-    </>
-  );
+          </section>
+        </div>
+      </>
+    );
+  };
 };
