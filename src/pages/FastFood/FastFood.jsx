@@ -148,6 +148,7 @@ export const FastFood = () => {
 								</tbody>
 							</table>
 							<FastfoodModal
+								setOneId={setOneId}
 								id={id}
 								oneId={oneId}
 								getSubCategories={getSubCategories}

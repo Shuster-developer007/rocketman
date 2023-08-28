@@ -122,6 +122,7 @@ export const Category = () => {
 							</table>
 							<CategoryModal
 								oneId={oneId}
+								setOneId={setOneId}
 								getCategories={getCategories}
 								addModal={addModal}
 								addSetModal={addSetModal}
