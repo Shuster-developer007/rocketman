@@ -79,6 +79,7 @@ const SettingsUsers = () => {
         toast("Success deleted admin", { type: "success" });
         getAdmins();
       } catch (error) {
+        console.log(error.message);
       } finally {
         setLoading(false);
       }
