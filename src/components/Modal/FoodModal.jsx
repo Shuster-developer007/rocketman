@@ -14,6 +14,7 @@ export const FoodModal = ({
 	id,
 	getSubProducts,
 	oneId,
+	setOneId,
 }) => {
 	const [value, setValue] = useState(false);
 	const onChange = (e) => {
@@ -105,7 +106,7 @@ export const FoodModal = ({
 					},
 					content: {
 						width: '800px',
-						height: '350px',
+						height: '400px',
 						top: 0,
 						right: 0,
 						left: 0,
@@ -119,9 +120,9 @@ export const FoodModal = ({
 					<div className=''>
 						<img
 							src={oneId.image}
-							className='img-fluid rounded'
+							className='rounded'
 							alt='MOCK IMAGE'
-							width={300}
+							width={200}
 							height={300}
 						/>
 					</div>
@@ -135,7 +136,8 @@ export const FoodModal = ({
 									<label htmlFor='product'>Tovar nomi</label>
 									<input
 										ref={eInputRef}
-										defaultValue={oneId.sub_product_name}
+										value={oneId.sub_product_name}
+										onChange={(e) => setOneId.sub_product_name(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='product'
@@ -147,7 +149,8 @@ export const FoodModal = ({
 									<label htmlFor='price'>Narxi</label>
 									<input
 										ref={ePriceRef}
-										defaultValue={oneId.price}
+										value={oneId.price}
+										onChange={(e) => setOneId.price(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='price'
@@ -172,7 +175,8 @@ export const FoodModal = ({
 									<label htmlFor='product'>Ma’lumot</label>
 									<input
 										ref={eDescRef}
-										defaultValue={oneId.description}
+										value={oneId.description}
+										onChange={(e) => setOneId.description(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='product'
@@ -184,7 +188,8 @@ export const FoodModal = ({
 									<label htmlFor='price'>Rasmga link</label>
 									<input
 										ref={eLinkRef}
-										defaultValue={oneId.image}
+										value={oneId.image}
+										onChange={(e) => setOneId.image(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='price'

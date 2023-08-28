@@ -14,6 +14,7 @@ export const CategoryModal = ({
 	editSetModal,
 	getCategories,
 	oneId,
+	setOneId,
 }) => {
 	const inputRef = useRef();
 	const editInputRef = useRef();
@@ -102,7 +103,8 @@ export const CategoryModal = ({
 					<p>Kategoriya nomi</p>
 					<input
 						ref={editInputRef}
-						defaultValue={oneId.category_name}
+						value={oneId.category_name}
+						onChange={(e) => setOneId.category_name(e.target.value)}
 						className='rounded form-control'
 						type='text'
 						name='category'
