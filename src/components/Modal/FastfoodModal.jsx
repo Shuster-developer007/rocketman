@@ -13,6 +13,7 @@ export const FastfoodModal = ({
 	getSubCategories,
 	id,
 	oneId,
+	setOneId,
 }) => {
 	const inputRef = useRef();
 	const eInputRef = useRef();
@@ -125,7 +126,8 @@ export const FastfoodModal = ({
 							<h4>Do’’kon nomi</h4>
 							<input
 								ref={eInputRef}
-								defaultValue={oneId.sub_category_name}
+								value={oneId.sub_category_name}
+								onChange={(e) => setOneId.sub_category_name(e.target.value)}
 								className='rounded me-3 form-control'
 								type='text'
 								name='sub_category_name'
@@ -138,7 +140,8 @@ export const FastfoodModal = ({
 							<h4>Telefon raqami</h4>
 							<input
 								ref={ePhoneInputRef}
-								defaultValue={oneId.phone}
+								value={oneId.phone}
+								onChange={(e) => setOneId.phone(e.target.value)}
 								className='rounded form-control'
 								type='text'
 								name='phone'
@@ -153,7 +156,8 @@ export const FastfoodModal = ({
 							<h4>Long</h4>
 							<input
 								ref={eLongInputRef}
-								defaultValue={oneId.long}
+								value={oneId.long}
+								onChange={(e) => setOneId.long(e.target.value)}
 								className='rounded me-3 form-control'
 								type='text'
 								name='long'
@@ -166,7 +170,8 @@ export const FastfoodModal = ({
 							<h4>Lang</h4>
 							<input
 								ref={eLangInputRef}
-								defaultValue={oneId.lang}
+								value={oneId.lang}
+								onChange={(e) => setOneId.lang(e.target.value)}
 								className='rounded form-control'
 								type='text'
 								name='lang'
@@ -181,7 +186,8 @@ export const FastfoodModal = ({
 							<h4>Manzil</h4>
 							<input
 								ref={eLocInputRef}
-								defaultValue={oneId.location}
+								value={oneId.location}
+								onChange={(e) => setOneId.location(e.target.value)}
 								className='rounded me-4 form-control'
 								type='text'
 								name='loc'

@@ -13,6 +13,7 @@ export const SModal = ({
 	id,
 	getProducts,
 	oneId,
+	setOneId,
 }) => {
 	const inputRef = useRef();
 	const eInputRef = useRef();
@@ -100,7 +101,8 @@ export const SModal = ({
 					<p>Kategoriya nomi</p>
 					<input
 						ref={eInputRef}
-						defaultValue={oneId.product_name}
+						value={oneId.product_name}
+						onChange={(e) => setOneId.product_name(e.target.value)}
 						className='rounded form-control'
 						type='text'
 						name='product'
@@ -126,6 +128,7 @@ export const SModal = ({
 					X
 				</button>
 			</Modal>
+			
 			<Modal
 				isOpen={addModal}
 				onRequestClose={() => addSetModal(false)}
