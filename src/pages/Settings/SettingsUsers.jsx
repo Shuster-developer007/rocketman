@@ -9,25 +9,24 @@ import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 
 const SettingsUsers = () => {
   const [data, setData] = useState([]);
-  const [admin_id, setId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [admin, setAdmin] = useState({});
+  const [admin, setAdmin] = useState(null);
+  const [username, setUserName] = useState('')
+  const [password, setPassword] = useState('') 
   const editUsernameRef = useRef();
   const editPasswordRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
 
- 
 
-  const getOneAdmin = async (id) => {
+
+
+  const handleClick = async (id) => {
     try {
-      console.log(id);
-      console.log(admin_id);
-      setId(id);
       const { data } = await api.getOneAdmin(id);
-      // console.log(admin);
-      setAdmin(data);
-      console.log(admin);
+      setUserName(data.data.username)
+      setPassword('')
+      setAdmin(data?.data);
     } catch (error) {
       console.log(error);
     }
@@ -36,10 +35,13 @@ const SettingsUsers = () => {
   const handleUpdateAdmin = async () => {
     try {
       const body = {
-        username: editUsernameRef.current.value,
-        password: editPasswordRef.current.value,
+        username: username,
+        password: password,
       };
-      const { data } = await api.editAdmin(admin_id, body);
+
+      console.log(admin._id);
+
+      const { data } = await api.editAdmin(admin._id, body);
       if (data.status == 400 && data.name == "ValidationError") {
         toast("Iltimos ma'lumotlarni to'g'ri to'ldiring", { type: "warning" });
       }
@@ -150,6 +152,7 @@ const SettingsUsers = () => {
                     Password
                   </label>
                   <input
+                  
                     ref={passwordRef}
                     type="password"
                     className="form-control"
@@ -185,25 +188,28 @@ const SettingsUsers = () => {
               </div>
               <div className="modal-body">
                 <form action="">
-                  <label htmlFor="username" className="my-3">
+                  <label htmlFor="usernamed" className="my-3">
                     Username
                   </label>
                   <input
+                    value={username}
+                    onChange={(e) => setUserName(e.target.value)}
                     type="text"
-                    ref={editUsernameRef}
                     className="form-control"
-                    defaultValue={admin?.username}
                     placeholder="username"
-                    id="username"
-                    name="username"
+                    id="usernamed"
+                    name="usernamed"
                   />
                   <label htmlFor="password_ad" className=" my-3">
                     Password
                   </label>
                   <input
-                    ref={editPasswordRef}
-                    // defaultValue={admin?.password}
+                   
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="password"
+                    id="password_ad"
+                    name="password_ad"
                     className="form-control"
                     placeholder="password"
                   />
@@ -235,12 +241,12 @@ const SettingsUsers = () => {
                   >
                     <div>
                       <h6>
-                        {index + 1}.{item.username}
+                        {index + 1}.{item?.username}
                       </h6>
                     </div>
                     <div className="d-flex gap-3">
                       <div
-                        onClick={() => getOneAdmin(item?._id)}
+                        onClick={() => handleClick(item._id)}
                         className="setting_icon_edit"
                         data-bs-toggle="modal"
                         data-bs-target="#editUserModal"

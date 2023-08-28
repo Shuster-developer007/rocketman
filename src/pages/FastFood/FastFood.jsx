@@ -43,7 +43,7 @@ export const FastFood = () => {
     });
     if (data.status === 200) {
       console.log(data);
-      dispatch(setSubCategory(data.data?.data));
+      dispatch(setSubCategory(data?.data?.data?.subcategories));
     }
   };
 
