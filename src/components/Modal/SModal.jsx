@@ -128,6 +128,7 @@ export const SModal = ({
 					X
 				</button>
 			</Modal>
+			
 			<Modal
 				isOpen={addModal}
 				onRequestClose={() => addSetModal(false)}
