@@ -15,9 +15,9 @@ export const CategoryModal = ({
 	getCategories,
 	oneId,
 	setOneId,
+	id
 }) => {
 	const inputRef = useRef();
-	const editInputRef = useRef();
 	const [value, setValue] = useState(false);
 	const onChange = (e) => {
 		setValue(e.target.value);
@@ -44,10 +44,10 @@ export const CategoryModal = ({
 	const handleEdit = async () => {
 		try {
 			const body = {
-				category_name: editInputRef.current.value,
+				category_name: oneId,
 				status: value === 'on' ? true : false,
 			};
-			const { data } = await api.editCategory(oneId._id, body);
+			const { data } = await api.editCategory(id, body);
 			console.log(data);
 			if (data?.status == 400 && data?.name == 'ValidationError') {
 				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
@@ -102,9 +102,8 @@ export const CategoryModal = ({
 					<h1>Tahrirlash</h1>
 					<p>Kategoriya nomi</p>
 					<input
-						ref={editInputRef}
-						value={oneId.category_name}
-						onChange={(e) => setOneId.category_name(e.target.value)}
+						value={oneId}
+						onChange={(e) => setOneId(e.target.value)}
 						className='rounded form-control'
 						type='text'
 						name='category'

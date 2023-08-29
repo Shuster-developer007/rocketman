@@ -12,19 +12,23 @@ export const FastfoodModal = ({
 	addSetModal,
 	getSubCategories,
 	id,
-	oneId,
-	setOneId,
+	Id,
+	sub,
+	setSub,
+	setPhone,
+	phone,
+	setLong,
+	long,
+	setLang,
+	lang,
+	setLoc,
+	loc,
 }) => {
 	const inputRef = useRef();
-	const eInputRef = useRef();
 	const locInputRef = useRef();
-	const eLocInputRef = useRef();
 	const phoneInputRef = useRef();
-	const ePhoneInputRef = useRef();
 	const longInputRef = useRef();
-	const eLongInputRef = useRef();
 	const langInputRef = useRef();
-	const eLangInputRef = useRef();
 	const [value, setValue] = useState(false);
 
 	const onChange = (e) => {
@@ -51,14 +55,14 @@ export const FastfoodModal = ({
 	const handleEdit = async () => {
 		try {
 			const body = {
-				sub_category_name: eInputRef.current.value,
-				location: eLocInputRef.current.value,
-				long: eLongInputRef.current.value,
-				lang: eLangInputRef.current.value,
-				phone: ePhoneInputRef.current.value,
+				sub_category_name: sub,
+				location: loc,
+				long: long,
+				lang: lang,
+				phone: phone,
 				status: value === 'on' ? true : false,
 			};
-			const { data } = await api.editSubCategory(oneId._id, body);
+			const { data } = await api.editSubCategory(Id, body);
 			if (data?.status == 400 && data?.name == 'ValidationError') {
 				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
 					type: 'warning',
@@ -125,9 +129,8 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Do’’kon nomi</h4>
 							<input
-								ref={eInputRef}
-								value={oneId.sub_category_name}
-								onChange={(e) => setOneId.sub_category_name(e.target.value)}
+								value={sub}
+								onChange={(e) => setSub(e.target.value)}
 								className='rounded me-3 form-control'
 								type='text'
 								name='sub_category_name'
@@ -139,9 +142,8 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Telefon raqami</h4>
 							<input
-								ref={ePhoneInputRef}
-								value={oneId.phone}
-								onChange={(e) => setOneId.phone(e.target.value)}
+								value={phone}
+								onChange={(e) => setPhone(e.target.value)}
 								className='rounded form-control'
 								type='text'
 								name='phone'
@@ -155,9 +157,8 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Long</h4>
 							<input
-								ref={eLongInputRef}
-								value={oneId.long}
-								onChange={(e) => setOneId.long(e.target.value)}
+								value={long}
+								onChange={(e) => setLong(e.target.value)}
 								className='rounded me-3 form-control'
 								type='text'
 								name='long'
@@ -169,9 +170,8 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Lang</h4>
 							<input
-								ref={eLangInputRef}
-								value={oneId.lang}
-								onChange={(e) => setOneId.lang(e.target.value)}
+								value={lang}
+								onChange={(e) => setLang(e.target.value)}
 								className='rounded form-control'
 								type='text'
 								name='lang'
@@ -185,9 +185,8 @@ export const FastfoodModal = ({
 							{' '}
 							<h4>Manzil</h4>
 							<input
-								ref={eLocInputRef}
-								value={oneId.location}
-								onChange={(e) => setOneId.location(e.target.value)}
+								value={loc}
+								onChange={(e) => setLoc(e.target.value)}
 								className='rounded me-4 form-control'
 								type='text'
 								name='loc'

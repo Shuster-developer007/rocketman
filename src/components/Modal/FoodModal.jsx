@@ -15,6 +15,14 @@ export const FoodModal = ({
 	getSubProducts,
 	oneId,
 	setOneId,
+	setProductName,
+	productName,
+	setDesc,
+	desc,
+	setPrice,
+	price,
+	img,
+	setImg,
 }) => {
 	const [value, setValue] = useState(false);
 	const onChange = (e) => {
@@ -22,13 +30,9 @@ export const FoodModal = ({
 	};
 
 	const inputRef = useRef();
-	const eInputRef = useRef();
 	const descRef = useRef();
-	const eDescRef = useRef();
 	const priceRef = useRef();
-	const ePriceRef = useRef();
 	const linkRef = useRef();
-	const eLinkRef = useRef();
 
 	const subProductPost = async (subProduct) => {
 		try {
@@ -53,13 +57,13 @@ export const FoodModal = ({
 	const handleEdit = async () => {
 		try {
 			const body = {
-				sub_product_name: eInputRef.current.value,
-				description: eDescRef.current.value,
+				sub_product_name: productName,
+				description: desc,
 				status: value === 'on' ? true : false,
-				price: +ePriceRef.current.value,
-				image: eLinkRef.current.value,
+				price: +price,
+				image: img,
 			};
-			const { data } = await api.editSubProduct(oneId._id, body);
+			const { data } = await api.editSubProduct(oneId, body);
 			console.log(data);
 			if (data?.status == 400 && data?.name == 'ValidationError') {
 				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
@@ -119,7 +123,7 @@ export const FoodModal = ({
 				<div className='d-flex align-items-center gap-5'>
 					<div className=''>
 						<img
-							src={oneId.image}
+							src={img}
 							className='rounded'
 							alt='MOCK IMAGE'
 							width={200}
@@ -135,9 +139,8 @@ export const FoodModal = ({
 								<span className='d-flex flex-column mt-4'>
 									<label htmlFor='product'>Tovar nomi</label>
 									<input
-										ref={eInputRef}
-										value={oneId.sub_product_name}
-										onChange={(e) => setOneId.sub_product_name(e.target.value)}
+										value={productName}
+										onChange={(e) => setProductName(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='product'
@@ -148,9 +151,8 @@ export const FoodModal = ({
 								<span className='d-flex flex-column mt-4'>
 									<label htmlFor='price'>Narxi</label>
 									<input
-										ref={ePriceRef}
-										value={oneId.price}
-										onChange={(e) => setOneId.price(e.target.value)}
+										value={price}
+										onChange={(e) => setPrice(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='price'
@@ -174,9 +176,8 @@ export const FoodModal = ({
 								<span className='d-flex flex-column mt-4'>
 									<label htmlFor='product'>Ma’lumot</label>
 									<input
-										ref={eDescRef}
-										value={oneId.description}
-										onChange={(e) => setOneId.description(e.target.value)}
+										value={desc}
+										onChange={(e) => setDesc(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='product'
@@ -187,9 +188,8 @@ export const FoodModal = ({
 								<span className='d-flex flex-column mt-4'>
 									<label htmlFor='price'>Rasmga link</label>
 									<input
-										ref={eLinkRef}
-										value={oneId.image}
-										onChange={(e) => setOneId.image(e.target.value)}
+										value={img}
+										onChange={(e) => setImg(e.target.value)}
 										type='text'
 										className='rounded form-control'
 										name='price'

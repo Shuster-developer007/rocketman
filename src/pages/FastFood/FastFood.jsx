@@ -17,6 +17,12 @@ export const FastFood = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 	const [oneId, setOneId] = useState('');
+	const [sub, setSub] = useState('');
+	const [long, setLong] = useState('');
+	const [loc, setLoc] = useState('');
+	const [lang, setLang] = useState('');
+	const [phone, setPhone] = useState('');
+	const [Id, setOneid] = useState('');
 	const [pagenation, setPagenation] = useState({
 		page: 1,
 		totalPage: 1,
@@ -31,6 +37,12 @@ export const FastFood = () => {
 		const { data } = await api.getSubCategoryById(fastFoodId);
 		if (data.status === 200) {
 			setOneId(data.data);
+			setSub(data.data.sub_category_name);
+			setPhone(data.data.phone);
+			setOneid(data.data._id);
+			setLong(data.data.long);
+			setLang(data.data.lang);
+			setLoc(data.data.location);
 		}
 	};
 
@@ -148,6 +160,17 @@ export const FastFood = () => {
 								</tbody>
 							</table>
 							<FastfoodModal
+								loc={loc}
+								setLoc={setLoc}
+								lang={lang}
+								setLang={setLang}
+								long={long}
+								setLong={setLong}
+								setPhone={setPhone}
+								phone={phone}
+								sub={sub}
+								setSub={setSub}
+								Id={Id}
 								setOneId={setOneId}
 								id={id}
 								oneId={oneId}

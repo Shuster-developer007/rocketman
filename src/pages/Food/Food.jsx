@@ -18,6 +18,10 @@ export const Food = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 	const [oneId, setOneId] = useState('');
+	const [productName, setProductName] = useState('');
+	const [desc, setDesc] = useState('');
+	const [img, setImg] = useState('');
+	const [price, setPrice] = useState('');
 	const [pagenation, setPagenation] = useState({
 		page: 1,
 		totalPage: 1,
@@ -43,7 +47,11 @@ export const Food = () => {
 	const subProductEdit = async (subProductId) => {
 		const { data } = await api.getSubProductById(subProductId);
 		if (data.status === 200) {
-			setOneId(data.data);
+			setOneId(data.data._id);
+			setProductName(data.data.sub_product_name);
+			setDesc(data.data.description);
+			setPrice(data.data.price);
+			setImg(data.data.image);
 		}
 	};
 
@@ -136,6 +144,14 @@ export const Food = () => {
 								</tbody>
 							</table>
 							<FoodModal
+								setImg={setImg}
+								img={img}
+								price={price}
+								setPrice={setPrice}
+								desc={desc}
+								setDesc={setDesc}
+								productName={productName}
+								setProductName={setProductName}
 								setOneId={setOneId}
 								oneId={oneId}
 								id={id}
