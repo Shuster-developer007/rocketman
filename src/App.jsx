@@ -42,12 +42,14 @@ function App() {
       </Routes>
     );
   }
-  return  (
-	<Routes>
-	  <Route path="/login" element={<Login />} />
-	  <Route path="*" element={<Login />} />
-	</Routes> 
-  )
+  return (
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;

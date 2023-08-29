@@ -123,7 +123,7 @@ const Payment = () => {
     "O'CHIRISH",
   ];
 
-  return (
+  return  (
     <div>
       <Sidebar />
       <div className="ummumiy">
