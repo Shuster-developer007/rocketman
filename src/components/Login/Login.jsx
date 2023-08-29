@@ -5,6 +5,7 @@ import { api } from "../../API/api";
 import { Logo } from "../../assets/images";
 import "./Login.css";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -14,13 +15,17 @@ export const Login = () => {
   };
 
   const onSubmit = async (values) => {
-    const data = await api.login(values);
-    console.log(data.data);
-    if (data.data.status === 200) {
-      localStorage.clear();
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("admin", data.data.data.username);
-      window.location.replace("/");
+    try {
+      const data = await api.login(values);
+
+      if (data.data.status === 200) {
+        localStorage.clear();
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("admin", data.data.data.username);
+        window.location.replace("/");
+      }
+    } catch (error) {
+      toast("Admin topilmadi", { type: "error" });
     }
   };
 
