@@ -14,9 +14,10 @@ export const SModal = ({
 	getProducts,
 	oneId,
 	setOneId,
+	setProduct,
+	product,
 }) => {
 	const inputRef = useRef();
-	const eInputRef = useRef();
 	const [value, setValue] = useState(false);
 
 	const onChange = (e) => {
@@ -43,10 +44,10 @@ export const SModal = ({
 	const handleEdit = async () => {
 		try {
 			const body = {
-				product_name: eInputRef.current.value,
+				product_name: product,
 				status: value === 'on' ? true : false,
 			};
-			const { data } = await api.editProduct(oneId._id, body);
+			const { data } = await api.editProduct(oneId, body);
 			if (data?.status == 400 && data?.name == 'ValidationError') {
 				toast("Iltimos ma'lumotlarni to'g'ri va to'liq to'ldiring", {
 					type: 'warning',
@@ -100,9 +101,8 @@ export const SModal = ({
 					<h1>Tahrirlash</h1>
 					<p>Kategoriya nomi</p>
 					<input
-						ref={eInputRef}
-						value={oneId.product_name}
-						onChange={(e) => setOneId.product_name(e.target.value)}
+						value={product}
+						onChange={(e) => setProduct(e.target.value)}
 						className='rounded form-control'
 						type='text'
 						name='product'
@@ -128,7 +128,6 @@ export const SModal = ({
 					X
 				</button>
 			</Modal>
-			
 			<Modal
 				isOpen={addModal}
 				onRequestClose={() => addSetModal(false)}

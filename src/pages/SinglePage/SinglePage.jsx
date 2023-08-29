@@ -16,6 +16,7 @@ export const SinglePage = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 	const [oneId, setOneId] = useState('');
+	const [product, setProduct] = useState('');
 	const [pagenation, setPagenation] = useState({
 		page: 1,
 		totalPage: 1,
@@ -30,7 +31,8 @@ export const SinglePage = () => {
 		const { data } = await api.getProductById(productId);
 		console.log(data);
 		if (data.status === 200) {
-			setOneId(data.data);
+			setOneId(data.data._id);
+			setProduct(data.data.product_name);
 		}
 	};
 
@@ -137,6 +139,8 @@ export const SinglePage = () => {
 								</tbody>
 							</table>
 							<SModal
+								product={product}
+								setProduct={setProduct}
 								setOneId={setOneId}
 								oneId={oneId}
 								id={id}

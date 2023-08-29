@@ -17,6 +17,7 @@ export const Category = () => {
 	const [addModal, addSetModal] = useState(false);
 	const [editModal, editSetModal] = useState(false);
 	const [oneId, setOneId] = useState('');
+	const [id, setId] = useState('');
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.category.category);
 	const [pagenation, setPagenation] = useState({
@@ -40,8 +41,10 @@ export const Category = () => {
 
 	const categoryEdit = async (categoryId) => {
 		const { data } = await api.getCategoryById(categoryId);
+
 		if (data.status === 200) {
-			setOneId(data.data);
+			setId(data.data._id);
+			setOneId(data.data.category_name);
 		}
 	};
 
@@ -121,6 +124,7 @@ export const Category = () => {
 								</tbody>
 							</table>
 							<CategoryModal
+								id={id}
 								oneId={oneId}
 								setOneId={setOneId}
 								getCategories={getCategories}
