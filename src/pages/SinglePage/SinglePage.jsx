@@ -25,11 +25,10 @@ export const SinglePage = () => {
 
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const products = useSelector((state) => state.product.product);
+	const products = useSelector((state) => state?.product?.product);
 
 	const productEdit = async (productId) => {
 		const { data } = await api.getProductById(productId);
-		console.log(data);
 		if (data.status === 200) {
 			setOneId(data.data._id);
 			setProduct(data.data.product_name);

@@ -99,8 +99,8 @@ export const CategoryModal = ({
 				}}
 			>
 				<div>
-					<h1>Tahrirlash</h1>
-					<p>Kategoriya nomi</p>
+					<h3 className='mt-4'>Tahrirlash</h3>
+					<p className='mt-4'>Kategoriya nomi</p>
 					<input
 						value={oneId}
 						onChange={(e) => setOneId(e.target.value)}
@@ -148,8 +148,8 @@ export const CategoryModal = ({
 				}}
 			>
 				<form action='' onSubmit={handleSubmit}>
-					<h1>Qo’shish</h1>
-					<p>Kategoriya nomi</p>
+					<h3 className='mt-4'>Qo’shish</h3>
+					<p className='mt-4'>Kategoriya nomi</p>
 					<input
 						ref={inputRef}
 						className='rounded form-control'

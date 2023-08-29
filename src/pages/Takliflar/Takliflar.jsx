@@ -16,9 +16,6 @@ const Takliflar = () => {
       setLoading(true);
       const { data } = await api.getComplaitns();
       setData(data);
-      // if (data.status === 200) {
-      // 	dispatch(setCategory(data.data.data));
-      // }
     } catch (error) {
       console.log(error.message);
       setError(true)

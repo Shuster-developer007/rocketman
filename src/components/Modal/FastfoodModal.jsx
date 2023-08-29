@@ -118,20 +118,21 @@ export const FastfoodModal = ({
 						bottom: 0,
 						margin: 'auto',
 						color: 'black',
+						padding: '2rem 2rem'
 					},
 				}}
 			>
-				<div className='ps-5'>
+				<div className=''>
 					{' '}
-					<h1>Tahrirlash</h1>
-					<div className='d-flex align-items-center gap-5'>
+					<h2>Tahrirlash</h2>
+					<div className='d-flex align-items-center justify-content-between gap-5'>
 						<span>
 							{' '}
-							<h4>Do’’kon nomi</h4>
+							<h5 className='mt-4'>Do’’kon nomi</h5>
 							<input
 								value={sub}
 								onChange={(e) => setSub(e.target.value)}
-								className='rounded me-3 form-control'
+								className='rounded mt-3 me-3 form-control'
 								type='text'
 								name='sub_category_name'
 								id='sub_category_name'
@@ -140,11 +141,11 @@ export const FastfoodModal = ({
 						</span>
 						<span>
 							{' '}
-							<h4>Telefon raqami</h4>
+							<h5>Telefon raqami</h5>
 							<input
 								value={phone}
 								onChange={(e) => setPhone(e.target.value)}
-								className='rounded form-control'
+								className='rounded mt-3 form-control'
 								type='text'
 								name='phone'
 								id='phone'
@@ -152,14 +153,14 @@ export const FastfoodModal = ({
 							/>
 						</span>
 					</div>
-					<div className='d-flex align-items-center gap-5 mt-5'>
+					<div className='d-flex align-items-center justify-content-between  gap-5 mt-5'>
 						<span>
 							{' '}
-							<h4>Long</h4>
+							<h5>Long</h5>
 							<input
 								value={long}
 								onChange={(e) => setLong(e.target.value)}
-								className='rounded me-3 form-control'
+								className='rounded mt-3 me-3 form-control'
 								type='text'
 								name='long'
 								id='long'
@@ -168,11 +169,11 @@ export const FastfoodModal = ({
 						</span>
 						<span>
 							{' '}
-							<h4>Lang</h4>
+							<h5>Lang</h5>
 							<input
 								value={lang}
 								onChange={(e) => setLang(e.target.value)}
-								className='rounded form-control'
+								className='rounded mt-3 form-control'
 								type='text'
 								name='lang'
 								id='lang'
@@ -180,14 +181,14 @@ export const FastfoodModal = ({
 							/>
 						</span>
 					</div>
-					<div className='d-flex align-items-end gap-5 mt-5'>
+					<div className='d-flex align-items-end  gap-5 mt-5'>
 						<span>
 							{' '}
-							<h4>Manzil</h4>
+							<h5>Manzil</h5>
 							<input
 								value={loc}
 								onChange={(e) => setLoc(e.target.value)}
-								className='rounded me-4 form-control'
+								className='rounded mt-3 me-4 form-control'
 								type='text'
 								name='loc'
 								id='loc'
@@ -202,13 +203,15 @@ export const FastfoodModal = ({
 							</Radio.Group>
 						</div>
 					</div>
+					<div className='d-flex justify-content-center align-items-center'>
 					<button
-						className='btn btn-dark mt-5 ms-5 w-50'
+						className='btn btn-dark mt-5 w-100'
 						type='submit'
 						onClick={() => handleEdit()}
 					>
 						Saqlash
 					</button>
+					</div>
 				</div>
 
 				<button className='styledBtn' onClick={() => editSetModal(false)}>
