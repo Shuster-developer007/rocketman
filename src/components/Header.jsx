@@ -29,7 +29,7 @@ const Header = (props) => {
               aria-expanded="false"
             ></button>
             <Link
-              to={"/login"}
+              to={"/"}
               onClick={() => localStorage.clear()}
               className="dropdown-menu drop_dawn text-center text-decoration-none"
             >

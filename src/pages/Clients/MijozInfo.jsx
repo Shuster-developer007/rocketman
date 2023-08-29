@@ -144,7 +144,7 @@ const MijozInfo = () => {
                   </div>
                   <div>
                     <p className="text-center text-secondary">Jami:</p>
-                    <h5 className="text-center som">54 000 so'm</h5>
+                    <h5 className="text-center som">{data?.data?.total_price} so'm</h5>
                   </div>
                 </div>
               </div>

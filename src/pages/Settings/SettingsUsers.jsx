@@ -74,10 +74,11 @@ const SettingsUsers = () => {
       try {
         setLoading(true);
         const { data } = await api.deleteAdmin(id);
+        console.log(data);
         toast("Success deleted admin", { type: "success" });
         getAdmins();
       } catch (error) {
-        console.log(error.message);
+        toast(error?.response?.data?.message , {type: "error"})
       } finally {
         setLoading(false);
       }
