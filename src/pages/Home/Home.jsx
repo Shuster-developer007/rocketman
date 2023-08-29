@@ -99,7 +99,7 @@ const Home = () => {
       getAllDriver();
       findOrders();
     } catch (error) {
-      console.log(error);
+      toast(error.response.data.message, { type: "error" });
     }
   };
 
@@ -123,10 +123,7 @@ const Home = () => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h1
-                    className="modal-title fs-5"
-                    id="exampleModalLabel"
-                  >
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">
                     Edit Status Order
                   </h1>
                   <button
@@ -281,11 +278,7 @@ const Home = () => {
                 <thead className="thread">
                   <tr>
                     {thread?.map((item, index) => (
-                      <th
-                        key={index}
-                        className="jg text-center"
-                        scope="col"
-                      >
+                      <th key={index} className="jg text-center" scope="col">
                         {item}
                       </th>
                     ))}
@@ -294,14 +287,8 @@ const Home = () => {
                 <tbody>
                   {data?.data?.length ? (
                     data?.data?.map((item, index) => (
-                      <tr
-                        className="tr"
-                        key={item._id}
-                      >
-                        <th
-                          className="jg text-center"
-                          cope="row"
-                        >
+                      <tr className="tr" key={item._id}>
+                        <th className="jg text-center" cope="row">
                           {index + 1}
                         </th>
                         <td className="jg text-center">
@@ -364,11 +351,7 @@ const Home = () => {
                   ) : (
                     <tr>
                       {thread?.map((item, index) => (
-                        <th
-                          key={index}
-                          className="jg text-center"
-                          scope="col"
-                        >
+                        <th key={index} className="jg text-center" scope="col">
                           <React_Skeleton />
                         </th>
                       ))}
