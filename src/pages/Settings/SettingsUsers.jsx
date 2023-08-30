@@ -13,6 +13,7 @@ const SettingsUsers = () => {
   const [loading, setLoading] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [username, setUserName] = useState("");
+  const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const editUsernameRef = useRef();
   const editPasswordRef = useRef();
@@ -56,9 +57,11 @@ const SettingsUsers = () => {
     try {
       setLoading(true);
       const { data } = await api.getAdmins();
+
       setData(data);
     } catch (error) {
       console.log(error.message);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -77,7 +80,7 @@ const SettingsUsers = () => {
         toast("Success deleted admin", { type: "success" });
         getAdmins();
       } catch (error) {
-        console.log(error.message);
+        toast(error?.response?.data?.message, { type: "error" });
       } finally {
         setLoading(false);
       }
@@ -231,8 +234,28 @@ const SettingsUsers = () => {
             <div className="thor mt-5">
               {loading ? <h2>Loading</h2> : <h2>Available users</h2>}
               <div className="setting_card_users">
-                {data?.data?.length ? (
-                  data?.data?.map((item, index) => (
+                {loading ? (
+                  <div className="user_setting d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 className=" h-50 px-5 skeleton_name">
+                        <React_Skeleton />
+                      </h6>
+                    </div>
+                    <div className="d-flex gap-3">
+                      <div
+                        className="setting_icon_edit"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editUserModal"
+                      >
+                        <React_Skeleton />
+                      </div>
+                      <div className="setting_icon_delete">
+                        <React_Skeleton />
+                      </div>
+                    </div>
+                  </div>
+                ) : data?.data?.length ? (
+                  data?.data?.map((item , index) => (
                     <div
                       key={item._id}
                       className="user_setting d-flex justify-content-between"
@@ -260,25 +283,11 @@ const SettingsUsers = () => {
                       </div>
                     </div>
                   ))
+                ) : error ? (
+                  <p>Serverdan javob yo'q</p>
                 ) : (
-                  <div className="user_setting d-flex justify-content-between align-items-center">
-                    <div>
-                      <h6 className=" h-50 px-5 skeleton_name">
-                        <React_Skeleton />
-                      </h6>
-                    </div>
-                    <div className="d-flex gap-3">
-                      <div
-                        className="setting_icon_edit"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editUserModal"
-                      >
-                        <React_Skeleton />
-                      </div>
-                      <div className="setting_icon_delete">
-                        <React_Skeleton />
-                      </div>
-                    </div>
+                  <div className="morke py-4  d-flex justify-content-between">
+                    <h5>Ma'lumotlar yo'q</h5>
                   </div>
                 )}
               </div>

@@ -9,16 +9,16 @@ import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 const Takliflar = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   const getComplaints = async () => {
     try {
       setLoading(true);
       const { data } = await api.getComplaitns();
       setData(data);
-      // if (data.status === 200) {
-      // 	dispatch(setCategory(data.data.data));
-      // }
     } catch (error) {
       console.log(error.message);
+      setError(true)
     } finally {
       setLoading(false);
     }
@@ -151,7 +151,7 @@ const Takliflar = () => {
                     </div>
                   </div>
                 ))
-              ) : (
+              ) : error ? (<p>Serverdan javob yo'q</p>) : (
                 <div className="morke py-4  d-flex justify-content-between">
                   <h2>Ma'lumotlar yo'q</h2>
                 </div>

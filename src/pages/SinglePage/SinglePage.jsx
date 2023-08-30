@@ -25,7 +25,7 @@ export const SinglePage = () => {
 
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const products = useSelector((state) => state.product.product);
+	const products = useSelector((state) => state?.product?.product);
 	const productEdit = async (productId) => {
 		const { data } = await api.getProductById(productId);
 		if (data.status === 200) {

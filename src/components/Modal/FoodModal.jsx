@@ -111,6 +111,7 @@ export const FoodModal = ({
 					content: {
 						width: '800px',
 						height: '400px',
+						padding: '2rem 1.5rem',
 						top: 0,
 						right: 0,
 						left: 0,
@@ -120,14 +121,12 @@ export const FoodModal = ({
 					},
 				}}
 			>
-				<div className='d-flex align-items-center gap-5'>
+				<div className='d-flex justify-content-between mt-4 align-items-center gap-3'>
 					<div className=''>
 						<img
 							src={img}
-							className='rounded'
+							className='rounded image_modal'
 							alt='MOCK IMAGE'
-							width={200}
-							height={300}
 						/>
 					</div>
 

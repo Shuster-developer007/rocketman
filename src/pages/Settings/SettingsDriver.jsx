@@ -12,11 +12,12 @@ const SettingsDriver = () => {
   const [data, setData] = useState([]);
   const [driver, setDriver] = useState({});
   const [loading, setLoading] = useState(false);
-  const [drivername , setDriverName] = useState('')
-  const [driverbirthday , setDriverbirthday] = useState('')
-  const [driverphone , setDriverphone] = useState('')
-  const [autoNumber , setAutoNumber] = useState('')
-  const [drivertype , setDriverType] = useState('')
+  const [error, setError] = useState(false);
+  const [drivername, setDriverName] = useState("");
+  const [driverbirthday, setDriverbirthday] = useState("");
+  const [driverphone, setDriverphone] = useState("");
+  const [autoNumber, setAutoNumber] = useState("");
+  const [drivertype, setDriverType] = useState("");
   const [value, setValue] = useState(false);
   const [pagenation, setPagenation] = useState({
     page: 1,
@@ -54,7 +55,7 @@ const SettingsDriver = () => {
       });
       setData(data?.data?.drivers);
     } catch (error) {
-      console.log(error.message);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -93,12 +94,12 @@ const SettingsDriver = () => {
   const getOneDriver = async (id) => {
     try {
       const { data } = await api.getOneDriver(id);
-      setDriverName(data?.data?.driver_full_name)
-      setDriverbirthday(data?.data?.driver_birthday)
-      setDriverphone(data?.data?.driver_phone)
-      setAutoNumber(data?.data?.car_number)
-      setDriverType(data?.data?.type)
-      setDriverType(data?.data?.type)
+      setDriverName(data?.data?.driver_full_name);
+      setDriverbirthday(data?.data?.driver_birthday);
+      setDriverphone(data?.data?.driver_phone);
+      setAutoNumber(data?.data?.car_number);
+      setDriverType(data?.data?.type);
+      setDriverType(data?.data?.type);
       setDriver(data?.data);
     } catch (error) {
       console.log(error.message);
@@ -122,7 +123,7 @@ const SettingsDriver = () => {
         driver_full_name: drivername,
         driver_birthday: driverbirthday,
         driver_phone: driverphone,
-        car_number:autoNumber,
+        car_number: autoNumber,
         type: drivertype,
         status: value === "on" ? true : false,
       };
@@ -338,7 +339,7 @@ const SettingsDriver = () => {
                         Autoraqam
                       </label>
                       <input
-                       value={autoNumber}
+                        value={autoNumber}
                         onChange={(e) => setAutoNumber(e.target.value)}
                         type="text"
                         className="form-control 100"
@@ -416,7 +417,7 @@ const SettingsDriver = () => {
               <table className="mytable">
                 <thead className="thread">
                   <tr>
-                    {title?.map((item , index) => (
+                    {title?.map((item, index) => (
                       <th key={index} className="jg text-center" scope="col">
                         {item}
                       </th>
@@ -424,63 +425,75 @@ const SettingsDriver = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.length ? (data?.map((item, index) => (
-                    <tr className="tr" key={item._id}>
-                      <th className="jg text-center" cope="row">
-                        {index + 1}
-                      </th>
-                      <td className="jg text-center">
-                        {item.driver_full_name}
-                      </td>
-                      <td className="jg text-center">{item.driver_birthday}</td>
-                      <td className="jg text-center">+{item.driver_phone}</td>
-                      <td className="jg text-center">{item.car_number}</td>
-                      <td className="jg text-center">{item.type}</td>
-                      <td className="jg text-success">
-                        {item.status == true ? (
-                          <div className="d-flex justify-content-center align-items-center">
-                            <div className="enabled d-flex align-items-center justify-content-center">
-                              enabled
+                  {data?.length ? (
+                    data?.map((item, index) => (
+                      <tr className="tr" key={item._id}>
+                        <th className="jg text-center" cope="row">
+                          {index + 1}
+                        </th>
+                        <td className="jg text-center">
+                          {item.driver_full_name}
+                        </td>
+                        <td className="jg text-center">
+                          {item.driver_birthday}
+                        </td>
+                        <td className="jg text-center">+{item.driver_phone}</td>
+                        <td className="jg text-center">{item.car_number}</td>
+                        <td className="jg text-center">{item.type}</td>
+                        <td className="jg text-success">
+                          {item.status == true ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <div className="enabled d-flex align-items-center justify-content-center">
+                                enabled
+                              </div>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="d-flex justify-content-center align-items-center ">
-                            <div className="disabled text-danger justify-content-center align-items-center d-flex">
-                              disabled
+                          ) : (
+                            <div className="d-flex justify-content-center align-items-center ">
+                              <div className="disabled text-danger justify-content-center align-items-center d-flex">
+                                disabled
+                              </div>
                             </div>
+                          )}
+                        </td>
+                        <td
+                          onClick={() => getOneDriver(item?._id)}
+                          data-bs-toggle="modal"
+                          data-bs-target="#editmodal"
+                          className="jg d-flex align-items-center justify-content-center py-3"
+                        >
+                          <div className="setting_icon_edit">
+                            <i className="fa-solid fa-marker text-white"></i>
                           </div>
-                        )}
-                      </td>
-                      <td
-                        onClick={() => getOneDriver(item?._id)}
-                        data-bs-toggle="modal"
-                        data-bs-target="#editmodal"
-                        className="jg d-flex align-items-center justify-content-center py-3"
-                      >
-                        <div className="setting_icon_edit">
-                          <i className="fa-solid fa-marker text-white"></i>
-                        </div>
-                      </td>
+                        </td>
+                      </tr>
+                    ))
+                  ) : loading ? (
+                    <tr>
+                      {title?.map((item, index) => (
+                        <th key={index} className="jg text-center" scope="col">
+                          <React_Skeleton />
+                        </th>
+                      ))}
                     </tr>
-                  ))) : (<tr>
-                    {title?.map((item, index) => (
-                      <th key={index} className="jg text-center" scope="col">
-                        <React_Skeleton />
-                      </th>
-                    ))}
-                  </tr>)}
+                  ) : error ? (
+                    <p className="ms-4 py-4">Serverdan javob yo'q</p>
+                  ) : (
+                    <div className="morke py-4  d-flex justify-content-between">
+                      <h5 className="ms-4">Ma'lumotlar yo'q</h5>
+                    </div>
+                  )}
                 </tbody>
               </table>
               <div className="d-flex next align-items-center">
-              <div className="d-flex next align-items-center">
-                <Pagination
-                  simple
-                  defaultCurrent={1}
-                  total={pagenation?.totalPage * pagenation?.pageLimit}
-                  defaultPageSize={pagenation?.pageLimit}
-                  onChange={(pageNumber) => getAllDrivers(pageNumber)}
-                />
-              </div>
+                <div className="d-flex next align-items-center">
+                  <Pagination
+                    simple
+                    defaultCurrent={1}
+                    total={pagenation?.totalPage * pagenation?.pageLimit}
+                    defaultPageSize={pagenation?.pageLimit}
+                    onChange={(pageNumber) => getAllDrivers(pageNumber)}
+                  />
+                </div>
               </div>
             </div>
           </div>
