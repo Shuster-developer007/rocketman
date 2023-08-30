@@ -67,7 +67,7 @@ const Mijozlar = () => {
               to={`/mijozlar/${item._id}`}
               className="text-decoration-none link"
             >
-              {item.phone}
+              +{item.phone}
             </Link>
           </td>
           <td className="jg text-center">{item.orders.length}</td>
@@ -86,8 +86,6 @@ const Mijozlar = () => {
   useEffect(() => {
     getClients();
   }, []);
-  console.log(searchClients);
-  console.log(data);
   return (
     <div>
       <Sidebar />

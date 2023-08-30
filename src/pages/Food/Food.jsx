@@ -125,7 +125,7 @@ export const Food = () => {
 														className='btn'
 														onClick={() => editSetModal(true)}
 													>
-														<GrEdit color='green' size={20} />
+														<i className="fa-solid fa-pen-clip fs-5"></i>
 													</button>
 												</td>
 												<td></td>

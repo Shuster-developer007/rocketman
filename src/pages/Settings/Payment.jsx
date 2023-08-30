@@ -11,12 +11,13 @@ import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 const Payment = () => {
   const [data, setData] = useState([]);
   const [payment, setPayment] = useState({});
+  const [error, setError] = useState(false);
   const [id, setId] = useState();
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
-  const [payment_type , setPayment_type] = useState('')
-  const [payment_telg , setPayment_telg] = useState('')
-  const [payment_link , setPayment_link] = useState('')
+  const [payment_type, setPayment_type] = useState("");
+  const [payment_telg, setPayment_telg] = useState("");
+  const [payment_link, setPayment_link] = useState("");
 
   const editPayment_typeRef = useRef();
   const editpayment_telegramRef = useRef();
@@ -35,6 +36,7 @@ const Payment = () => {
       const { data } = await api.getSettingsPayment();
       setData(data);
     } catch (error) {
+      setError(true);
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -72,9 +74,9 @@ const Payment = () => {
   const getOnePaymentOrEdit = async (id) => {
     try {
       const { data } = await api.getOnePayment(id);
-      setPayment_type(data?.data?.payment_type)
-      setPayment_link(data?.data?.link)
-      setPayment_telg(data?.data?.telegram_payment)
+      setPayment_type(data?.data?.payment_type);
+      setPayment_link(data?.data?.link);
+      setPayment_telg(data?.data?.telegram_payment);
       setPayment(data?.data);
     } catch (error) {
       console.log(error.message);
@@ -123,7 +125,7 @@ const Payment = () => {
     "O'CHIRISH",
   ];
 
-  return  (
+  return (
     <div>
       <Sidebar />
       <div className="ummumiy">
@@ -321,7 +323,7 @@ const Payment = () => {
               <table className="mytable">
                 <thead className="thread">
                   <tr>
-                    {title?.map((item , index) => (
+                    {title?.map((item, index) => (
                       <th key={index} className="jg text-center" scope="col">
                         {item}
                       </th>
@@ -329,67 +331,77 @@ const Payment = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.data?.length ? (data?.data?.map((item) => (
-                    <tr className="tr" key={item._id}>
-                      <th className="jg text-center" cope="row">
-                        {item.payment_type}
-                      </th>
-                      <td className="jg text-center d-flex align-items-center justify-content-center gap-2 py-4">
-                        <i className="fa-solid fa-credit-card text-warning"></i>
-                        {item.telegram_payment}
-                      </td>
-                      <td className="jg text-center">
-                        <a href={item.link} target="_blank">
-                          <i className="fa-solid fa-link"></i>
-                        </a>
-                      </td>
-                      <td className="jg ">
-                        {item.status == true ? (
+                  {data?.data?.length ? (
+                    data?.data?.map((item) => (
+                      <tr className="tr" key={item._id}>
+                        <th className="jg text-center" cope="row">
+                          {item.payment_type}
+                        </th>
+                        <td className="jg text-center d-flex align-items-center justify-content-center gap-2 py-4">
+                          <i className="fa-solid fa-credit-card text-warning"></i>
+                          {item.telegram_payment}
+                        </td>
+                        <td className="jg text-center">
+                          <a href={item.link} target="_blank">
+                            <i className="fa-solid fa-link"></i>
+                          </a>
+                        </td>
+                        <td className="jg ">
+                          {item.status == true ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <div className="enabled text-success d-flex align-items-center justify-content-center">
+                                enabled
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="d-flex justify-content-center align-items-center ">
+                              <div className="disabled text-danger justify-content-center align-items-center d-flex">
+                                disabled
+                              </div>
+                            </div>
+                          )}
+                        </td>
+                        <td className="jg">
+                          <div
+                            onClick={() => getOnePaymentOrEdit(item._id)}
+                            className="d-flex justify-content-center align-items-center"
+                          >
+                            <div
+                              data-bs-toggle="modal"
+                              data-bs-target="#editmodal"
+                              className="setting_icon_edit"
+                            >
+                              <i className="fa-solid fa-marker text-white"></i>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="jg">
                           <div className="d-flex justify-content-center align-items-center">
-                            <div className="enabled text-success d-flex align-items-center justify-content-center">
-                              enabled
+                            <div
+                              onClick={() => handleDeletePayment(item._id)}
+                              className="setting_icon_delete my-3"
+                            >
+                              <i className="fa-solid fa-trash text-white"></i>
                             </div>
                           </div>
-                        ) : (
-                          <div className="d-flex justify-content-center align-items-center ">
-                            <div className="disabled text-danger justify-content-center align-items-center d-flex">
-                              disabled
-                            </div>
-                          </div>
-                        )}
-                      </td>
-                      <td className="jg">
-                        <div
-                          onClick={() => getOnePaymentOrEdit(item._id)}
-                          className="d-flex justify-content-center align-items-center"
-                        >
-                          <div
-                            data-bs-toggle="modal"
-                            data-bs-target="#editmodal"
-                            className="setting_icon_edit"
-                          >
-                            <i className="fa-solid fa-marker text-white"></i>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="jg">
-                        <div className="d-flex justify-content-center align-items-center">
-                          <div
-                            onClick={() => handleDeletePayment(item._id)}
-                            className="setting_icon_delete my-3"
-                          >
-                            <i className="fa-solid fa-trash text-white"></i>
-                          </div>
-                        </div>
-                      </td>
+                        </td>
+                      </tr>
+                    ))
+                  ) : loading ? (
+                    <tr>
+                      {title?.map((item, index) => (
+                        <th key={index} className="jg text-center" scope="col">
+                          <React_Skeleton />
+                        </th>
+                      ))}
                     </tr>
-                  ))) : (<tr>
-                    {title?.map((item, index) => (
-                      <th key={index} className="jg text-center" scope="col">
-                        <React_Skeleton />
-                      </th>
-                    ))}
-                  </tr>)}
+                  ) : error ? (
+                    <p className="py-4 ms-3">Serverdan javob yo'q</p>
+                  ) : (
+                    <div className="morke py-4  d-flex justify-content-between">
+                      <h5 className="py-4 ms-3">Ma'lumotlar yo'q</h5>
+                    </div>
+                  )}
                 </tbody>
               </table>
             </div>

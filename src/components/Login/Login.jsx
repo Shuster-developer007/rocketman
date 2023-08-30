@@ -17,8 +17,9 @@ export const Login = () => {
   const onSubmit = async (values) => {
     try {
       const data = await api.login(values);
-
+      
       if (data.data.status === 200) {
+        toast("Login muofiqiyatli amalga oshirildi" , {type : 'success'})
         localStorage.clear();
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("admin", data.data.data.username);
