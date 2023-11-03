@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "https://rocketman-api-lz89.onrender.com";
 
 const token = localStorage.getItem("token");
 

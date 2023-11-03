@@ -5,7 +5,7 @@ import { BtnSliderF, BtnSliderT } from "../../components/BtnSlider";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { useState } from "react";
-import { CategoryModal } from "../../components/Modal/categoryModal";
+import { CategoryModal } from "../../components/Modal/CategoryModal";
 import React_Skeleton from "../../components/React_Skeleton/React_Skeleton";
 import { api } from "../../API/api";
 import { useEffect } from "react";
