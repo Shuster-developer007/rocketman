@@ -35,6 +35,7 @@ const MijozInfo = () => {
     try {
       setLoading(true);
       const { data } = await api.getSubProductOrder(id);
+      console.log("data" , data);
       setOrder(data);
     } catch (error) {
       console.log(error.message);
